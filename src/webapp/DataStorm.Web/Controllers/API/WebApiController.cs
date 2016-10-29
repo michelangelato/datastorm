@@ -109,6 +109,7 @@ namespace DataStorm.Web.Controllers.API
         {
             var utente = await _userManager.FindByNameAsync(User.Identity.Name);
             var immobile = await _db.Immobili.SingleAsync(im => im.Id == Id);
+
             if (immobile.UtenteAppartenenza.Id != utente.Id)
             {
                 throw new Exception("Immobile non trovato");
@@ -116,7 +117,11 @@ namespace DataStorm.Web.Controllers.API
             }
             else
             {
-                return Mapper.Map<ImmobileDTO>(immobile);
+                var result = Mapper.Map<ImmobileDTO>(immobile);
+                var rnd = new Random();
+                var rand = rnd.Next(1, 6);
+                result.TipoAgibilita = ((TipoAgibilita)rand).ToString();
+                return result;
             }
         }
         [Authorize]
