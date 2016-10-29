@@ -41,6 +41,7 @@ namespace DataStorm.Web.Data
             builder.Entity<AziendeTipoLavoro>().ToTable("AziendeTipiLavoro").HasKey(tl => tl.Id);
             builder.Entity<AziendeTipoLavoro>().HasOne(az => az.AziendaLavoro);
             builder.Entity<AziendeTipoLavoro>().HasOne(tl => tl.TipoLavoro);
+            builder.Entity<Catasto>().ToTable("Catasto").HasKey(ca => ca.IdCatasto);
             builder.Entity<Azienda>().HasMany(az => az.AziendaTipoLavoro);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
