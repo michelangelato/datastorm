@@ -15,9 +15,14 @@ import io.requery.Table;
 public class AbstractAlertLink {
 
 	@Expose
+	@SerializedName("Id")
+	@Column(name = "id")
+	@Key
+	long id;
+
+	@Expose
 	@SerializedName("Url")
 	@Column(name = "url")
-	@Key
 	String url;
 
 	@ManyToOne

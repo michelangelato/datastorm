@@ -15,19 +15,22 @@ import io.requery.Table;
 public class AbstractAlertMapPoint {
 
 	@Expose
+	@SerializedName("Id")
+	@Column(name = "id")
+	@Key
+	long id;
+
+	@Expose
 	@SerializedName("Lat")
 	@Column(name = "lat")
-	@Key
 	double lat;
 
 	@Expose
 	@SerializedName("Lon")
 	@Column(name = "lon")
-	@Key
 	double lon;
 
 	@ManyToOne
 	@Column(name = "alert_map")
-	@Key
 	MapObject alert;
 }

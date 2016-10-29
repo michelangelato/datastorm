@@ -30,19 +30,21 @@ public class AbstractTopic {
 	@SerializedName("nelat")
 	@Column(name = "ne_lat")
 	double neLat;
+
 	@Expose
 	@SerializedName("nelon")
 	@Column(name = "ne_lon")
 	double neLon;
+
 	@Expose
 	@SerializedName("solat")
 	@Column(name = "so_lat")
 	double soLat;
+
 	@Expose
 	@SerializedName("solon")
 	@Column(name = "so_lon")
 	double soLon;
-
 
 	@Expose
 	@SerializedName("Pinnato")
