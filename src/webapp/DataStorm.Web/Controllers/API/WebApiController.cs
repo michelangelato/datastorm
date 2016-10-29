@@ -52,7 +52,21 @@ namespace DataStorm.Web.Controllers.API
             await db.SaveChangesAsync();
             return Ok();
         }
-
+        [HttpGet]
+        public async Task<ImmobileDTO> GetImmobile(int Id)
+        {
+            var utente = await um.FindByNameAsync(User.Identity.Name);
+            var immobile = await db.Immobili.SingleAsync(im => im.Id == Id);
+            if(immobile.UtenteAppartenenza.Id!=utente.Id)
+            {
+                throw new Exception("Immobile non trovato");
+                
+            }
+            else
+            {
+                return Mapper.Map<ImmobileDTO>(immobile);
+            }
+        }
         [Authorize]
         [Route("api/immobili")]
         public async Task<IEnumerable<ImmobileDTO>> GetImmobili()
