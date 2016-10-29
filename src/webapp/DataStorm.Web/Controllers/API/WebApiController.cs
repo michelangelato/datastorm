@@ -1,5 +1,6 @@
 ﻿using DataStorm.Web.Data;
 using DataStorm.Web.Models;
+using DataStorm.Web.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,10 +20,39 @@ namespace DataStorm.Web.Controllers.API
             this.db = db;
         }
 
-        [Route("api/immobili")]
-        public async Task<IEnumerable<dynamic>> GetImmobili()
+        [Route("api/immobile")]
+        public async Task PostImmobile(ImmobileDTO immobile)
         {
-            return await db.Immobili.Select(i => new { i.Id, i.Comune, i.Indirizzo, i.MetriQuadri, i.NumeroPersoneResidenti, i.NumeroPiano, i.PuntoMappa, i.TipoImmobile }).ToListAsync();
+            db.Immobili.Add(new Immobile
+            {
+                Comune = immobile.Comune,
+                Indirizzo = immobile.Indirizzo,
+                MetriQuadri = immobile.MetriQuadri,
+                NumeroPersoneResidenti = immobile.NumeroPersoneResidenti,
+                NumeroPiano = immobile.NumeroPiano,
+                PuntoMappa = new PuntoMappa { LatitudinePunto = immobile.LatitudinePunto, LongitudinePunto = immobile.LongitudinePunto },
+                TipoImmobile = immobile.TipoImmobile,
+#warning TODO
+                UtenteAppartenenza = null
+            });
+
+            await db.SaveChangesAsync();
+        }
+
+        [Route("api/immobili")]
+        public async Task<IEnumerable<ImmobileDTO>> GetImmobili()
+        {
+            return await db.Immobili.Select(i => new ImmobileDTO
+            {
+                Comune = i.Comune,
+                Indirizzo = i.Indirizzo,
+                LatitudinePunto = i.PuntoMappa.LatitudinePunto,
+                LongitudinePunto = i.PuntoMappa.LongitudinePunto,
+                MetriQuadri = i.MetriQuadri,
+                NumeroPersoneResidenti = i.NumeroPersoneResidenti,
+                NumeroPiano = i.NumeroPiano,
+                TipoImmobile = i.TipoImmobile
+            }).ToListAsync();
         }
 
         [Route("api/immobili/tipologie")]
