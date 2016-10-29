@@ -1,4 +1,6 @@
-﻿@{
+﻿
+
+@{
     ViewData["Title"] = "Immobili";
 }
 
@@ -87,6 +89,15 @@
         });
     </script>
 }
+
+<!--inizio breadcrumbs-->
+
+<ol class="breadcrumb">
+  <li><a asp-action="Index" asp-controller="Home" >Home</a></li>
+  <li class="active">Immobili</li>
+</ol>
+
+<!--fine breadcrumbs-->
 
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>

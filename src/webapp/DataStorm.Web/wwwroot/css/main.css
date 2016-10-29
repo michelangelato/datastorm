@@ -478,7 +478,7 @@ ul.sub-menu {
 }
 
 #contact{
-background-color: #c4cfd4;
+background-color: #e8e8e8;
 width: 100%;
 margin-bottom:20px;
 }
@@ -811,6 +811,14 @@ margin-bottom:20px;
   display: table;
   position: static;
   width: 100%;
+}
+
+.breadcrumb{
+  margin-top:40px;
+}
+
+.breadcrumb li{
+  font-size:12px;
 }
 
 #team {
