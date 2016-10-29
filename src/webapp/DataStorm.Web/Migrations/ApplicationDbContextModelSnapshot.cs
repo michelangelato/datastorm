@@ -253,7 +253,8 @@ namespace DataStorm.Web.Migrations
 
             modelBuilder.Entity("DataStorm.Web.Models.Segnalazione", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Descrizione");
 
