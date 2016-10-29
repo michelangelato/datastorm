@@ -14,7 +14,7 @@ namespace DataStorm.Web.Models
         public virtual List<ImmagineAvviso> ImmaginiAvviso { get; set; }
         public virtual List<LinkAvviso> Links { get; set; }
         public virtual List<AreaMappa> AreeMappe { get; set; }
-        public virtual List<Topic> Topics { get; set; }
+        public virtual List<AvvisoTopic> AvvisiTopics { get; set; }
         
     }
 }

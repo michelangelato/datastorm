@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace DataStorm.Web.Models
 {
-    public class Topic
+    public class AvvisoTopic
     {
         public virtual int Id { get; set; }
-        public virtual string Codice { get; set; }
-        public virtual List<AvvisoTopic> AvvisiTopics { get; set; }
+        public virtual Avviso AvvisoRiferimento { get; set; }
+        public virtual Topic TopicRiferimento { get; set; }
     }
 }

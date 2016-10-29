@@ -141,10 +141,27 @@ namespace DataStorm.Web.Controllers.API
         {
             await Task.FromResult(0);
         }
+        [Route("api/topics")]
+        public async Task<IEnumerable<TopicDTO>> GetTopics(string ricerca)
+        {
+            var result= _db.Topics.Where(t => t.Codice.Contains(ricerca)).Select(t=>Mapper.Map<TopicDTO>(t));
+            
+            await Task.FromResult(0);
+            return result;
+            
+        }
+        [Route("api/topics/{id}")]
 
+        public async Task<TopicDTO> GetTopic(int Id)
+        {
+            var topic = await _db.Topics.SingleAsync(t => t.Id == Id);
+            return Mapper.Map<TopicDTO>(topic);
+        }
+        
         [Route("api/richiesta")]
         public async Task PostRichiesta()
         {
+            
             await Task.FromResult(0);
         }
 
