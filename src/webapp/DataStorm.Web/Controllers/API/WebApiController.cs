@@ -35,9 +35,6 @@ namespace DataStorm.Web.Controllers.API
             {
                 Comune = immobile.Comune,
                 Indirizzo = immobile.Indirizzo,
-                MetriQuadri = immobile.MetriQuadri,
-                NumeroPersoneResidenti = immobile.NumeroPersoneResidenti,
-                NumeroPiano = immobile.NumeroPiano,
                 PuntoMappa = new PuntoMappa { LatitudinePunto = immobile.LatitudinePunto, LongitudinePunto = immobile.LongitudinePunto },
                 TipoImmobile = immobile.TipoImmobile,
                 UtenteAppartenenza = utente
