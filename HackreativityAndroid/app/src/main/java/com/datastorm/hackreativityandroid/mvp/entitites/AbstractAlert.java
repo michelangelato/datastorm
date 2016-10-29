@@ -52,7 +52,7 @@ public class AbstractAlert {
 
 	@Expose
 	@SerializedName("Mappe")
-	@Column(name = "maps")
+	@Column(name = "map_objects")
 	@OneToMany(cascade = {CascadeAction.DELETE, CascadeAction.SAVE})
 	List<MapObject> maps;
 }

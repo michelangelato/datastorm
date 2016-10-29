@@ -15,7 +15,7 @@ import io.requery.OneToMany;
 import io.requery.Table;
 
 @Entity(stateless = true)
-@Table(name = "alert_map")
+@Table(name = "map_object")
 public class AbstractMapObject {
 
 	public static final int TYPE_POINT    = 1;
@@ -50,7 +50,6 @@ public class AbstractMapObject {
 
 	@ManyToOne
 	@Column(name = "alert")
-	@Key
 	Alert alert;
 
 	@Expose

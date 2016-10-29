@@ -11,7 +11,7 @@ import io.requery.ManyToOne;
 import io.requery.Table;
 
 @Entity(stateless = true)
-@Table(name = "alert_map_point")
+@Table(name = "map_point")
 public class AbstractMapPoint {
 
 	@Expose
@@ -31,6 +31,6 @@ public class AbstractMapPoint {
 	double lon;
 
 	@ManyToOne
-	@Column(name = "alert_map")
+	@Column(name = "map_object")
 	MapObject alert;
 }

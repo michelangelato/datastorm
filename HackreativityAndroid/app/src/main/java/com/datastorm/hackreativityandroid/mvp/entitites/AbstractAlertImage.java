@@ -37,6 +37,5 @@ public class AbstractAlertImage {
 
 	@ManyToOne
 	@Column(name = "alert")
-	@Key
 	Alert alert;
 }

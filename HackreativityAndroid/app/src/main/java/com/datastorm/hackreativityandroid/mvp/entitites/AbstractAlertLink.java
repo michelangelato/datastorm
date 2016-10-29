@@ -27,6 +27,5 @@ public class AbstractAlertLink {
 
 	@ManyToOne
 	@Column(name = "alert")
-	@Key
 	Alert alert;
 }
