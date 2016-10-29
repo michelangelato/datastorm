@@ -116,13 +116,17 @@ namespace DataStorm.Web.Controllers.API
         [Route("api/avvisi")]
         public async Task<dynamic> GetAvvisi()
         {
-            return await _db.Avvisi.Select(a => a.ToDTO()).ToListAsync();
+            await Task.FromResult(0);
+            throw new NotImplementedException();
+            //return await _db.Avvisi.Select(a => a.ToDTO()).ToListAsync();
         }
 
         [Route("api/avvisi/{id}")]
         public async Task<dynamic> GetAvviso(int ID)
         {
-            return await _db.Avvisi.First(a => a.Id == ID).ToDTO();
+            await Task.FromResult(0);
+            throw new NotImplementedException();
+            //return await _db.Avvisi.First(a => a.Id == ID).ToDTO();
         }
 
         [Route("api/segnalazione")]
@@ -167,12 +171,20 @@ namespace DataStorm.Web.Controllers.API
         //}
         [Route("api/aziende")]
         [HttpGet]
-        public Task<IEnumerable<Azienda>> GetAziende(int? pageNumber)
+        public async Task<IEnumerable<AziendaDTO>> GetAziende(int? pageNumber)
         {
+            await Task.FromResult(0);
             int PageSize = 10;
-            var skipValue = (pageNumber.GetValueOrDefault(1) - 1) * PageSize;
             
-            throw new NotImplementedException();
+            var skipValue = (pageNumber.GetValueOrDefault(1) - 1) * PageSize;
+            var aziende = _db.Aziende.Skip(skipValue).Take(PageSize);
+            return aziende.Select(az => Mapper.Map<AziendaDTO>(az));
+        }
+        [HttpGet]
+        public async Task<AziendaDTO> GetAzienda(int idAzienda)
+        {
+            var azienda = await _db.Aziende.SingleAsync(az => az.Id == idAzienda);
+            return Mapper.Map<Azienda, AziendaDTO>(azienda);
         }
     }
 }
