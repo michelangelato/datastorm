@@ -1,10 +1,12 @@
 package com.datastorm.hackreativityandroid.adapters.holders.alerts;
 
 import android.view.View;
-import android.widget.ImageView;
 
 import com.datastorm.hackreativityandroid.R;
 import com.datastorm.hackreativityandroid.mvp.entitites.Alert;
+import com.datastorm.hackreativityandroid.mvp.entitites.AlertImage;
+import com.datastorm.hackreativityandroid.widgets.AspectRatioImageView;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 
@@ -12,7 +14,7 @@ import butterknife.BindView;
 public class Alert1ImageHolder extends AlertTextOnlyHolder {
 
 	@BindView(R.id.alert_image_1)
-	ImageView image;
+	AspectRatioImageView image;
 
 	public Alert1ImageHolder(View itemView, boolean withClickListener) {
 		super(itemView, withClickListener);
@@ -21,6 +23,12 @@ public class Alert1ImageHolder extends AlertTextOnlyHolder {
 	@Override
 	public void bindItem(Alert item, int position) {
 		super.bindItem(item, position);
-		//TODO load image in imageView
+		AlertImage im = item.getImages()
+		                    .get(0);
+		image.setAspectRatio(im.getWidth() / im.getHeight());
+		image.setAspectRatioEnabled(true);
+		Picasso.with(image.getContext())
+		       .load(im.getUrl())
+		       .into(image);
 	}
 }

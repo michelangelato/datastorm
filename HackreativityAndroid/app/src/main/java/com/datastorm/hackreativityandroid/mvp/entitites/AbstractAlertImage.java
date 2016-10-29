@@ -25,6 +25,16 @@ public class AbstractAlertImage {
 	@Column(name = "url")
 	String url;
 
+	@Expose
+	@SerializedName("Larghezza")
+	@Column(name = "width")
+	int width;
+
+	@Expose
+	@SerializedName("Altezza")
+	@Column(name = "height")
+	int height;
+
 	@ManyToOne
 	@Column(name = "alert")
 	@Key
