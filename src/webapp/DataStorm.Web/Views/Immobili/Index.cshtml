@@ -9,27 +9,23 @@
             function getImmobili() {
                 $.get('/api/immobili', function (data) {
                     console.log(data);
-                    var nuovalstImmobili = $('<ul></ul>');
+
                     var lstImmobili = $('#immobili-list');
-                    var immobiliexists = data.length>0;
+                    var lista = '<ul>';
+
+                    var immobiliexists = data.length > 0;
                     for (var i = 0; i < data.length; i++) {
-                        var newEL = $("<li></li>");
-                        nuovalstImmobili.append(newEL);
-                        var singleImmobile = '';
-                        for (var key in data[i]) {
-                            singleImmobile+=" "+key + ': ' + data[i][key];
-                        }
-                        newEL.html(singleImmobile);
+                        lista += 
+                            '<a href="#" class="list-group-item list-group-item-action">' +
+                            '<i class="fa fa-home" aria-hidden="true"></i> ' +
+                            data[i]["comune"] + ', ' + data[i]["indirizzo"] +
+                            '</a>';
                     }
+
+                    lista += '</ul>'
                     
-                    //var items = $(data).each(function (i, el) {
-                    //    $(el).map(function (item) {
-                    //    immobiliexists=true;
-                    //    nuovalstImmobili.append("<li>"+ item.key + ': ' + item.value+"</li>");
-                    //});
-                    //});
                     lstImmobili.empty();
-                    lstImmobili.append(nuovalstImmobili);
+                    lstImmobili.append(lista);
                     
                 })
                 .fail(function() {
@@ -41,8 +37,8 @@
 
             $("#nuovo-immobile").click(function () {
                 var immobile = { 
-                    "Comune": "Ancona", 
-                    "Indirizzo": "Via delle Tavernelle 18", 
+                    "Comune": $("#txt-comune").val(), 
+                    "Indirizzo": $("#txt-indirizzo").val(), 
                     "TipoImmobile": 0 
                 };
                 $.ajax({
@@ -53,13 +49,15 @@
                     data: immobile // Some data e.g. Valid JSON as a string
                 })
                 .done(function() {
-                    alert( "success" );
+                    console.log("success");
                 })
                 .fail(function() {
-                    alert( "error" );
+                    console.log("error");
+                })
+                .complete(function() {
+                    console.log("complete");
+                    getImmobili()
                 });
-
-                getImmobili();
             });
             
             /*
@@ -95,7 +93,7 @@
 
 <div class="row">
 
-    <div class="col-md-9">
+    <div class="col-md-7">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4>Nuovo Immobile</h4>
@@ -122,12 +120,12 @@
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-5">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4>Lista Immobili</h4>
             </div>
-            <div class="list-group">
+            <div class="list-group" id="immobili-list">
                 <a href="#" class="list-group-item list-group-item-action">
                     <i class="fa fa-home" aria-hidden="true"></i> Via del Colle 6, Monte Roberto</a>
                 <a href="#" class="list-group-item list-group-item-action">
@@ -135,8 +133,6 @@
                 <a href="#" class="list-group-item list-group-item-action">
                     <i class="fa fa-home" aria-hidden="true"></i> Via delle Tavernelle 160, Ancona</a>
             </div>
-            
-            <div id="immobili-list"></div>
 
             <div class="panel-body">
                 <a href="#">Visualizza tutti gli immobili...</a>
