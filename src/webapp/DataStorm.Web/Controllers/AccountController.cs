@@ -12,6 +12,7 @@ using DataStorm.Web.Models;
 using DataStorm.Web.Models.AccountViewModels;
 using DataStorm.Web.Services;
 using DataStorm.Web.Data;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace DataStorm.Web.Controllers
 {
@@ -20,6 +21,7 @@ namespace DataStorm.Web.Controllers
     {
         private readonly ApplicationDbContext _db;
         private readonly UserManager<Utente> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<Utente> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
@@ -28,6 +30,7 @@ namespace DataStorm.Web.Controllers
         public AccountController(
             ApplicationDbContext db,
             UserManager<Utente> userManager,
+            RoleManager<IdentityRole> roleManager,
             SignInManager<Utente> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
@@ -35,12 +38,13 @@ namespace DataStorm.Web.Controllers
         {
             _db = db;
             _userManager = userManager;
+            _roleManager = roleManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
 
-            db.Seed(userManager);
+            db.Seed(userManager, roleManager);
         }
 
         //
