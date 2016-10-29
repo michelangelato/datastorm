@@ -58,7 +58,7 @@
   }
 
   h1{
-    color: #e53935;
+    color: #686868;
   }
 
   h2{
@@ -69,6 +69,10 @@
   h3{
     font-size: 18px;
   }
+
+.red{
+color:#e53935;
+}
 
   .overflow{
     overflow: hidden;
@@ -684,7 +688,7 @@ margin-bottom:20px;
 }
 
 #action-app {
-  background-image: url(../images/home/tour-bg3.png);
+  background-image: url(/images/home/tour-bg3.png);
   background-color: #fbfafa;
   background-repeat: repeat-x;
   height: 300px;
