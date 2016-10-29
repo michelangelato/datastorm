@@ -23,6 +23,9 @@ namespace DataStorm.Web.Controllers.API
         [Route("api/immobile")]
         public async Task PostImmobile(ImmobileDTO immobile)
         {
+#warning TODO
+            var utente = await db.Utenti.FirstAsync();
+
             db.Immobili.Add(new Immobile
             {
                 Comune = immobile.Comune,
@@ -32,8 +35,7 @@ namespace DataStorm.Web.Controllers.API
                 NumeroPiano = immobile.NumeroPiano,
                 PuntoMappa = new PuntoMappa { LatitudinePunto = immobile.LatitudinePunto, LongitudinePunto = immobile.LongitudinePunto },
                 TipoImmobile = immobile.TipoImmobile,
-#warning TODO
-                UtenteAppartenenza = null
+                UtenteAppartenenza = utente
             });
 
             await db.SaveChangesAsync();
