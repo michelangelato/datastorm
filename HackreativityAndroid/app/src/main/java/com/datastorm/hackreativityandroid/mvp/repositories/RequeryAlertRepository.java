@@ -1,6 +1,7 @@
 package com.datastorm.hackreativityandroid.mvp.repositories;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.datastorm.hackreativityandroid.interfaces.IAlertRepository;
 import com.datastorm.hackreativityandroid.mvp.entitites.Alert;
@@ -9,6 +10,7 @@ import java.util.List;
 
 import io.requery.Transaction;
 import io.requery.query.Result;
+import io.requery.query.Selection;
 import rx.Observable;
 import rx.Single;
 
@@ -19,11 +21,15 @@ public class RequeryAlertRepository extends RequeryRepository implements IAlertR
 	}
 
 	@Override
-	public Observable<List<Alert>> retrieve() {
-		return db().select(Alert.class)
-		           .get()
-		           .toSelfObservable()
-		           .map(Result::toList);
+	public Observable<List<Alert>> retrieve(String topic) {
+		final Selection<Result<Alert>> select = db().select(Alert.class);
+		if (!TextUtils.isEmpty(topic)) return select.where(Alert.TOPIC.eq(topic))
+		                                            .get()
+		                                            .toSelfObservable()
+		                                            .map(Result::toList);
+		return select.get()
+		             .toSelfObservable()
+		             .map(Result::toList);
 	}
 
 	@Override

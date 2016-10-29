@@ -37,16 +37,25 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    testCompile 'junit:junit:4.12'
-
-    compile 'com.dadino.quickstart:core:0.0.3'
-    compile 'com.dadino.quickstart:login:0.0.3'
 
     //Requery
+    // for android
+    // use an APT plugin
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.dadino.quickstart:core:0.0.3'
+    compile 'com.dadino.quickstart:login:0.0.3'
     compile 'io.requery:requery:1.0.0-rc4'
-    compile 'io.requery:requery-android:1.0.0-rc4' // for android
-    apt 'io.requery:requery-processor:1.0.0-rc4'   // use an APT plugin
+    compile 'io.requery:requery-android:1.0.0-rc4'
+    compile 'com.android.support:support-v4:25.0.0'
+    testCompile 'junit:junit:4.12'
+    apt 'io.requery:requery-processor:1.0.0-rc4'
+
+    debugCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
+    compile 'com.jakewharton:butterknife:8.2.1'
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
 }
 
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<group
+		android:id="@+id/group_heaters"
+		android:checkableBehavior="single">
+		<item
+			android:id="@+id/action_show_alert_list"
+			android:orderInCategory="1"
+			android:title="@string/action_show_alert_list"
+			/>
+		<item
+			android:id="@+id/action_show_request_lists"
+			android:orderInCategory="1"
+			android:title="@string/action_show_request_list"
+			/>
+		<item
+			android:id="@+id/action_show_report"
+			android:orderInCategory="1"
+			android:title="@string/action_show_report"
+			/>
+	</group>
+
+</menu>

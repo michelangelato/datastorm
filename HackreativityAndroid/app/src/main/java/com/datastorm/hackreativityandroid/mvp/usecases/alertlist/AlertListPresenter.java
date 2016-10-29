@@ -27,4 +27,9 @@ public class AlertListPresenter extends Presenter<List<Alert>, AlertListMVP.Mode
 	protected String tag() {
 		return "AlertList";
 	}
+
+	@Override
+	public void setTopic(String topic) {
+		model().setTopic(topic);
+	}
 }

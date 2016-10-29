@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-	android:id="@+id/ticket_root"
+
+<android.support.v4.widget.DrawerLayout
+	android:id="@+id/drawer_layout"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:fitsSystemWindows="true">
+	tools:openDrawer="start">
 
-	<android.support.design.widget.AppBarLayout
+	<FrameLayout
+		android:id="@+id/fragment_container"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:background="@color/colorPrimaryDark"
-		android:theme="@style/AppTheme.AppBarOverlay">
+		android:layout_height="match_parent"/>
 
-		<android.support.v7.widget.Toolbar
-			android:id="@+id/toolbar"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:elevation="4dp"
-			android:minHeight="?attr/actionBarSize"
-			android:theme="@style/AppTheme.AppBarOverlay"
-			app:popupTheme="@style/AppTheme.PopupOverlay"/>
-	</android.support.design.widget.AppBarLayout>
-
-	<com.datastorm.hackreativityandroid.widgets.PresentedAlertListView
-		android:id="@+id/alert_list"
+	<FrameLayout
+		android:id="@+id/right_panel_fragment_container"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+		android:layout_gravity="end"/>
 
-
-</android.support.design.widget.CoordinatorLayout>
+	<android.support.design.widget.NavigationView
+		android:id="@+id/nav_view"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:layout_gravity="start"
+		android:fitsSystemWindows="true"
+		app:headerLayout="@layout/nav_header_main"
+		app:itemBackground="@drawable/nav_item_background_selector"
+		app:itemIconTint="@color/nav_item_text_color"
+		app:itemTextColor="@color/nav_item_text_color"
+		app:menu="@menu/activity_main_drawer"/>
+</android.support.v4.widget.DrawerLayout>

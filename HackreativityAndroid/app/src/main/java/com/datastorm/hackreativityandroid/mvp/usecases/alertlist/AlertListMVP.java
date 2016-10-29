@@ -18,6 +18,7 @@ public class AlertListMVP {
 	public interface Model extends IModel {
 
 		Observable<List<Alert>> subscribe();
+		void setTopic(String topic);
 	}
 
 	public interface View extends INext<List<Alert>> {
@@ -26,6 +27,7 @@ public class AlertListMVP {
 
 	public interface Presenter extends IPresenter<List<Alert>> {
 
+		void setTopic(String topic);
 	}
 
 	public static class Factory implements PresenterFactory<Presenter> {

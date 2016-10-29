@@ -11,6 +11,6 @@ import rx.Single;
 
 public interface IAlertRepository extends IRepository {
 
-	Observable<List<Alert>> retrieve();
+	Observable<List<Alert>> retrieve(String topic);
 	Single<Boolean> update(List<Alert> alerts);
 }

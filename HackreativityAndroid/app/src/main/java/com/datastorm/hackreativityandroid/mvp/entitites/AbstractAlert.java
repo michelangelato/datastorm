@@ -24,6 +24,11 @@ public class AbstractAlert {
 	long id;
 
 	@Expose
+	@SerializedName("Topic")
+	@Column(name = "topic")
+	String topic;
+
+	@Expose
 	@SerializedName("Titolo")
 	@Column(name = "title")
 	String title;

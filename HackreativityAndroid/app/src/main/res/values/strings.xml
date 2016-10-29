@@ -1,4 +1,11 @@
 <resources>
 	<string name="app_name">HackreativityAndroid</string>
 	<string name="empty_alerts">Non ci sono avvisi</string>
+	<string name="action_show_alert_list">Avvisi</string>
+	<string name="action_show_request_list">Richieste</string>
+	<string name="action_show_report">Segnalazioni</string>
+
+	<string name="navigation_drawer_open">Apri il menù laterale</string>
+	<string name="navigation_drawer_close">Chiudi il menù laterale</string>
+
 </resources>

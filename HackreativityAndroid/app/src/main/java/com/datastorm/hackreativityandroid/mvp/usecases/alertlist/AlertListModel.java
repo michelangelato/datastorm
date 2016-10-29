@@ -13,6 +13,7 @@ import rx.Observable;
 public class AlertListModel implements AlertListMVP.Model {
 
 	private final IAlertRepository zoneRepository;
+	private       String           topic;
 
 	public AlertListModel(Context context) {
 		final Context applicationContext = context.getApplicationContext();
@@ -26,6 +27,11 @@ public class AlertListModel implements AlertListMVP.Model {
 
 	@Override
 	public Observable<List<Alert>> subscribe() {
-		return zoneRepository.retrieve();
+		return zoneRepository.retrieve(topic);
+	}
+
+	@Override
+	public void setTopic(String topic) {
+		this.topic = topic;
 	}
 }
