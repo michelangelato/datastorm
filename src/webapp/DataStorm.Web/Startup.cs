@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using DataStorm.Web.Data;
 using DataStorm.Web.Models;
 using DataStorm.Web.Services;
+using Swashbuckle.Swagger.Model;
 
 namespace DataStorm.Web
 {
@@ -51,6 +52,22 @@ namespace DataStorm.Web
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+
+            services.AddSwaggerGen();
+    services.ConfigureSwaggerGen(options =>
+    {
+        options.SingleApiVersion(new Info
+        {
+            Version = "v1",
+            Title = "Geo Search API",
+            Description = "A simple api to search using geo location in Elasticsearch",
+            TermsOfService = "None"
+        });
+        //options.IncludeXmlComments(pathToDoc);
+        options.DescribeAllEnumsAsStrings();
+    });
+ 
+    //services.AddScoped<ISearchProvider, SearchProvider>();
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();

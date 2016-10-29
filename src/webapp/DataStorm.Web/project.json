@@ -39,7 +39,9 @@
       "version": "1.0.0-preview2-final",
       "type": "build"
     },
-    "Microsoft.AspNetCore.Mvc.WebApiCompatShim": "1.0.1"
+    "Microsoft.AspNetCore.Mvc.WebApiCompatShim": "1.0.1",
+    "Swashbuckle.SwaggerGen":"6.0.0-beta902",
+    "Swashbuckle.SwaggerUi":"6.0.0-beta902"
   },
 
   "tools": {
