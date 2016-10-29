@@ -30,14 +30,21 @@ namespace DataStorm.Web.Controllers.API
         [HttpPut]
         public async Task PutImmobile(ImmobileDTO immobile)
         {
-            var utente = await um.FindByNameAsync(User.Identity.Name);
-            Immobile nuovoImmobile=Mapper.Map<ImmobileDTO, Immobile>(immobile);
-            nuovoImmobile.UtenteAppartenenza = utente;
-            db.Immobili.Add(
-                nuovoImmobile
-                );
+            try
+            {
+                var utente = await um.FindByNameAsync(User.Identity.Name);
+                Immobile nuovoImmobile = Mapper.Map<ImmobileDTO, Immobile>(immobile);
+                nuovoImmobile.UtenteAppartenenza = utente;
+                db.Immobili.Add(
+                    nuovoImmobile
+                    );
 
-            await db.SaveChangesAsync();
+                await db.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
         public async Task<ActionResult> EditImmobile(ImmobileDTO immobile)
         {
