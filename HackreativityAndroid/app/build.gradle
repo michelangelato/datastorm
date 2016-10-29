@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
+
 android {
     compileSdkVersion 25
     buildToolsVersion "24.0.1"
@@ -7,8 +10,10 @@ android {
         applicationId "com.datastorm.hackreativityandroid"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        final MAJOR_RELEASE = 0
+        final MINOR_RELEASE = 12
+        versionCode getVersionCodeNumber(MAJOR_RELEASE, MINOR_RELEASE)
+        versionName getVersionCodeName(MAJOR_RELEASE, MINOR_RELEASE)
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -16,6 +21,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
     }
 }
 
@@ -28,5 +41,27 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile 'com.dadino.quickstart:core:0.0.3'
+    compile 'com.dadino.quickstart:login:0.0.3'
 
+    //Requery
+    compile 'io.requery:requery:1.0.0-rc4'
+    compile 'io.requery:requery-android:1.0.0-rc4' // for android
+    apt 'io.requery:requery-processor:1.0.0-rc4'   // use an APT plugin
+}
+
+
+retrolambda {
+    oldJdk JAVA7_HOME
+    jdk JAVA8_HOME
+    javaVersion JavaVersion.VERSION_1_7
+}
+
+def getVersionCodeName(int major, int minor) {
+    def versionCodeName = major * 100 + minor
+    return "${versionCodeName}"
+}
+
+def getVersionCodeNumber(int major, int minor) {
+    def versionCodeName = major * 100 + minor
+    return versionCodeName
 }

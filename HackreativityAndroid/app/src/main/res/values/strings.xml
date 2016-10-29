@@ -1,3 +1,4 @@
 <resources>
 	<string name="app_name">HackreativityAndroid</string>
+	<string name="empty_alerts">Non ci sono avvisi</string>
 </resources>
