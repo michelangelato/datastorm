@@ -679,7 +679,7 @@ margin-bottom:20px;
 
 #action-contatore{
   background-image: none;
-  background-color: #fbfafa;
+  background-color: #ffffff;
   height: 350px;
   background-position: center;
   display: table;
@@ -688,11 +688,11 @@ margin-bottom:20px;
 }
 
 #action-app {
-  background-image: url(/images/home/tour-bg3.png);
-  background-color: #fbfafa;
-  background-repeat: repeat-x;
-  height: 300px;
-  background-position: center;
+  background-image: url(../images/tour-icon3.png);
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  height: 200px;
+  background-position: right;
   display: table;
   position: static;
   width: 100%;
@@ -824,13 +824,11 @@ margin-bottom:20px;
 }
 
 .tour-button {
-  background-image: url(../images/home/tour-icon3.png);
   height: 100%;
-  background-repeat: no-repeat;
   position: absolute;
   width: 100%;
   left: 0;
-  background-position: 151px 4px;
+  
 }
 
 .about-image {
