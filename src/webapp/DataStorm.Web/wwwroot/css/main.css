@@ -71,7 +71,7 @@
   }
 
 .red{
-color:#e53935;
+color:#e53935 !important;
 }
 
   .overflow{
@@ -678,13 +678,15 @@ margin-bottom:20px;
 }
 
 #action-contatore{
-  background-image: none;
-  background-color: #ffffff;
-  height: 350px;
+  background-image: url(../images/home/tour-bg.png);
+  background-color: #fbfafa;
+  height: 157px;
   background-position: center;
   display: table;
   position: static;
   width: 100%;
+  margin-top:50px;
+  margin-bottom:50px;
 }
 
 #action-app {
@@ -696,6 +698,11 @@ margin-bottom:20px;
   display: table;
   position: static;
   width: 100%;
+  margin-bottom:50px;
+}
+
+#services {
+  margin-top:50px;
 }
 
 .vertical-center{
@@ -739,7 +746,7 @@ margin-bottom:20px;
 }
 
 .action .btn-common{
-  margin-top: 55px;
+  margin-top: 35px;
   float: left;
 }
 
