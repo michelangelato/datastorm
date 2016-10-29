@@ -49,14 +49,15 @@
                     data: immobile // Some data e.g. Valid JSON as a string
                 })
                 .done(function() {
-                    //alert( "success" );
+                    console.log("success");
                 })
                 .fail(function() {
-                    //alert( "error" );
+                    console.log("error");
                 })
-                .complete(
+                .complete(function() {
+                    console.log("complete");
                     getImmobili()
-                );
+                });
             });
             
             /*
