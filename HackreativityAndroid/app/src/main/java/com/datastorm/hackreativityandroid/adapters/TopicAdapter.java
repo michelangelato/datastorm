@@ -10,7 +10,7 @@ import com.datastorm.hackreativityandroid.mvp.entitites.Topic;
 public class TopicAdapter extends BaseListAdapter<Topic, TopicHolder> {
 
 	@Override
-	public long getItemId(int position) {
+	public long getItemIdSafe(int position) {
 		return getItem(position).getTopic()
 		                        .hashCode();
 	}

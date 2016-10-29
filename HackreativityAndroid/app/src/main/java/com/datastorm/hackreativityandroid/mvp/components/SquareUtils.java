@@ -39,8 +39,7 @@ public class SquareUtils {
 	                                                      " sdk" + Build.VERSION.SDK_INT + " - " +
 	                                                      APPLICATION;
 
-	private static final String BASEURL_DEV        = "http://apcoa.e-lios.eu/api/";
-	private static final String BASEURL_PRODUCTION = "http://sede.apcoa.it:32322/";
+	private static final String BASEURL_DEV = "http://datastorm.com/api/";
 
 	private static OkHttpClient client;
 
@@ -52,7 +51,7 @@ public class SquareUtils {
 		                             .registerTypeAdapter(Date.class, new DateDeserializer())
 		                             .create();
 
-		return new Retrofit.Builder().baseUrl(BASEURL_PRODUCTION)
+		return new Retrofit.Builder().baseUrl(BASEURL_DEV)
 		                             .addConverterFactory(GsonConverterFactory.create(gson))
 		                             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
 		                             .client(SquareUtils.okHttpClient())

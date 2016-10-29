@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dadino.quickstart.core.BaseActivity;
+import com.dadino.quickstart.core.interfaces.DrawerToggleServer;
 import com.dadino.quickstart.core.mvp.components.presenter.MvpView;
 import com.dadino.quickstart.core.mvp.components.presenter.PresenterManager;
 import com.dadino.quickstart.core.utils.Logs;
@@ -28,7 +29,6 @@ import com.datastorm.hackreativityandroid.fragments.MapObjectListFragment;
 import com.datastorm.hackreativityandroid.fragments.ReportFragment;
 import com.datastorm.hackreativityandroid.fragments.RequestListFragment;
 import com.datastorm.hackreativityandroid.fragments.TopicListFragment;
-import com.datastorm.hackreativityandroid.interfaces.DrawerToggleServer;
 import com.datastorm.hackreativityandroid.interfaces.OnAlertListInteractionListener;
 import com.datastorm.hackreativityandroid.interfaces.OnMapObjectListInteractionListener;
 import com.datastorm.hackreativityandroid.interfaces.OnRequestListInteractionListener;

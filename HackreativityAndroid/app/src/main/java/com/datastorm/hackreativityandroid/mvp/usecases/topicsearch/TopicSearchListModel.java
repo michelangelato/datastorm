@@ -2,17 +2,17 @@ package com.datastorm.hackreativityandroid.mvp.usecases.topicsearch;
 
 import android.content.Context;
 
-import com.datastorm.hackreativityandroid.interfaces.ITopicRepository;
+import com.datastorm.hackreativityandroid.interfaces.ITopicSearchRepository;
 import com.datastorm.hackreativityandroid.mvp.entitites.Topic;
 import com.datastorm.hackreativityandroid.mvp.repositories.RetrofitTopicRepository;
 
 import java.util.List;
 
-import rx.Observable;
+import rx.Single;
 
 public class TopicSearchListModel implements TopicSearchListMVP.Model {
 
-	private final ITopicRepository topicRepository;
+	private final ITopicSearchRepository topicRepository;
 
 	public TopicSearchListModel(Context context) {
 		final Context applicationContext = context.getApplicationContext();
@@ -25,7 +25,7 @@ public class TopicSearchListModel implements TopicSearchListMVP.Model {
 	}
 
 	@Override
-	public Observable<List<Topic>> search(String filter) {
+	public Single<List<Topic>> search(String filter) {
 		return topicRepository.search(filter);
 	}
 }

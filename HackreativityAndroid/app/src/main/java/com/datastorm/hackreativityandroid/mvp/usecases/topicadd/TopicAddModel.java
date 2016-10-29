@@ -9,20 +9,20 @@ import rx.Single;
 
 public class TopicAddModel implements TopicAddMVP.Model {
 
-	private final ITopicRepository zoneRepository;
+	private final ITopicRepository topicRepository;
 
 	public TopicAddModel(Context context) {
 		final Context applicationContext = context.getApplicationContext();
-		zoneRepository = new RequeryTopicRepository(applicationContext);
+		topicRepository = new RequeryTopicRepository(applicationContext);
 	}
 
 	@Override
 	public void onDestroy() {
-		zoneRepository.onDestroy();
+		topicRepository.onDestroy();
 	}
 
 	@Override
 	public Single<Boolean> add(String topic) {
-		return zoneRepository.upsert(topic);
+		return topicRepository.upsert(topic);
 	}
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dadino.quickstart.core.fragments.DrawerToggleFragment;
 import com.dadino.quickstart.core.interfaces.IPresenter;
 import com.dadino.quickstart.core.mvp.components.presenter.MvpView;
 import com.dadino.quickstart.core.mvp.components.presenter.PresenterManager;
@@ -71,12 +72,12 @@ public class RequestListFragment extends DrawerToggleFragment {
 	}
 
 	@Override
-	Toolbar toolbar() {
+	public Toolbar toolbar() {
 		return toolbar;
 	}
 
 	@Override
-	protected int title() {
+	public int title() {
 		return R.string.fragment_title_requests_list;
 	}
 

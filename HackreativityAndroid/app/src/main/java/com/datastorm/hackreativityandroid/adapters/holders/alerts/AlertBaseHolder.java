@@ -1,4 +1,4 @@
-package com.datastorm.hackreativityandroid.adapters.holders;
+package com.datastorm.hackreativityandroid.adapters.holders.alerts;
 
 import android.view.View;
 

@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.dadino.quickstart.core.fragments.DrawerToggleFragment;
 import com.dadino.quickstart.core.interfaces.IPresenter;
 import com.dadino.quickstart.core.mvp.components.presenter.MvpView;
 import com.dadino.quickstart.core.mvp.components.presenter.PresenterManager;
@@ -80,12 +81,12 @@ public class RequestNewFragment extends DrawerToggleFragment {
 	}
 
 	@Override
-	Toolbar toolbar() {
+	public Toolbar toolbar() {
 		return toolbar;
 	}
 
 	@Override
-	protected int title() {
+	public int title() {
 		return R.string.fragment_title_request_new;
 	}
 

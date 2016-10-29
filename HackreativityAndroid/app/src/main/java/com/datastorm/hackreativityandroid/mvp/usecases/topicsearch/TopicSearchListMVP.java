@@ -10,14 +10,14 @@ import com.datastorm.hackreativityandroid.mvp.entitites.Topic;
 
 import java.util.List;
 
-import rx.Observable;
+import rx.Single;
 
 
 public class TopicSearchListMVP {
 
 	public interface Model extends IModel {
 
-		Observable<List<Topic>> search(String filter);
+		Single<List<Topic>> search(String filter);
 	}
 
 	public interface View extends INext<List<Topic>> {

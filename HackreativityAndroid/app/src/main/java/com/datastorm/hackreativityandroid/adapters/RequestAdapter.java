@@ -10,7 +10,7 @@ import com.datastorm.hackreativityandroid.mvp.entitites.Request;
 public class RequestAdapter extends BaseListAdapter<Request, RequestHolder> {
 
 	@Override
-	public long getItemId(int position) {
+	public long getItemIdSafe(int position) {
 		return getItem(position).getId();
 	}
 

@@ -13,8 +13,8 @@ import io.requery.Key;
 import io.requery.Table;
 
 @Entity(stateless = true)
-@Table(name = "request")
-public class AbstractRequest {
+@Table(name = "report")
+public class AbstractReport {
 
 	@Expose
 	@SerializedName("Id")
@@ -24,34 +24,14 @@ public class AbstractRequest {
 	long id;
 
 	@Expose
-	@SerializedName("ServerId")
-	@Column(name = "server_id")
-	long serverId;
-
-	@Expose
-	@SerializedName("Indirizzo")
-	@Column(name = "address")
-	String address;
-
-	@Expose
 	@SerializedName("Tipo")
 	@Column(name = "type")
 	int type;
 
 	@Expose
-	@SerializedName("DataRichiesta")
-	@Column(name = "requested_at")
-	Date requestedAt;
-
-	@Expose
-	@SerializedName("CondizionePorta")
-	@Column(name = "condition_door")
-	boolean conditionDoor;
-
-	@Expose
-	@SerializedName("CondizioneScale")
-	@Column(name = "condition_stairs")
-	boolean conditionStairs;
+	@SerializedName("DataSegnalazione")
+	@Column(name = "reported_at")
+	Date reportedAt;
 
 	@Column(name = "synced")
 	boolean synced;

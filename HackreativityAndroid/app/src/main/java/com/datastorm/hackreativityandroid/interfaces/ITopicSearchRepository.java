@@ -6,12 +6,9 @@ import com.datastorm.hackreativityandroid.mvp.entitites.Topic;
 
 import java.util.List;
 
-import rx.Observable;
 import rx.Single;
 
-public interface ITopicRepository extends IRepository {
+public interface ITopicSearchRepository extends IRepository {
 
-	Observable<List<Topic>> retrieve();
-	Single<Boolean> upsert(Topic topic);
-	Single<Boolean> upsert(String topicName);
+	Single<List<Topic>> search(String filter);
 }
