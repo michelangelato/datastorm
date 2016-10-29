@@ -112,20 +112,22 @@ namespace DataStorm.Web.Controllers.API
             var tipologie = Enum.GetValues(typeof(TipologiaImmobile)).Cast<TipologiaImmobile>().ToArray();
             return tipologie.Select(t => new KeyValuePair<int, string>((int)t, t.ToString()));
         }
-
+        [HttpGet]
         [Route("api/avvisi")]
         public async Task<dynamic> GetAvvisi()
         {
+
+            var avvisi = _db.Avvisi.Select(av=>Mapper.Map<AvvisoDTO>(av));
             await Task.FromResult(0);
-            throw new NotImplementedException();
+            return avvisi;
             //return await _db.Avvisi.Select(a => a.ToDTO()).ToListAsync();
         }
 
         [Route("api/avvisi/{id}")]
-        public async Task<dynamic> GetAvviso(int ID)
+        public async Task<dynamic> GetAvviso(int Id)
         {
-            await Task.FromResult(0);
-            throw new NotImplementedException();
+            var avviso = await _db.Avvisi.SingleAsync(a => a.Id == Id);
+            return Mapper.Map<AvvisoDTO>(avviso);
             //return await _db.Avvisi.First(a => a.Id == ID).ToDTO();
         }
 
@@ -151,7 +153,8 @@ namespace DataStorm.Web.Controllers.API
         [Route("api/elementi-mappa")]
         public async Task<IEnumerable<dynamic>> GetElementiMappa()
         {
-            return await _db.AreeMappa.Select(a => a.ToDTO()).ToListAsync();
+            throw new NotImplementedException();
+            //return await _db.AreeMappa.Select(a => a.ToDTO()).ToListAsync();
         }
 
         [Route("api/gps")]

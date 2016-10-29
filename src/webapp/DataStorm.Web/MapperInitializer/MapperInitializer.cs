@@ -22,7 +22,14 @@ namespace DataStorm.Web.MapperInitializer
                 cfg.CreateMap<Azienda, AziendaDTO>()
                     .ForMember(dst => dst.TipologieLavori,
                     opt => opt.MapFrom(src => src.AziendaTipoLavoro.Select(aztl => aztl.TipoLavoro)));
+                cfg.CreateMap<PuntoMappa, PuntoMappaDTO>();
+                cfg.CreateMap<AreaMappa, AreaMappaDTO>()
+                .ForMember(dst => dst.TipoMappa, opt => opt.MapFrom(src => src.TipoMappa.ToString()));
+                cfg.CreateMap<LinkAvviso, LinkAvvisoDTO>();
+                cfg.CreateMap<ImmagineAvviso, ImmagineAvvisoDTO>();
+                cfg.CreateMap<Avviso, AvvisoDTO>();
                 }
+            
             
             );
             
