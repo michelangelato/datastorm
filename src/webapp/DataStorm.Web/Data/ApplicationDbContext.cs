@@ -52,6 +52,7 @@ namespace DataStorm.Web.Data
 
         public DbSet<TipologiaLavoro> TipologieLavoro { get; set; }
         public DbSet<Azienda> Aziende { get; set; }
+        public DbSet<Topic> Topics { get; set; }
         public DbSet<Avviso> Avvisi { get; set; }
         public DbSet<Immobile> Immobili { get; set; }
         public DbSet<Utente> Utenti { get; set; }

@@ -81,15 +81,38 @@ namespace DataStorm.Web.Controllers.API
             return Ok();
         }
         [HttpGet]
+        [Route("api/verifica/{id}")]
+        public async Task<dynamic> GetVerifica(int Id)
+        {
+            var utente = await _userManager.FindByNameAsync(User.Identity.Name);
+            var immobile = await _db.Immobili.SingleAsync(im => im.Id == Id);
+            if (immobile.UtenteAppartenenza.Id != utente.Id)
+            {
+                throw new Exception("Immobile non trovato");
+
+            }
+            else
+            {
+                var agibilità = Enum.GetValues(typeof(TipoAgibilita)).Cast<TipoAgibilita>().ToArray();
+
+                return new
+                {
+                    Immobile = Mapper.Map<ImmobileDTO>(immobile),
+                    MessaggioEsito = agibilità.ToString(),
+                    CodiceEsito = agibilità[new Random().Next(agibilità.Length)]
+                };
+            }
+        }
+        [HttpGet]
         [Route("api/immobili/{id}")]
         public async Task<ImmobileDTO> GetImmobile(int Id)
         {
             var utente = await _userManager.FindByNameAsync(User.Identity.Name);
             var immobile = await _db.Immobili.SingleAsync(im => im.Id == Id);
-            if(immobile.UtenteAppartenenza.Id!=utente.Id)
+            if (immobile.UtenteAppartenenza.Id != utente.Id)
             {
                 throw new Exception("Immobile non trovato");
-                
+
             }
             else
             {
