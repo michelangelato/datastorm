@@ -247,6 +247,8 @@ namespace DataStorm.Web.Controllers.API
             return null;
         }
 
+        
+
         [Route("api/elementi-mappa")]
         public async Task<IEnumerable<dynamic>> GetAreeMappa()
         {

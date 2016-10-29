@@ -13,7 +13,7 @@ namespace DataStorm.Web.Models
         public virtual string Indirizzo { get; set; }
         public virtual string Comune { get; set; }
         public virtual TipologiaImmobile TipoImmobile { get; set; }
-
+        public virtual TipoAgibilita TipoAgibilita { get; set; }
         
     }
 }

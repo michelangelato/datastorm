@@ -14,9 +14,12 @@ namespace DataStorm.Web.MapperInitializer
         {
             Mapper.Initialize(cfg => {
             cfg.CreateMap<Immobile, ImmobileDTO>()
-            .ForMember(dst => dst.TipoImmobile, opt => opt.MapFrom(src => src.TipoImmobile.ToString()));
+            .ForMember(dst => dst.TipoImmobile, opt => opt.MapFrom(src => src.TipoImmobile.ToString()))
+            .ForMember(dst=>dst.TipoAgibilita, opt=>opt.MapFrom(src=>src.TipoAgibilita.ToString()))
+            ;
             cfg.CreateMap<ImmobileDTO, Immobile>()
             .ForMember(dst => dst.TipoImmobile, opt => opt.Ignore())
+            .ForMember(dst => dst.TipoAgibilita, opt => opt.Ignore())
             ;
             cfg.CreateMap<TipologiaLavoro, TipologiaLavoroDTO>();
             cfg.CreateMap<Azienda, AziendaDTO>()

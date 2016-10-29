@@ -7,9 +7,11 @@ namespace DataStorm.Web.Models.DTO
 {
     public class ImmobileDTO
     {
-        public int Id { get; set; }
-        public string Indirizzo { get; set; }
-        public string Comune { get; set; }
-        public string TipoImmobile { get; set; }
+        public virtual int Id { get; set; }
+        public virtual string Indirizzo { get; set; }
+        public virtual string Comune { get; set; }
+        public virtual string TipoImmobile { get; set; }
+
+        public virtual string TipoAgibilita { get; set; }
     }
 }
