@@ -146,15 +146,26 @@ namespace DataStorm.Web.Controllers.API
         {
             await Task.FromResult(0);
         }
-        [Route("api/automapper")]
-        public async Task<ImmobileDTO> ProvaAutoMapper()
-        {
-            await Task.FromResult(0);
+        //[Route("api/automapper")]
+        //public async Task<ImmobileDTO> ProvaAutoMapper()
+        //{
+        //    await Task.FromResult(0);
 
-            Immobile ImmobileTest = new Immobile();
-            ImmobileTest.Indirizzo = "aaaaa";
-            var mapped= Mapper.Map<Immobile, ImmobileDTO>(ImmobileTest);
-            return mapped;
+        //    Immobile ImmobileTest = new Immobile();
+        //    ImmobileTest.Indirizzo = "aaaaa";
+        //    var mapped= Mapper.Map<Immobile, ImmobileDTO>(ImmobileTest);
+        //    return mapped;
+        //}
+        [Route("api/aziende")]
+        [HttpGet]
+        public Task<IEnumerable<Azienda>> GetAziende(int? pageNumber)
+        {
+            int PageSize = 10;
+            if (pageNumber.HasValue)
+            {
+
+            }
+            throw new NotImplementedException();
         }
     }
 }
