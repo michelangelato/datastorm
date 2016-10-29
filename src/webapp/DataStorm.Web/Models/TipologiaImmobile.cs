@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace DataStorm.Web.Models
 {
-    public enum TipologiaImmobile
+    public enum TipologiaImmobile:int
     {
-        Appartamento,
-        VillaIndipendente,
-        VillaSchiera
+        Appartamento=0,
+        VillaIndipendente=1,
+        VillaSchiera=2
     }
 }
