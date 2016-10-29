@@ -1,6 +1,70 @@
 ﻿@{
     ViewData["Title"] = "Immobili";
 }
+
+@section scripts {
+	<script>
+        $(document).ready(function () {
+
+            $.get('/api/immobili', function (data) {
+                console.log(data);
+                var lstImmobili = $('#immobili-list');
+                var items = data.items.map(function (item) {
+                    return item.key + ': ' + item.value;
+                });
+                
+                lstImmobili.empty();
+                    
+                if (items.length) {
+                    var content = '<li>' + items.join('</li><li>') + '</li>';
+                    var list = $('<ul />').html(content);
+                    lstImmobili.append(list);
+                }
+            })
+            .fail(function() {
+                console.log( "error" );
+            });
+
+
+            $("#nuovo-immobile").click(function () {
+                var immobile = '{ "Comune": "Ancona", "Indirizzo": "Via delle Tavernelle, 18", "TipoImmobile": 0 }';
+                $.ajax({
+                    type: 'PUT', // Use POST with X-HTTP-Method-Override or a straight PUT if appropriate.
+                    dataType: 'json', // Set datatype - affects Accept header
+                    url: "/api/immobili", // A valid URL
+                    headers: {"X-HTTP-Method-Override": "PUT"}, // X-HTTP-Method-Override set to PUT.
+                    data: immobile // Some data e.g. Valid JSON as a string
+                });
+            });
+            
+            /*
+            $("#nuovo-immobile").click(function () {
+
+                var data = {
+                    "id": 1,
+                    "name": "pollo"
+                };
+
+                $.post("index.html", function(data) {
+                    //$("#show-result").html(data);
+                    console.log("success");
+                    console.log(data);
+                })
+                .done(function() {
+                    console.log("second success");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("finished");
+                });
+            });*/
+
+        });
+    </script>
+}
+
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
 
@@ -25,20 +89,8 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="txt-piano" class="col-xs-2 col-form-label">Piano</label>
-                    <div class="col-xs-10">
-                        <input class="form-control" type="number" name="piano" id="txt-piano" placeholder="Numero o vuoto se intero edificio...">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="txt-mq" class="col-xs-2 col-form-label">Metri quadri</label>
-                    <div class="col-xs-10">
-                        <input class="form-control" type="number" name="mq" id="txt-mq" placeholder="Numero dei mq...">
-                    </div>
-                </div>
-                <div class="form-group row">
                     <div class="offset-sm-2 col-sm-10">
-                        <button type="submit" class="btn btn-success">Inserisci</button>
+                        <button id="nuovo-immobile" type="submit" class="btn btn-success">Inserisci</button>
                     </div>
                 </div>
             </div>
@@ -58,6 +110,9 @@
                 <a href="#" class="list-group-item list-group-item-action">
                     <i class="fa fa-home" aria-hidden="true"></i> Via delle Tavernelle 160, Ancona</a>
             </div>
+            
+            <div id="immobili-list"></div>
+
             <div class="panel-body">
                 <a href="#">Visualizza tutti gli immobili...</a>
             </div>
