@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using DataStorm.Web.Models;
+using Npgsql;
 
 namespace DataStorm.Web.Data
 {
@@ -14,6 +15,7 @@ namespace DataStorm.Web.Data
             : base(options)
         {
         }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
