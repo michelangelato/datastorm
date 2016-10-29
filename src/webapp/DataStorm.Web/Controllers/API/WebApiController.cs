@@ -157,7 +157,59 @@ namespace DataStorm.Web.Controllers.API
             var topic = await _db.Topics.SingleAsync(t => t.Id == Id);
             return Mapper.Map<TopicDTO>(topic);
         }
-        
+        [HttpPut]
+        [Route("api/topic/addtopic")]
+        public async Task<IActionResult> AddTopic(string topic)
+        {
+            if (topic.Length >= 2)
+            {
+                var utente = await _userManager.FindByNameAsync(User.Identity.Name);
+                var roles = await _userManager.GetRolesAsync(utente);
+                if (roles.Contains(Ruolo.PA.ToString()) || roles.Contains(Ruolo.ProtezioneCivile.ToString()))
+                {
+                    return InternalServerError(new Exception("Sessione scaduta"));
+                }
+                Topic NuovoTopic = new Topic();
+                NuovoTopic.Codice = topic;
+                Topic topicPresente = await _db.Topics.SingleOrDefaultAsync(t => t.Codice == topic);
+                if (topicPresente != null)
+                {
+                    throw new Exception("Topic già presente");
+                }
+                else
+                {
+                    _db.Topics.Add(NuovoTopic);
+                    _db.SaveChanges();
+                }
+                return Ok();
+            }
+            else
+            {
+                return new EmptyResult();
+            }
+        }
+        [HttpDelete]
+        [Route("api/topic/delete")]
+        public async Task<IActionResult> RemoveTopic(int Id)
+        {
+            var utente = await _userManager.FindByNameAsync(User.Identity.Name);
+            var roles = await _userManager.GetRolesAsync(utente);
+            if (roles.Contains(Ruolo.PA.ToString())||roles.Contains(Ruolo.ProtezioneCivile.ToString()))
+            {
+                return InternalServerError(new Exception("Sessione scaduta"));
+            }
+            var topic = _db.Topics.Single(t => t.Id == Id);
+            _db.Topics.Remove(topic);
+            return Ok();
+        }
+        [HttpGet]
+        [Route("api/avvisi/topic")]
+        public async Task<IEnumerable<AvvisoDTO>> GetAvvisiByTopic(string ricerca)
+        {
+            await Task.FromResult(0);
+            var avvisi = _db.Avvisi.Where(av => av.AvvisiTopics.Any(avt => avt.TopicRiferimento.Codice == ricerca));
+            return avvisi.Select(av => Mapper.Map<AvvisoDTO>(av));
+        }
         [Route("api/richiesta")]
         public async Task PostRichiesta()
         {
@@ -196,14 +248,19 @@ namespace DataStorm.Web.Controllers.API
         //}
         [Route("api/aziende/{pageNumber:int?}")]
         [HttpGet]
-        public async Task<IEnumerable<AziendaDTO>> GetAziende(int? pageNumber)
+        public async Task<PagedResult<AziendaDTO>> GetAziende(int? pageNumber)
         {
             await Task.FromResult(0);
             int PageSize = 10;
             
             var skipValue = (pageNumber.GetValueOrDefault(1) - 1) * PageSize;
             var aziende = _db.Aziende.Skip(skipValue).Take(PageSize);
-            return aziende.Select(az => Mapper.Map<AziendaDTO>(az));
+
+            var aziendeDTO=aziende.Select(az => Mapper.Map<AziendaDTO>(az));
+            PagedResult<AziendaDTO> result = new PagedResult<AziendaDTO>();
+            result.Risultati = aziendeDTO;
+            result.PageNumber = pageNumber.GetValueOrDefault(1);
+            return result;
         }
         [Route("api/aziende/{id}")]
         [HttpGet]
