@@ -7,6 +7,7 @@ namespace DataStorm.Web.Models.DTO
 {
     public class ImmobileDTO
     {
+        public int Id { get; set; }
         public decimal MetriQuadri { get; set; }
         public float LatitudinePunto { get; set; }
         public float LongitudinePunto { get; set; }

@@ -54,17 +54,9 @@ namespace DataStorm.Web.Controllers.API
 
             return await db.Immobili
                 .Where(i => i.UtenteAppartenenza == utente)
-                .Select(i => new ImmobileDTO
-                {
-                    Comune = i.Comune,
-                    Indirizzo = i.Indirizzo,
-                    LatitudinePunto = i.PuntoMappa.LatitudinePunto,
-                    LongitudinePunto = i.PuntoMappa.LongitudinePunto,
-                    MetriQuadri = i.MetriQuadri,
-                    NumeroPersoneResidenti = i.NumeroPersoneResidenti,
-                    NumeroPiano = i.NumeroPiano,
-                    TipoImmobile = i.TipoImmobile
-                }).ToListAsync();
+                .Select(i => 
+                    Mapper.Map<ImmobileDTO>(i)
+                ).ToListAsync();
         }
 
         [Route("api/immobili/tipologie")]
