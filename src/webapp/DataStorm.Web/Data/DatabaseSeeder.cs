@@ -22,29 +22,11 @@ namespace DataStorm.Web.Data
             new TipologiaLavoro {Codice="T03", Descrizione="Impiantistica" }
         };
 
-        private static readonly Avviso[] AvvisiDefault =
+        private static readonly ImmagineAvviso[] ImmaginiEsempio =
         {
-            new Avviso
-            {
-                Titolo = "Evacuazione centro storico Camerino",
-                Descrizione = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum congue luctus dapibus. Integer ac porta lacus, ultricies aliquet purus. Etiam in ex mi. Duis commodo sit amet metus id consectetur. Aliquam mollis convallis vehicula. Morbi ultricies, dolor at condimentum mattis, arcu leo malesuada est, quis molestie ex mi id purus. Etiam auctor posuere auctor.",
-                Links = new List<LinkAvviso>
-                {
-                    new LinkAvviso { Titolo = "Sito COC", Url="about:blank" }
-                },
-                ImmaginiAvviso = new List<ImmagineAvviso> { },
-                AreeMappe = new List<AreaMappa>
-                {
-                    new AreaMappa
-                    {
-                        TipoMappa = TipoAreaMappa.Punto,
-                        PuntiMappa = new List<PuntoMappa>
-                        {
-                            new PuntoMappa { LatitudinePunto=43.135700f, LongitudinePunto=13.068236f }
-                        }
-                    }
-                }
-            }
+            new ImmagineAvviso { TitoloImmagine="Amatrice", UrlImmagine="http://www.repstatic.it/video/photo/2016/08/31/339301/339301-thumb-full-zonarossaamtrice.jpg", Larghezza=640, Altezza=360 },
+            new ImmagineAvviso { TitoloImmagine="Camerino", UrlImmagine="https://www.repstatic.it/content/nazionale/img/2016/10/26/220243584-8de1ce9e-d984-466c-89dd-990920525a6a.jpg", Larghezza=880, Altezza=660 },
+            new ImmagineAvviso { TitoloImmagine="Ipocentro", UrlImmagine="http://www.meteoweb.eu/wp-content/uploads/2014/03/epicentro_ipocentro.jpg", Larghezza=299, Altezza=236 }
         };
 
         public static void Seed(this ApplicationDbContext db, UserManager<Utente> userManager, RoleManager<IdentityRole> roleManager)
@@ -143,10 +125,25 @@ namespace DataStorm.Web.Data
 
             #region Seed Avvisi
             {
-                foreach (var avviso in AvvisiDefault)
+                for (var i = 1; i <= 100; i++)
                 {
-                    var avvisoEsistente = await db.Avvisi.FirstOrDefaultAsync(a => a.Titolo == avviso.Titolo);
-                    if (avvisoEsistente == null)
+                    var avviso = new Avviso
+                    {
+                        Titolo = $"Avviso {i}",
+                        Descrizione = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum congue luctus dapibus. Integer ac porta lacus, ultricies aliquet purus. Etiam in ex mi. Duis commodo sit amet metus id consectetur. Aliquam mollis convallis vehicula. Morbi ultricies, dolor at condimentum mattis, arcu leo malesuada est, quis molestie ex mi id purus. Etiam auctor posuere auctor.",
+                        Links = await GetLinkEsempio(),
+                        ImmaginiAvviso = await GetImmaginiEsempio(),
+                        AreeMappe = new List<AreaMappa>
+                        {
+                            new AreaMappa
+                            {
+                                TipoMappa = TipoAreaMappa.Punto,
+                                PuntiMappa = new List<PuntoMappa> { await GetRandomPuntoRegioneMarche() }
+                            }
+                        }
+                    };
+
+                    if (!await db.Avvisi.AnyAsync(a => a.Titolo == avviso.Titolo))
                     {
                         db.Avvisi.Add(avviso);
                     }
@@ -219,6 +216,39 @@ namespace DataStorm.Web.Data
                     throw new Exception($"SEED: si sono verificati i seguenti errori durante l'aggiunta del ruolo {ruolo} all'utente {email}: {string.Join("; ", inserimentoUtente.Errors.Select(e => e.Description))}");
                 }
             }
+        }
+
+        private static async Task<List<LinkAvviso>> GetLinkEsempio()
+        {
+            var lista = new List<LinkAvviso>();
+
+            var n = Random.Next(4);
+            for (var i = 1; i <= n; i++)
+            {
+                lista.Add(new LinkAvviso { Titolo = $"Link {i}", Url = "about:blank" });
+            }
+
+            return lista;
+        }
+
+        private static async Task<List<ImmagineAvviso>> GetImmaginiEsempio()
+        {
+            var lista = new List<ImmagineAvviso>();
+
+            var n = Random.Next(3);
+            for (var i = 1; i <= n; i++)
+            {
+                var immagine = ImmaginiEsempio[Random.Next(ImmaginiEsempio.Length)];
+                lista.Add(new ImmagineAvviso
+                {
+                    TitoloImmagine = immagine.TitoloImmagine,
+                    UrlImmagine = immagine.UrlImmagine,
+                    Larghezza = immagine.Larghezza,
+                    Altezza = immagine.Altezza
+                });
+            }
+
+            return lista;
         }
 
         private static async Task<PuntoMappa> GetRandomPuntoRegioneMarche()
