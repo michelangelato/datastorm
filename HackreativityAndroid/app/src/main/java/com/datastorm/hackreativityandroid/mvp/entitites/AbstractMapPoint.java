@@ -32,5 +32,5 @@ public class AbstractMapPoint {
 
 	@ManyToOne
 	@Column(name = "map_object")
-	MapObject alert;
+	MapObject mapObject;
 }
