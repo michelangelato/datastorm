@@ -89,6 +89,46 @@ namespace DataStorm.Web.Migrations
                     b.ToTable("AziendeTipiLavoro");
                 });
 
+            modelBuilder.Entity("DataStorm.Web.Models.Catasto", b =>
+                {
+                    b.Property<int>("IdCatasto")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AnnoDiCostruzione");
+
+                    b.Property<int>("AreaInMq");
+
+                    b.Property<int>("CateneCordoli");
+
+                    b.Property<string>("Comune");
+
+                    b.Property<int>("Costruzione");
+
+                    b.Property<int>("DissestiTerreno");
+
+                    b.Property<string>("Indirizzo");
+
+                    b.Property<int>("NumeroDiPiani");
+
+                    b.Property<int>("PercentualeUtilizzo");
+
+                    b.Property<int>("Posizione");
+
+                    b.Property<int>("Proprieta");
+
+                    b.Property<int?>("PuntoMappaId");
+
+                    b.Property<int>("Terreno");
+
+                    b.Property<int>("Uso");
+
+                    b.HasKey("IdCatasto");
+
+                    b.HasIndex("PuntoMappaId");
+
+                    b.ToTable("Catasto");
+                });
+
             modelBuilder.Entity("DataStorm.Web.Models.ImmagineAvviso", b =>
                 {
                     b.Property<int>("Id")
@@ -116,19 +156,35 @@ namespace DataStorm.Web.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("AnnoDiCostruzione");
+
+                    b.Property<int>("AreaInMq");
+
+                    b.Property<int>("CateneCordoli");
+
                     b.Property<string>("Comune");
+
+                    b.Property<int>("Costruzione");
+
+                    b.Property<int>("DissestiTerreno");
 
                     b.Property<string>("Indirizzo");
 
-                    b.Property<decimal>("MetriQuadri");
+                    b.Property<int>("NumeroDiPiani");
 
-                    b.Property<short>("NumeroPersoneResidenti");
+                    b.Property<int>("PercentualeUtilizzo");
 
-                    b.Property<int?>("NumeroPiano");
+                    b.Property<int>("Posizione");
+
+                    b.Property<int>("Proprieta");
 
                     b.Property<int?>("PuntoMappaId");
 
+                    b.Property<int>("Terreno");
+
                     b.Property<int>("TipoImmobile");
+
+                    b.Property<int>("Uso");
 
                     b.Property<string>("UtenteAppartenenzaId");
 
@@ -395,6 +451,13 @@ namespace DataStorm.Web.Migrations
                     b.HasOne("DataStorm.Web.Models.TipologiaLavoro", "TipoLavoro")
                         .WithMany()
                         .HasForeignKey("TipoLavoroId");
+                });
+
+            modelBuilder.Entity("DataStorm.Web.Models.Catasto", b =>
+                {
+                    b.HasOne("DataStorm.Web.Models.PuntoMappa", "PuntoMappa")
+                        .WithMany()
+                        .HasForeignKey("PuntoMappaId");
                 });
 
             modelBuilder.Entity("DataStorm.Web.Models.ImmagineAvviso", b =>
