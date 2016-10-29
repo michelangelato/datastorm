@@ -41,9 +41,11 @@ namespace DataStorm.Web
         {
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
+                );
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<Utente, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 

@@ -15,15 +15,15 @@ namespace DataStorm.Web.Controllers
     [Authorize]
     public class ManageController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<Utente> _userManager;
+        private readonly SignInManager<Utente> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
 
         public ManageController(
-        UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager,
+        UserManager<Utente> userManager,
+        SignInManager<Utente> signInManager,
         IEmailSender emailSender,
         ISmsSender smsSender,
         ILoggerFactory loggerFactory)
@@ -350,7 +350,7 @@ namespace DataStorm.Web.Controllers
             Error
         }
 
-        private Task<ApplicationUser> GetCurrentUserAsync()
+        private Task<Utente> GetCurrentUserAsync()
         {
             return _userManager.GetUserAsync(HttpContext.User);
         }
