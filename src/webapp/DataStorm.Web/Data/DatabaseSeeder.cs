@@ -15,6 +15,8 @@ namespace DataStorm.Web.Data
 
         private static Random Random = new Random();
 
+        private static string[] TopicsEsempio = new string[] { "Terremoto Amatrice", "Terremoto 26 ottobre 2016", "Emergenza Camerino", "Arquata del Tronto" };
+
         private static readonly TipologiaLavoro[] TipologieLavoroDefault =
         {
             new TipologiaLavoro {Codice="T01", Descrizione="Infissi" },
@@ -123,29 +125,50 @@ namespace DataStorm.Web.Data
             }
             #endregion
 
+            #region Seed Topics
+            {
+                foreach (var topic in TopicsEsempio)
+                {
+                    if (!await db.Topics.AnyAsync(t => t.Codice == topic))
+                    {
+                        db.Topics.Add(new Topic { Codice = topic });
+                    }
+                }
+
+                await db.SaveChangesAsync();
+            }
+            #endregion
+
             #region Seed Avvisi
             {
-                for (var i = 1; i <= 100; i++)
-                {
-                    var avviso = new Avviso
-                    {
-                        Titolo = $"Avviso {i}",
-                        Descrizione = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum congue luctus dapibus. Integer ac porta lacus, ultricies aliquet purus. Etiam in ex mi. Duis commodo sit amet metus id consectetur. Aliquam mollis convallis vehicula. Morbi ultricies, dolor at condimentum mattis, arcu leo malesuada est, quis molestie ex mi id purus. Etiam auctor posuere auctor.",
-                        Links = await GetLinkEsempio(),
-                        ImmaginiAvviso = await GetImmaginiEsempio(),
-                        AreeMappe = new List<AreaMappa>
-                        {
-                            new AreaMappa
-                            {
-                                TipoMappa = TipoAreaMappa.Punto,
-                                PuntiMappa = new List<PuntoMappa> { await GetRandomPuntoRegioneMarche() }
-                            }
-                        }
-                    };
+                var topics = await db.Topics.ToListAsync();
 
-                    if (!await db.Avvisi.AnyAsync(a => a.Titolo == avviso.Titolo))
+                foreach (var topic in topics)
+                {
+                    for (var i = 1; i <= 100; i++)
                     {
-                        db.Avvisi.Add(avviso);
+                        var avviso = new Avviso
+                        {
+                            Titolo = $"Avviso {topic.Codice} {i}",
+                            Descrizione = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum congue luctus dapibus. Integer ac porta lacus, ultricies aliquet purus. Etiam in ex mi. Duis commodo sit amet metus id consectetur. Aliquam mollis convallis vehicula. Morbi ultricies, dolor at condimentum mattis, arcu leo malesuada est, quis molestie ex mi id purus. Etiam auctor posuere auctor.",
+                            Links = await GetLinkEsempio(),
+                            ImmaginiAvviso = await GetImmaginiEsempio(),
+                            AreeMappe = new List<AreaMappa>
+                            {
+                                new AreaMappa
+                                {
+                                    TipoMappa = TipoAreaMappa.Punto,
+                                    PuntiMappa = new List<PuntoMappa> { await GetRandomPuntoRegioneMarche() }
+                                }
+                            }
+                        };
+
+                        avviso.AvvisiTopics = new List<AvvisoTopic> { new AvvisoTopic { AvvisoRiferimento = avviso, TopicRiferimento = topic } };
+
+                        if (!await db.Avvisi.AnyAsync(a => a.Titolo == avviso.Titolo))
+                        {
+                            db.Avvisi.Add(avviso);
+                        }
                     }
                 }
 
