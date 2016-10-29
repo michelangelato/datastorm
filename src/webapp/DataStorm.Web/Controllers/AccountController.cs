@@ -11,30 +11,40 @@ using Microsoft.Extensions.Logging;
 using DataStorm.Web.Models;
 using DataStorm.Web.Models.AccountViewModels;
 using DataStorm.Web.Services;
+using DataStorm.Web.Data;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace DataStorm.Web.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private readonly ApplicationDbContext _db;
         private readonly UserManager<Utente> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<Utente> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
 
         public AccountController(
+            ApplicationDbContext db,
             UserManager<Utente> userManager,
+            RoleManager<IdentityRole> roleManager,
             SignInManager<Utente> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
             ILoggerFactory loggerFactory)
         {
+            _db = db;
             _userManager = userManager;
+            _roleManager = roleManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+
+            db.Seed(userManager, roleManager);
         }
 
         //
@@ -127,10 +137,9 @@ namespace DataStorm.Web.Controllers
         }
 
         //
-        // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LogOff()
+        // POST: /Account/Logout
+        [HttpGet]
+        public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");

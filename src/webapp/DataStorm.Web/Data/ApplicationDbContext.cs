@@ -29,9 +29,11 @@ namespace DataStorm.Web.Data
             builder.Entity<Immobile>().HasOne(app => app.UtenteAppartenenza);
             builder.Entity<LinkAvviso>().ToTable("LinkAvvisi").HasKey(lav => lav.Id);
             builder.Entity<ImmagineAvviso>().ToTable("ImmaginiAvvisi").HasKey(img => img.Id);
+            builder.Entity<AvvisoTopic>().ToTable("AvvisiTopics").HasKey(av => av.Id);
             builder.Entity<Avviso>().ToTable("Avvisi").HasKey(av => av.Id);
             builder.Entity<Avviso>().HasMany(av => av.ImmaginiAvviso);
             builder.Entity<Avviso>().HasMany(av => av.Links);
+            builder.Entity<Avviso>().HasMany(av => av.AvvisiTopics);
             builder.Entity<PuntoMappa>().ToTable("PuntiMappa").HasKey(pm => pm.Id);
             builder.Entity<AreaMappa>().ToTable("AreeMappa").HasKey(am=>am.Id);
             builder.Entity<AreaMappa>().HasMany(am => am.PuntiMappa);
@@ -43,6 +45,8 @@ namespace DataStorm.Web.Data
             builder.Entity<AziendeTipoLavoro>().HasOne(tl => tl.TipoLavoro);
             builder.Entity<Catasto>().ToTable("Catasto").HasKey(ca => ca.IdCatasto);
             builder.Entity<Azienda>().HasMany(az => az.AziendaTipoLavoro);
+            builder.Entity<Topic>().ToTable("Topics").HasKey(t=>t.Id);
+            builder.Entity<Topic>().HasMany(t => t.AvvisiTopics);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
@@ -50,9 +54,11 @@ namespace DataStorm.Web.Data
 
         public DbSet<TipologiaLavoro> TipologieLavoro { get; set; }
         public DbSet<Azienda> Aziende { get; set; }
+        public DbSet<Topic> Topics { get; set; }
         public DbSet<Avviso> Avvisi { get; set; }
         public DbSet<Immobile> Immobili { get; set; }
         public DbSet<Utente> Utenti { get; set; }
         public DbSet<AreaMappa> AreeMappa { get; set; }
+        public DbSet<Segnalazione> Segnalazioni { get; set; }
     }
 }

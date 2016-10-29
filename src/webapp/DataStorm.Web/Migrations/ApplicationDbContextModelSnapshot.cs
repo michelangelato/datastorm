@@ -45,6 +45,24 @@ namespace DataStorm.Web.Migrations
                     b.ToTable("Avvisi");
                 });
 
+            modelBuilder.Entity("DataStorm.Web.Models.AvvisoTopic", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("AvvisoRiferimentoId");
+
+                    b.Property<int?>("TopicRiferimentoId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AvvisoRiferimentoId");
+
+                    b.HasIndex("TopicRiferimentoId");
+
+                    b.ToTable("AvvisiTopics");
+                });
+
             modelBuilder.Entity("DataStorm.Web.Models.Azienda", b =>
                 {
                     b.Property<int>("Id")
@@ -268,6 +286,18 @@ namespace DataStorm.Web.Migrations
                     b.ToTable("TipologieLavoro");
                 });
 
+            modelBuilder.Entity("DataStorm.Web.Models.Topic", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Codice");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Topics");
+                });
+
             modelBuilder.Entity("DataStorm.Web.Models.Utente", b =>
                 {
                     b.Property<string>("Id");
@@ -429,6 +459,17 @@ namespace DataStorm.Web.Migrations
                     b.HasOne("DataStorm.Web.Models.Avviso")
                         .WithMany("AreeMappe")
                         .HasForeignKey("AvvisoId");
+                });
+
+            modelBuilder.Entity("DataStorm.Web.Models.AvvisoTopic", b =>
+                {
+                    b.HasOne("DataStorm.Web.Models.Avviso", "AvvisoRiferimento")
+                        .WithMany("AvvisiTopics")
+                        .HasForeignKey("AvvisoRiferimentoId");
+
+                    b.HasOne("DataStorm.Web.Models.Topic", "TopicRiferimento")
+                        .WithMany("AvvisiTopics")
+                        .HasForeignKey("TopicRiferimentoId");
                 });
 
             modelBuilder.Entity("DataStorm.Web.Models.Azienda", b =>

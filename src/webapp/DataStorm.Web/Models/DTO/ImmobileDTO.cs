@@ -10,6 +10,6 @@ namespace DataStorm.Web.Models.DTO
         public int Id { get; set; }
         public string Indirizzo { get; set; }
         public string Comune { get; set; }
-        public TipologiaImmobile TipoImmobile { get; set; }
+        public string TipoImmobile { get; set; }
     }
 }

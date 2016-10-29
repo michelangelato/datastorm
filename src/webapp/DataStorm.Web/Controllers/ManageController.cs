@@ -9,30 +9,40 @@ using Microsoft.Extensions.Logging;
 using DataStorm.Web.Models;
 using DataStorm.Web.Models.ManageViewModels;
 using DataStorm.Web.Services;
+using DataStorm.Web.Data;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace DataStorm.Web.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
+        private readonly ApplicationDbContext _db;
         private readonly UserManager<Utente> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<Utente> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
 
         public ManageController(
-        UserManager<Utente> userManager,
-        SignInManager<Utente> signInManager,
-        IEmailSender emailSender,
-        ISmsSender smsSender,
-        ILoggerFactory loggerFactory)
+            ApplicationDbContext db,
+            UserManager<Utente> userManager,
+            RoleManager<IdentityRole> roleManager,
+            SignInManager<Utente> signInManager,
+            IEmailSender emailSender,
+            ISmsSender smsSender,
+            ILoggerFactory loggerFactory)
         {
+            _db = db;
             _userManager = userManager;
+            _roleManager = roleManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<ManageController>();
+
+            db.Seed(userManager, roleManager);
         }
 
         //
