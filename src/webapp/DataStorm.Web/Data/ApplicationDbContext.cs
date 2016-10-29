@@ -54,5 +54,6 @@ namespace DataStorm.Web.Data
         public DbSet<Immobile> Immobili { get; set; }
         public DbSet<Utente> Utenti { get; set; }
         public DbSet<AreaMappa> AreeMappa { get; set; }
+        public DbSet<Segnalazione> Segnalazioni { get; set; }
     }
 }
