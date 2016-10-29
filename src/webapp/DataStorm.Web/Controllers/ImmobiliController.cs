@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using DataStorm.Web.Data;
 using DataStorm.Web.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace DataStorm.Web.Controllers
 {
@@ -14,13 +15,15 @@ namespace DataStorm.Web.Controllers
     {
         private readonly ApplicationDbContext _db;
         private readonly UserManager<Utente> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public ImmobiliController(ApplicationDbContext db, UserManager<Utente> userManager)
+        public ImmobiliController(ApplicationDbContext db, UserManager<Utente> userManager, RoleManager<IdentityRole> roleManager)
         {
             _db = db;
             _userManager = userManager;
+            _roleManager = roleManager;
 
-            db.Seed(userManager);
+            db.Seed(userManager, roleManager);
         }
         
         [Authorize]

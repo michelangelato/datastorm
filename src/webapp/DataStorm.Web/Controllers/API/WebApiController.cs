@@ -4,6 +4,7 @@ using DataStorm.Web.Models;
 using DataStorm.Web.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,13 +19,15 @@ namespace DataStorm.Web.Controllers.API
     {
         private readonly ApplicationDbContext _db;
         private readonly UserManager<Utente> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public WebApiController(ApplicationDbContext db, UserManager<Utente> userManager)
+        public WebApiController(ApplicationDbContext db, UserManager<Utente> userManager, RoleManager<IdentityRole> roleManager)
         {
             _db = db;
             _userManager = userManager;
+            _roleManager = roleManager;
 
-            db.Seed(userManager);
+            db.Seed(userManager, roleManager);
         }
 
         [Authorize]
@@ -78,6 +81,7 @@ namespace DataStorm.Web.Controllers.API
             return Ok();
         }
         [HttpGet]
+        [Route("api/immobili/{id}")]
         public async Task<ImmobileDTO> GetImmobile(int Id)
         {
             var utente = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -114,7 +118,7 @@ namespace DataStorm.Web.Controllers.API
         }
         [HttpGet]
         [Route("api/avvisi")]
-        public async Task<dynamic> GetAvvisi()
+        public async Task<IEnumerable<AvvisoDTO>> GetAvvisi()
         {
 
             var avvisi = _db.Avvisi.Select(av=>Mapper.Map<AvvisoDTO>(av));
@@ -124,7 +128,8 @@ namespace DataStorm.Web.Controllers.API
         }
 
         [Route("api/avvisi/{id}")]
-        public async Task<dynamic> GetAvviso(int Id)
+        [HttpGet]
+        public async Task<AvvisoDTO> GetAvviso(int Id)
         {
             var avviso = await _db.Avvisi.SingleAsync(a => a.Id == Id);
             return Mapper.Map<AvvisoDTO>(avviso);
@@ -151,7 +156,7 @@ namespace DataStorm.Web.Controllers.API
         }
 
         [Route("api/elementi-mappa")]
-        public async Task<IEnumerable<dynamic>> GetElementiMappa()
+        public async Task<IEnumerable<dynamic>> GetAreeMappa()
         {
             throw new NotImplementedException();
             //return await _db.AreeMappa.Select(a => a.ToDTO()).ToListAsync();
@@ -172,7 +177,7 @@ namespace DataStorm.Web.Controllers.API
         //    var mapped= Mapper.Map<Immobile, ImmobileDTO>(ImmobileTest);
         //    return mapped;
         //}
-        [Route("api/aziende")]
+        [Route("api/aziende/{pageNumber:int?}")]
         [HttpGet]
         public async Task<IEnumerable<AziendaDTO>> GetAziende(int? pageNumber)
         {
@@ -183,6 +188,7 @@ namespace DataStorm.Web.Controllers.API
             var aziende = _db.Aziende.Skip(skipValue).Take(PageSize);
             return aziende.Select(az => Mapper.Map<AziendaDTO>(az));
         }
+        [Route("api/aziende/{id}")]
         [HttpGet]
         public async Task<AziendaDTO> GetAzienda(int idAzienda)
         {
