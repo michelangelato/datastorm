@@ -26,6 +26,12 @@
 	<string name="request_new_condition_stairs">Scale inagibili</string>
 	<string name="request_new_condition_send">Richiedi intervento</string>
 	<string name="request_new_type">Tipo di intervento</string>
+	<string name="alert_report_shortcut_title">Segnala un pericolo</string>
+	<string name="alert_report_shortcut_description">Clicca qui per vedere come fare</string>
+	<string name="alert_request_shortcut_title">Richiedi un intervento</string>
+	<string name="alert_request_shortcut_description">Clicca per vedere come fare</string>
+	<string name="alert_map_shortcut_title">Mappa della zona</string>
+	<string name="alert_map_shortcut_description">Clicca per allargare</string>
 	<string-array name="request_type">
 		<item>Sopralluogo</item>
 		<item>Recupero Beni</item>

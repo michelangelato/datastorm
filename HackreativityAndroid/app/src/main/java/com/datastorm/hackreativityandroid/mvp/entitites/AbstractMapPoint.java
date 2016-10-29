@@ -12,7 +12,7 @@ import io.requery.Table;
 
 @Entity(stateless = true)
 @Table(name = "alert_map_point")
-public class AbstractAlertMapPoint {
+public class AbstractMapPoint {
 
 	@Expose
 	@SerializedName("Id")

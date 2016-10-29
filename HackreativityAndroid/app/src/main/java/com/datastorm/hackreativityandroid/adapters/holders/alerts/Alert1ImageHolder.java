@@ -16,8 +16,8 @@ public class Alert1ImageHolder extends AlertTextOnlyHolder {
 	@BindView(R.id.alert_image_1)
 	AspectRatioImageView image;
 
-	public Alert1ImageHolder(View itemView, boolean withClickListener) {
-		super(itemView, withClickListener);
+	public Alert1ImageHolder(View itemView) {
+		super(itemView);
 	}
 
 	@Override

@@ -316,6 +316,27 @@ public class MainActivity extends BaseActivity implements NavigationView
 	}
 
 	@Override
+	public void onMapShortcutClicked(View v) {
+		MenuItem item = navigationView.getMenu()
+		                              .findItem(R.id.action_show_map);
+		if (item != null) onNavigationItemSelected(item, false);
+	}
+
+	@Override
+	public void onRequestShortcutClicked(View v) {
+		MenuItem item = navigationView.getMenu()
+		                              .findItem(R.id.action_show_request_lists);
+		if (item != null) onNavigationItemSelected(item, false);
+	}
+
+	@Override
+	public void onReportShortcutClicked(View v) {
+		MenuItem item = navigationView.getMenu()
+		                              .findItem(R.id.action_show_report);
+		if (item != null) onNavigationItemSelected(item, false);
+	}
+
+	@Override
 	public void onNewRequestClicked() {
 		RequestNewActivity.show(this);
 	}

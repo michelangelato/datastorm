@@ -3,11 +3,12 @@ package com.datastorm.hackreativityandroid.widgets;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.dadino.quickstart.core.mvp.components.presenter.MvpView;
 import com.datastorm.hackreativityandroid.R;
 import com.datastorm.hackreativityandroid.adapters.AlertAdapter;
-import com.datastorm.hackreativityandroid.interfaces.OnAlertClickedListener;
+import com.datastorm.hackreativityandroid.interfaces.OnAlertListClickListener;
 import com.datastorm.hackreativityandroid.mvp.entitites.Alert;
 import com.datastorm.hackreativityandroid.mvp.usecases.alertlist.AlertListMVP;
 
@@ -18,7 +19,7 @@ public class PresentedAlertListView extends RecyclerLayout<AlertAdapter, LinearL
 
 	private AlertListMVP.Presenter mPresenter;
 	private MvpView<List<Alert>> iView = new MvpView<>(this::onItemNext, this::onItemLoad);
-	private OnAlertClickedListener listener;
+	private OnAlertListClickListener listener;
 
 	public PresentedAlertListView(Context context) {
 		super(context);
@@ -34,8 +35,26 @@ public class PresentedAlertListView extends RecyclerLayout<AlertAdapter, LinearL
 		setEmptyText(R.string.empty_alerts);
 		setLayoutManager(new LinearLayoutManager(getContext()));
 		final AlertAdapter adapter = new AlertAdapter();
-		adapter.setClickListener((v, alert) -> {
-			if (listener != null) listener.onAlertClicked(v, alert);
+		adapter.setOnAlertListClickListener(new OnAlertListClickListener() {
+			@Override
+			public void onMapShortcutClicked(View v) {
+				if (listener != null) listener.onMapShortcutClicked(v);
+			}
+
+			@Override
+			public void onRequestShortcutClicked(View v) {
+				if (listener != null) listener.onRequestShortcutClicked(v);
+			}
+
+			@Override
+			public void onReportShortcutClicked(View v) {
+				if (listener != null) listener.onReportShortcutClicked(v);
+			}
+
+			@Override
+			public void onAlertClicked(View v, Alert alert) {
+				if (listener != null) listener.onAlertClicked(v, alert);
+			}
 		});
 		setAdapter(adapter);
 		setEnabled(false);
@@ -50,7 +69,7 @@ public class PresentedAlertListView extends RecyclerLayout<AlertAdapter, LinearL
 		setListLoading(loading);
 	}
 
-	public void setOnAlertClickedListener(OnAlertClickedListener listener) {
+	public void setOnAlertClickedListener(OnAlertListClickListener listener) {
 		this.listener = listener;
 	}
 

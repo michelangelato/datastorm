@@ -10,7 +10,7 @@ import com.dadino.quickstart.core.fragments.BaseFragment;
 import com.dadino.quickstart.core.mvp.components.presenter.MvpView;
 import com.dadino.quickstart.core.mvp.components.presenter.PresenterManager;
 import com.datastorm.hackreativityandroid.R;
-import com.datastorm.hackreativityandroid.interfaces.OnAlertClickedListener;
+import com.datastorm.hackreativityandroid.interfaces.OnAlertListClickListener;
 import com.datastorm.hackreativityandroid.interfaces.OnAlertListInteractionListener;
 import com.datastorm.hackreativityandroid.mvp.entitites.Alert;
 import com.datastorm.hackreativityandroid.mvp.usecases.alertlist.AlertListMVP;
@@ -22,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class AlertListFragment extends BaseFragment implements OnAlertClickedListener {
+public class AlertListFragment extends BaseFragment implements OnAlertListClickListener {
 
 	public static final  String TAG       = "AlertListFragment";
 	private static final String ARG_TOPIC = "topic";
@@ -113,12 +113,33 @@ public class AlertListFragment extends BaseFragment implements OnAlertClickedLis
 		initPresenters();
 	}
 
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		alertList.setOnAlertClickedListener(this);
+	}
+
 	private void initPresenters() {
 		alertListPresenterManager = new PresenterManager<>(this, new AlertListMVP.Factory(),
 				presenter -> {
 					presenter.setTopic(mTopic);
 					presenter.load();
 				}).bindTo(this);
+	}
+
+	@Override
+	public void onMapShortcutClicked(View v) {
+		if (mListener != null) mListener.onMapShortcutClicked(v);
+	}
+
+	@Override
+	public void onRequestShortcutClicked(View v) {
+		if (mListener != null) mListener.onRequestShortcutClicked(v);
+	}
+
+	@Override
+	public void onReportShortcutClicked(View v) {
+		if (mListener != null) mListener.onReportShortcutClicked(v);
 	}
 
 	@Override

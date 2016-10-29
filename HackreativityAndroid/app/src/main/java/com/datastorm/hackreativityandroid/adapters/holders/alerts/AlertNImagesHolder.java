@@ -15,8 +15,8 @@ public class AlertNImagesHolder extends AlertTextOnlyHolder {
 	@BindView(R.id.alert_images)
 	RecyclerView images;
 
-	public AlertNImagesHolder(View itemView, boolean withClickListener) {
-		super(itemView, withClickListener);
+	public AlertNImagesHolder(View itemView) {
+		super(itemView);
 	}
 
 	@Override
