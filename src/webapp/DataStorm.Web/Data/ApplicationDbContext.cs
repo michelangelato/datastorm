@@ -41,12 +41,15 @@ namespace DataStorm.Web.Data
             builder.Entity<AziendeTipoLavoro>().ToTable("AziendeTipiLavoro").HasKey(tl => tl.Id);
             builder.Entity<AziendeTipoLavoro>().HasOne(az => az.AziendaLavoro);
             builder.Entity<AziendeTipoLavoro>().HasOne(tl => tl.TipoLavoro);
+            builder.Entity<Catasto>().ToTable("Catasto").HasKey(ca => ca.IdCatasto);
             builder.Entity<Azienda>().HasMany(az => az.AziendaTipoLavoro);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
+        public DbSet<TipologiaLavoro> TipologieLavoro { get; set; }
+        public DbSet<Azienda> Aziende { get; set; }
         public DbSet<Avviso> Avvisi { get; set; }
         public DbSet<Immobile> Immobili { get; set; }
         public DbSet<Utente> Utenti { get; set; }
