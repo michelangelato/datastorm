@@ -47,7 +47,9 @@ namespace DataStorm.Web.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
+        public DbSet<Avviso> Avvisi { get; set; }
         public DbSet<Immobile> Immobili { get; set; }
         public DbSet<Utente> Utenti { get; set; }
+        public DbSet<AreaMappa> AreeMappa { get; set; }
     }
 }

@@ -2,6 +2,8 @@
 using DataStorm.Web.Data;
 using DataStorm.Web.Models;
 using DataStorm.Web.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,18 +16,20 @@ namespace DataStorm.Web.Controllers.API
 {
     public class WebApiController : ApiController
     {
-        private ApplicationDbContext db;
+        private readonly ApplicationDbContext db;
+        private readonly UserManager<Utente> um;
 
-        public WebApiController(ApplicationDbContext db)
+        public WebApiController(ApplicationDbContext db, UserManager<Utente> um)
         {
             this.db = db;
+            this.um = um;
         }
 
+        [Authorize]
         [Route("api/immobile")]
         public async Task PostImmobile(ImmobileDTO immobile)
         {
-#warning TODO
-            var utente = await db.Utenti.FirstAsync();
+            var utente = await um.FindByNameAsync(User.Identity.Name);
 
             db.Immobili.Add(new Immobile
             {
@@ -42,20 +46,25 @@ namespace DataStorm.Web.Controllers.API
             await db.SaveChangesAsync();
         }
 
+        [Authorize]
         [Route("api/immobili")]
         public async Task<IEnumerable<ImmobileDTO>> GetImmobili()
         {
-            return await db.Immobili.Select(i => new ImmobileDTO
-            {
-                Comune = i.Comune,
-                Indirizzo = i.Indirizzo,
-                LatitudinePunto = i.PuntoMappa.LatitudinePunto,
-                LongitudinePunto = i.PuntoMappa.LongitudinePunto,
-                MetriQuadri = i.MetriQuadri,
-                NumeroPersoneResidenti = i.NumeroPersoneResidenti,
-                NumeroPiano = i.NumeroPiano,
-                TipoImmobile = i.TipoImmobile
-            }).ToListAsync();
+            var utente = await um.FindByNameAsync(User.Identity.Name);
+
+            return await db.Immobili
+                .Where(i => i.UtenteAppartenenza == utente)
+                .Select(i => new ImmobileDTO
+                {
+                    Comune = i.Comune,
+                    Indirizzo = i.Indirizzo,
+                    LatitudinePunto = i.PuntoMappa.LatitudinePunto,
+                    LongitudinePunto = i.PuntoMappa.LongitudinePunto,
+                    MetriQuadri = i.MetriQuadri,
+                    NumeroPersoneResidenti = i.NumeroPersoneResidenti,
+                    NumeroPiano = i.NumeroPiano,
+                    TipoImmobile = i.TipoImmobile
+                }).ToListAsync();
         }
 
         [Route("api/immobili/tipologie")]
@@ -66,15 +75,15 @@ namespace DataStorm.Web.Controllers.API
         }
 
         [Route("api/avvisi")]
-        public async Task<object> GetAvvisi()
+        public async Task<dynamic> GetAvvisi()
         {
-            return await Task.FromResult(0);
+            return await db.Avvisi.Select(a => a.ToDTO()).ToListAsync();
         }
 
         [Route("api/avvisi/{id}")]
-        public async Task<object> GetAvviso(int ID)
+        public async Task<dynamic> GetAvviso(int ID)
         {
-            return await Task.FromResult(0);
+            return await db.Avvisi.First(a => a.Id == ID).ToDTO();
         }
 
         [Route("api/segnalazione")]
@@ -96,11 +105,10 @@ namespace DataStorm.Web.Controllers.API
             return null;
         }
 
-        [Route("api/oggetti-mappa")]
-        public async Task<IEnumerable<AreaMappa>> GetOggettiMappa()
+        [Route("api/elementi-mappa")]
+        public async Task<IEnumerable<dynamic>> GetElementiMappa()
         {
-            await Task.FromResult(0);
-            return null;
+            return await db.AreeMappa.Select(a => a.ToDTO()).ToListAsync();
         }
 
         [Route("api/gps")]
