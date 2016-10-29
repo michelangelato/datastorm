@@ -21,13 +21,49 @@ namespace DataStorm.Web.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<decimal>("MetriQuadri");
+
+                    b.Property<int?>("PuntoMappaId");
+
                     b.Property<string>("UtenteAppartenenzaId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PuntoMappaId");
+
                     b.HasIndex("UtenteAppartenenzaId");
 
                     b.ToTable("Appartamenti");
+                });
+
+            modelBuilder.Entity("DataStorm.Web.Models.AreaMappa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("AvvisoId");
+
+                    b.Property<int>("TipoMappa");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AvvisoId");
+
+                    b.ToTable("AreeMappa");
+                });
+
+            modelBuilder.Entity("DataStorm.Web.Models.Avviso", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descrizione");
+
+                    b.Property<string>("Titolo");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Avvisi");
                 });
 
             modelBuilder.Entity("DataStorm.Web.Models.Edificio", b =>
@@ -37,7 +73,13 @@ namespace DataStorm.Web.Data.Migrations
 
                     b.Property<int?>("AppartamentoEdifcioId");
 
+                    b.Property<string>("Comune");
+
+                    b.Property<string>("Indirizzo");
+
                     b.Property<short>("NumeroPersoneResidenti");
+
+                    b.Property<string>("Provincia");
 
                     b.HasKey("Id");
 
@@ -46,9 +88,69 @@ namespace DataStorm.Web.Data.Migrations
                     b.ToTable("Edifici");
                 });
 
+            modelBuilder.Entity("DataStorm.Web.Models.ImmagineAvviso", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Altezza");
+
+                    b.Property<int?>("AvvisoId");
+
+                    b.Property<int>("Larghezza");
+
+                    b.Property<string>("TitoloImmagine");
+
+                    b.Property<string>("UrlImmagine");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AvvisoId");
+
+                    b.ToTable("ImmaginiAvvisi");
+                });
+
+            modelBuilder.Entity("DataStorm.Web.Models.LinkAvviso", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("AvvisoId");
+
+                    b.Property<string>("Titolo");
+
+                    b.Property<string>("Url");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AvvisoId");
+
+                    b.ToTable("LinkAvvisi");
+                });
+
+            modelBuilder.Entity("DataStorm.Web.Models.PuntoMappa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("AreaMappaId");
+
+                    b.Property<float>("LatitudinePunto");
+
+                    b.Property<float>("LongitudinePunto");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AreaMappaId");
+
+                    b.ToTable("PuntiMappa");
+                });
+
             modelBuilder.Entity("DataStorm.Web.Models.Segnalazione", b =>
                 {
                     b.Property<string>("Id");
+
+                    b.Property<int>("TipoSegnalazione");
 
                     b.Property<string>("UtenteSegnalazioneId");
 
@@ -57,16 +159,6 @@ namespace DataStorm.Web.Data.Migrations
                     b.HasIndex("UtenteSegnalazioneId");
 
                     b.ToTable("Segnalazioni");
-                });
-
-            modelBuilder.Entity("DataStorm.Web.Models.TipologiaEdificio", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TipologieEdificio");
                 });
 
             modelBuilder.Entity("DataStorm.Web.Models.Utente", b =>
@@ -227,9 +319,20 @@ namespace DataStorm.Web.Data.Migrations
 
             modelBuilder.Entity("DataStorm.Web.Models.Appartamento", b =>
                 {
+                    b.HasOne("DataStorm.Web.Models.PuntoMappa", "PuntoMappa")
+                        .WithMany()
+                        .HasForeignKey("PuntoMappaId");
+
                     b.HasOne("DataStorm.Web.Models.Utente", "UtenteAppartenenza")
                         .WithMany("AppartamentiUtente")
                         .HasForeignKey("UtenteAppartenenzaId");
+                });
+
+            modelBuilder.Entity("DataStorm.Web.Models.AreaMappa", b =>
+                {
+                    b.HasOne("DataStorm.Web.Models.Avviso")
+                        .WithMany("AreeMappe")
+                        .HasForeignKey("AvvisoId");
                 });
 
             modelBuilder.Entity("DataStorm.Web.Models.Edificio", b =>
@@ -237,6 +340,27 @@ namespace DataStorm.Web.Data.Migrations
                     b.HasOne("DataStorm.Web.Models.Appartamento", "AppartamentoEdifcio")
                         .WithMany()
                         .HasForeignKey("AppartamentoEdifcioId");
+                });
+
+            modelBuilder.Entity("DataStorm.Web.Models.ImmagineAvviso", b =>
+                {
+                    b.HasOne("DataStorm.Web.Models.Avviso")
+                        .WithMany("ImmaginiAvviso")
+                        .HasForeignKey("AvvisoId");
+                });
+
+            modelBuilder.Entity("DataStorm.Web.Models.LinkAvviso", b =>
+                {
+                    b.HasOne("DataStorm.Web.Models.Avviso")
+                        .WithMany("Links")
+                        .HasForeignKey("AvvisoId");
+                });
+
+            modelBuilder.Entity("DataStorm.Web.Models.PuntoMappa", b =>
+                {
+                    b.HasOne("DataStorm.Web.Models.AreaMappa")
+                        .WithMany("PuntiMappa")
+                        .HasForeignKey("AreaMappaId");
                 });
 
             modelBuilder.Entity("DataStorm.Web.Models.Segnalazione", b =>
