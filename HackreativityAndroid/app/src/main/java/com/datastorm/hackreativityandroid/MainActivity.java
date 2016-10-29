@@ -51,7 +51,6 @@ public class MainActivity extends BaseActivity implements NavigationView
 		OnTopicAddInteractionListener {
 
 	public static final  String MAIN_FRAGMENT          = "main_fragment";
-	public static final  String RIGHT_PANEL_FRAGMENT   = "right_panel_fragment";
 	private static final String LAST_CLICKED_NAV_ITEM  = "last_clicked_nav_item";
 	private static final int    ACCOUNT_PICKER_REQUEST = 1234;
 	private static final String LAST_ACCOUNT           = "chosen_account";

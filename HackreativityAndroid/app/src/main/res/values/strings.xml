@@ -20,6 +20,12 @@
 	<string name="report_danger">Sono in pericolo…</string>
 	<string name="report_collapse">E\' crollato…</string>
 	<string name="report_block">E\' bloccato…</string>
+	<string name="new_request_address_hint">Scrivi l\'indirizzo completo</string>
+	<string name="request_new_conditions">Condizioni</string>
+	<string name="request_new_condition_door">Porta bloccata</string>
+	<string name="request_new_condition_stairs">Scale inagibili</string>
+	<string name="request_new_condition_send">Richiedi intervento</string>
+	<string name="request_new_type">Tipo di intervento</string>
 	<string-array name="request_type">
 		<item>Sopralluogo</item>
 		<item>Recupero Beni</item>
