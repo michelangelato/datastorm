@@ -65,15 +65,15 @@ namespace DataStorm.Web.Controllers.API
         }
 
         [Route("api/avvisi")]
-        public async Task<object> GetAvvisi()
+        public async Task<dynamic> GetAvvisi()
         {
-            return await Task.FromResult(0);
+            return await db.Avvisi.Select(a => a.ToDTO()).ToListAsync();
         }
 
         [Route("api/avvisi/{id}")]
-        public async Task<object> GetAvviso(int ID)
+        public async Task<dynamic> GetAvviso(int ID)
         {
-            return await Task.FromResult(0);
+            return await db.Avvisi.First(a => a.Id == ID).ToDTO();
         }
 
         [Route("api/segnalazione")]
