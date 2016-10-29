@@ -10,7 +10,7 @@
                 $.get('/api/immobili', function (data) {
                     console.log(data);
                     var lstImmobili = $('#immobili-list');
-                    var items = data.items.map(function (item) {
+                    var items = data.map(function (item) {
                         return item.key + ': ' + item.value;
                     });
                     
