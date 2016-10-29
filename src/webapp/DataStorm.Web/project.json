@@ -41,7 +41,8 @@
     },
     "Microsoft.AspNetCore.Mvc.WebApiCompatShim": "1.0.1",
     "Swashbuckle.SwaggerGen":"6.0.0-beta902",
-    "Swashbuckle.SwaggerUi":"6.0.0-beta902"
+    "Swashbuckle.SwaggerUi":"6.0.0-beta902",
+    "AutoMapper": "5.1.1"
   },
 
   "tools": {

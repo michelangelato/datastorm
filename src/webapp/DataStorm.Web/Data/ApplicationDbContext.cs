@@ -35,12 +35,21 @@ namespace DataStorm.Web.Data
             builder.Entity<PuntoMappa>().ToTable("PuntiMappa").HasKey(pm => pm.Id);
             builder.Entity<AreaMappa>().ToTable("AreeMappa").HasKey(am=>am.Id);
             builder.Entity<AreaMappa>().HasMany(am => am.PuntiMappa);
-
+            builder.Entity<Azienda>().ToTable("Aziende").HasKey(tl => tl.Id);
+            builder.Entity<Azienda>().HasOne(az => az.Posizione);
+            builder.Entity<TipologiaLavoro>().ToTable("TipologieLavoro").HasKey(tl=>tl.Id);
+            builder.Entity<AziendeTipoLavoro>().ToTable("AziendeTipiLavoro").HasKey(tl => tl.Id);
+            builder.Entity<AziendeTipoLavoro>().HasOne(az => az.AziendaLavoro);
+            builder.Entity<AziendeTipoLavoro>().HasOne(tl => tl.TipoLavoro);
+            builder.Entity<Azienda>().HasMany(az => az.AziendaTipoLavoro);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
+        public DbSet<Avviso> Avvisi { get; set; }
         public DbSet<Immobile> Immobili { get; set; }
+        public DbSet<Utente> Utenti { get; set; }
+        public DbSet<AreaMappa> AreeMappa { get; set; }
     }
 }

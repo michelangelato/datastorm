@@ -8,9 +8,10 @@ using DataStorm.Web.Data;
 namespace DataStorm.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161029143456_Aziende")]
+    partial class Aziende
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1");
@@ -181,17 +182,11 @@ namespace DataStorm.Web.Migrations
                 {
                     b.Property<string>("Id");
 
-                    b.Property<string>("Descrizione");
-
-                    b.Property<int?>("LocalizzazioneId");
-
                     b.Property<int>("TipoSegnalazione");
 
                     b.Property<string>("UtenteSegnalazioneId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LocalizzazioneId");
 
                     b.HasIndex("UtenteSegnalazioneId");
 
@@ -431,10 +426,6 @@ namespace DataStorm.Web.Migrations
 
             modelBuilder.Entity("DataStorm.Web.Models.Segnalazione", b =>
                 {
-                    b.HasOne("DataStorm.Web.Models.PuntoMappa", "Localizzazione")
-                        .WithMany()
-                        .HasForeignKey("LocalizzazioneId");
-
                     b.HasOne("DataStorm.Web.Models.Utente", "UtenteSegnalazione")
                         .WithMany()
                         .HasForeignKey("UtenteSegnalazioneId");
