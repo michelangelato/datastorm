@@ -170,10 +170,8 @@ namespace DataStorm.Web.Controllers.API
         public Task<IEnumerable<Azienda>> GetAziende(int? pageNumber)
         {
             int PageSize = 10;
-            if (pageNumber.HasValue)
-            {
-
-            }
+            var skipValue = (pageNumber.GetValueOrDefault(1) - 1) * PageSize;
+            
             throw new NotImplementedException();
         }
     }
