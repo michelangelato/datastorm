@@ -12,8 +12,8 @@ import com.dadino.quickstart.core.mvp.components.presenter.MvpView;
 import com.dadino.quickstart.core.mvp.components.presenter.PresenterManager;
 import com.datastorm.hackreativityandroid.R;
 import com.datastorm.hackreativityandroid.interfaces.OnRequestListInteractionListener;
-import com.datastorm.hackreativityandroid.mvp.entitites.Alert;
-import com.datastorm.hackreativityandroid.mvp.usecases.alertlist.AlertListMVP;
+import com.datastorm.hackreativityandroid.mvp.entitites.Request;
+import com.datastorm.hackreativityandroid.mvp.usecases.requestlist.RequestListMVP;
 import com.datastorm.hackreativityandroid.widgets.HideableFab;
 import com.datastorm.hackreativityandroid.widgets.PresentedRequestListView;
 
@@ -25,8 +25,7 @@ import butterknife.Unbinder;
 
 public class RequestListFragment extends DrawerToggleFragment {
 
-	public static final  String TAG       = "AlertListFragment";
-	private static final String ARG_TOPIC = "topic";
+	public static final String TAG = "RequestListFragment";
 
 	@BindView(R.id.toolbar)
 	Toolbar                  toolbar;
@@ -35,25 +34,16 @@ public class RequestListFragment extends DrawerToggleFragment {
 	@BindView(R.id.request_new_fab)
 	HideableFab              fab;
 
-	private String   mTopic;
 	private Unbinder unbinder;
 
-	private PresenterManager<AlertListMVP.Presenter> alertListPresenterManager;
-	private MvpView<List<Alert>> iAlertListView = new MvpView<>(this::onError, this);
+	private PresenterManager<RequestListMVP.Presenter> requestListPresenterManager;
+	private MvpView<List<Request>> iRequestListView = new MvpView<>(this::onError, this);
 
 
 	private OnRequestListInteractionListener mListener;
 
 	public RequestListFragment() {
 		// Required empty public constructor
-	}
-
-	public static RequestListFragment newInstance(String topic) {
-		RequestListFragment fragment = new RequestListFragment();
-		Bundle args = new Bundle();
-		args.putString(ARG_TOPIC, topic);
-		fragment.setArguments(args);
-		return fragment;
 	}
 
 	public static RequestListFragment newInstance() {
@@ -93,15 +83,12 @@ public class RequestListFragment extends DrawerToggleFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (getArguments() != null) {
-			mTopic = getArguments().getString(ARG_TOPIC);
-		}
 
 		initPresenters();
 	}
 
 	private void initPresenters() {
-		alertListPresenterManager = new PresenterManager<>(this, new AlertListMVP.Factory(),
+		requestListPresenterManager = new PresenterManager<>(this, new RequestListMVP.Factory(),
 				IPresenter::load).bindTo(this);
 	}
 
@@ -119,13 +106,13 @@ public class RequestListFragment extends DrawerToggleFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (alertListPresenter() != null) alertListPresenter().addView(iAlertListView);
+		if (alertListPresenter() != null) alertListPresenter().addView(iRequestListView);
 		if (alertList != null) alertList.setPresenter(alertListPresenter());
 	}
 
 	@Override
 	public void onPause() {
-		if (alertListPresenter() != null) alertListPresenter().removeView(iAlertListView);
+		if (alertListPresenter() != null) alertListPresenter().removeView(iRequestListView);
 		if (alertList != null) alertList.setPresenter(null);
 
 		super.onPause();
@@ -141,7 +128,7 @@ public class RequestListFragment extends DrawerToggleFragment {
 		//TODO
 	}
 
-	private AlertListMVP.Presenter alertListPresenter() {
-		return alertListPresenterManager != null ? alertListPresenterManager.get() : null;
+	private RequestListMVP.Presenter alertListPresenter() {
+		return requestListPresenterManager != null ? requestListPresenterManager.get() : null;
 	}
 }

@@ -54,5 +54,5 @@ public class AbstractAlert {
 	@SerializedName("Mappe")
 	@Column(name = "maps")
 	@OneToMany(cascade = {CascadeAction.DELETE, CascadeAction.SAVE})
-	List<AlertMap> maps;
+	List<MapObject> maps;
 }

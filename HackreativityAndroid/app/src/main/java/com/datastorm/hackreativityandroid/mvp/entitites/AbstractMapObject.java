@@ -12,7 +12,7 @@ import io.requery.Table;
 
 @Entity(stateless = true)
 @Table(name = "alert_map")
-public class AbstractAlertMap {
+public class AbstractMapObject {
 
 	@Expose
 	@SerializedName("Id")
@@ -21,9 +21,24 @@ public class AbstractAlertMap {
 	long id;
 
 	@Expose
+	@SerializedName("Topic")
+	@Column(name = "topic")
+	String topic;
+
+	@Expose
 	@SerializedName("Tipo")
 	@Column(name = "type")
 	int type;
+
+	@Expose
+	@SerializedName("Titolo")
+	@Column(name = "title")
+	String title;
+
+	@Expose
+	@SerializedName("Descrizione")
+	@Column(name = "description")
+	String description;
 
 	@ManyToOne
 	@Column(name = "alert")

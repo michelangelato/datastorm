@@ -1,7 +1,7 @@
 <resources>
 	<string name="app_name">HackreativityAndroid</string>
 	<string name="action_show_alert_list">@string/fragment_title_alert_list</string>
-	<string name="action_show_request_list">>@string/fragment_title_requests_list</string>
+	<string name="action_show_request_list">@string/fragment_title_requests_list</string>
 	<string name="action_show_report">@string/fragment_title_report</string>
 	<string name="action_show_map">@string/fragment_title_map</string>
 

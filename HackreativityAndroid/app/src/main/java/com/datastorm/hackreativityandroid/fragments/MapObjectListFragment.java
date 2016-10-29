@@ -11,10 +11,9 @@ import com.dadino.quickstart.core.interfaces.IPresenter;
 import com.dadino.quickstart.core.mvp.components.presenter.MvpView;
 import com.dadino.quickstart.core.mvp.components.presenter.PresenterManager;
 import com.datastorm.hackreativityandroid.R;
-import com.datastorm.hackreativityandroid.interfaces.OnAlertClickedListener;
-import com.datastorm.hackreativityandroid.interfaces.OnAlertListInteractionListener;
-import com.datastorm.hackreativityandroid.mvp.entitites.Alert;
-import com.datastorm.hackreativityandroid.mvp.usecases.alertlist.AlertListMVP;
+import com.datastorm.hackreativityandroid.interfaces.OnMapObjectListInteractionListener;
+import com.datastorm.hackreativityandroid.mvp.entitites.MapObject;
+import com.datastorm.hackreativityandroid.mvp.usecases.mapobjectlist.MapObjectListMVP;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class CustomMapFragment extends DrawerToggleFragment implements OnAlertClickedListener {
+public class MapObjectListFragment extends DrawerToggleFragment {
 
 	public static final String TAG = "MapFragment";
 
@@ -31,17 +30,17 @@ public class CustomMapFragment extends DrawerToggleFragment implements OnAlertCl
 
 	private Unbinder unbinder;
 
-	private PresenterManager<AlertListMVP.Presenter> alertListPresenterManager;
-	private MvpView<List<Alert>> iAlertListView = new MvpView<>(this::onError, this);
+	private PresenterManager<MapObjectListMVP.Presenter> mapObjectListPresenterManager;
+	private MvpView<List<MapObject>> iAlertListView = new MvpView<>(this::onError, this);
 
-	private OnAlertListInteractionListener mListener;
+	private OnMapObjectListInteractionListener mListener;
 
-	public CustomMapFragment() {
+	public MapObjectListFragment() {
 		// Required empty public constructor
 	}
 
-	public static CustomMapFragment newInstance() {
-		CustomMapFragment fragment = new CustomMapFragment();
+	public static MapObjectListFragment newInstance() {
+		MapObjectListFragment fragment = new MapObjectListFragment();
 		Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
@@ -50,11 +49,11 @@ public class CustomMapFragment extends DrawerToggleFragment implements OnAlertCl
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
-		if (context instanceof OnAlertListInteractionListener) {
-			mListener = (OnAlertListInteractionListener) context;
+		if (context instanceof OnMapObjectListInteractionListener) {
+			mListener = (OnMapObjectListInteractionListener) context;
 		} else {
 			throw new RuntimeException(
-					context.toString() + " must implement OnAlertListInteractionListener");
+					context.toString() + " must implement OnMapObjectListInteractionListener");
 		}
 	}
 
@@ -82,7 +81,8 @@ public class CustomMapFragment extends DrawerToggleFragment implements OnAlertCl
 	}
 
 	private void initPresenters() {
-		alertListPresenterManager = new PresenterManager<>(this, new AlertListMVP.Factory(),
+		mapObjectListPresenterManager = new PresenterManager<>(this, new MapObjectListMVP
+				.Factory(),
 				IPresenter::load).bindTo(this);
 	}
 
@@ -113,16 +113,12 @@ public class CustomMapFragment extends DrawerToggleFragment implements OnAlertCl
 		super.onDestroyView();
 	}
 
-	@Override
-	public void onAlertClicked(View view, Alert alert) {
-		if (mListener != null) mListener.onAlertClicked(view, alert);
-	}
 
 	private void onError(Throwable error) {
 		//TODO
 	}
 
-	private AlertListMVP.Presenter alertListPresenter() {
-		return alertListPresenterManager != null ? alertListPresenterManager.get() : null;
+	private MapObjectListMVP.Presenter alertListPresenter() {
+		return mapObjectListPresenterManager != null ? mapObjectListPresenterManager.get() : null;
 	}
 }

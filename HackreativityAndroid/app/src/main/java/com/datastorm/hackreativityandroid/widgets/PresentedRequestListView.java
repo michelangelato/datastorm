@@ -6,19 +6,19 @@ import android.util.AttributeSet;
 
 import com.dadino.quickstart.core.mvp.components.presenter.MvpView;
 import com.datastorm.hackreativityandroid.R;
-import com.datastorm.hackreativityandroid.adapters.AlertAdapter;
-import com.datastorm.hackreativityandroid.interfaces.OnAlertClickedListener;
-import com.datastorm.hackreativityandroid.mvp.entitites.Alert;
-import com.datastorm.hackreativityandroid.mvp.usecases.alertlist.AlertListMVP;
+import com.datastorm.hackreativityandroid.adapters.RequestAdapter;
+import com.datastorm.hackreativityandroid.interfaces.OnRequestClickedListener;
+import com.datastorm.hackreativityandroid.mvp.entitites.Request;
+import com.datastorm.hackreativityandroid.mvp.usecases.requestlist.RequestListMVP;
 
 import java.util.List;
 
 
-public class PresentedRequestListView extends RecyclerLayout<AlertAdapter, LinearLayoutManager> {
+public class PresentedRequestListView extends RecyclerLayout<RequestAdapter, LinearLayoutManager> {
 
-	private AlertListMVP.Presenter mPresenter;
-	private MvpView<List<Alert>> iView = new MvpView<>(this::onItemNext, this::onItemLoad);
-	private OnAlertClickedListener listener;
+	private RequestListMVP.Presenter mPresenter;
+	private MvpView<List<Request>> iView = new MvpView<>(this::onItemNext, this::onItemLoad);
+	private OnRequestClickedListener listener;
 
 	public PresentedRequestListView(Context context) {
 		super(context);
@@ -33,15 +33,15 @@ public class PresentedRequestListView extends RecyclerLayout<AlertAdapter, Linea
 	protected void initialize() {
 		setEmptyText(R.string.empty_requests);
 		setLayoutManager(new LinearLayoutManager(getContext()));
-		final AlertAdapter adapter = new AlertAdapter();
-		adapter.setClickListener((v, calculatedSubscription) -> {
-			if (listener != null) listener.onAlertClicked(v, calculatedSubscription);
+		final RequestAdapter adapter = new RequestAdapter();
+		adapter.setClickListener((v, request) -> {
+			if (listener != null) listener.onRequestClicked(v, request);
 		});
 		setAdapter(adapter);
 		setEnabled(false);
 	}
 
-	public void onItemNext(List<Alert> item) {
+	public void onItemNext(List<Request> item) {
 		mAdapter.setItems(item);
 	}
 
@@ -50,11 +50,11 @@ public class PresentedRequestListView extends RecyclerLayout<AlertAdapter, Linea
 		setListLoading(loading);
 	}
 
-	public void setOnAlertClickedListener(OnAlertClickedListener listener) {
+	public void setOnRequestClickedListener(OnRequestClickedListener listener) {
 		this.listener = listener;
 	}
 
-	public void setPresenter(AlertListMVP.Presenter presenter) {
+	public void setPresenter(RequestListMVP.Presenter presenter) {
 		if (mPresenter != null) mPresenter.removeView(iView);
 		mPresenter = presenter;
 		if (mPresenter != null) mPresenter.addView(iView);

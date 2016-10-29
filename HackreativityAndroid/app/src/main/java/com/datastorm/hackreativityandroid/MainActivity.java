@@ -25,11 +25,12 @@ import com.dadino.quickstart.core.utils.Logs;
 import com.dadino.quickstart.login.mvp.components.Authenticator;
 import com.dadino.quickstart.login.mvp.usecases.lastusedaccount.LastAccountMVP;
 import com.datastorm.hackreativityandroid.fragments.AlertListFragment;
-import com.datastorm.hackreativityandroid.fragments.CustomMapFragment;
+import com.datastorm.hackreativityandroid.fragments.MapObjectListFragment;
 import com.datastorm.hackreativityandroid.fragments.ReportFragment;
 import com.datastorm.hackreativityandroid.fragments.RequestListFragment;
 import com.datastorm.hackreativityandroid.interfaces.DrawerToggleServer;
 import com.datastorm.hackreativityandroid.interfaces.OnAlertListInteractionListener;
+import com.datastorm.hackreativityandroid.interfaces.OnMapObjectListInteractionListener;
 import com.datastorm.hackreativityandroid.interfaces.OnRequestListInteractionListener;
 import com.datastorm.hackreativityandroid.mvp.components.ErrorHandler;
 import com.datastorm.hackreativityandroid.mvp.entitites.Alert;
@@ -42,17 +43,14 @@ public class MainActivity extends BaseActivity implements NavigationView
 		.OnNavigationItemSelectedListener,
 		DrawerToggleServer,
 		OnAlertListInteractionListener,
-		OnRequestListInteractionListener {
+		OnRequestListInteractionListener,
+		OnMapObjectListInteractionListener {
 
 	public static final  String MAIN_FRAGMENT                          = "main_fragment";
 	public static final  String RIGHT_PANEL_FRAGMENT                   = "right_panel_fragment";
 	private static final String LAST_CLICKED_NAV_ITEM                  = "last_clicked_nav_item";
 	private static final int    ACCOUNT_PICKER_REQUEST                 = 1234;
 	private static final String LAST_ACCOUNT                           = "chosen_account";
-	private static final String INTENT_EXTRA_REQUESTED_MAC             =
-			"INTENT_EXTRA_REQUESTED_MAC";
-	private static final String INTENT_EXTRA_SOURCE_ALARM_NOTIFICATION =
-			"INTENT_EXTRA_SOURCE_ALARM_NOTIFICATION";
 
 	@BindView(R.id.nav_view)
 	NavigationView navigationView;
@@ -195,8 +193,8 @@ public class MainActivity extends BaseActivity implements NavigationView
 			case R.id.action_show_map:
 				getSupportFragmentManager().beginTransaction()
 				                           .replace(R.id.fragment_container,
-						                           CustomMapFragment.newInstance(),
-						                           CustomMapFragment.TAG)
+						                           MapObjectListFragment.newInstance(),
+						                           MapObjectListFragment.TAG)
 				                           .commitNow();
 				break;
 		}

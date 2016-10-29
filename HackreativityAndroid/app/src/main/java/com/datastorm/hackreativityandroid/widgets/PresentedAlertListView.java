@@ -34,8 +34,8 @@ public class PresentedAlertListView extends RecyclerLayout<AlertAdapter, LinearL
 		setEmptyText(R.string.empty_alerts);
 		setLayoutManager(new LinearLayoutManager(getContext()));
 		final AlertAdapter adapter = new AlertAdapter();
-		adapter.setClickListener((v, calculatedSubscription) -> {
-			if (listener != null) listener.onAlertClicked(v, calculatedSubscription);
+		adapter.setClickListener((v, alert) -> {
+			if (listener != null) listener.onAlertClicked(v, alert);
 		});
 		setAdapter(adapter);
 		setEnabled(false);

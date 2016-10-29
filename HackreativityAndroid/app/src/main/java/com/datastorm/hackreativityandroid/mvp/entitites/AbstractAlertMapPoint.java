@@ -29,5 +29,5 @@ public class AbstractAlertMapPoint {
 	@ManyToOne
 	@Column(name = "alert_map")
 	@Key
-	AlertMap alert;
+	MapObject alert;
 }
