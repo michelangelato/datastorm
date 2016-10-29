@@ -8,6 +8,7 @@ namespace DataStorm.Web.Models
     public class Catasto
     {
         public int IdCatasto { get; set; }
+        public PuntoMappa PuntoMappa {get;set;}
         public string Comune {get;set;}
         public string Indirizzo {get;set;}
 
