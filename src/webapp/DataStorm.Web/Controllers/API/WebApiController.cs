@@ -16,13 +16,15 @@ namespace DataStorm.Web.Controllers.API
 {
     public class WebApiController : ApiController
     {
-        private readonly ApplicationDbContext db;
-        private readonly UserManager<Utente> um;
+        private readonly ApplicationDbContext _db;
+        private readonly UserManager<Utente> _userManager;
 
-        public WebApiController(ApplicationDbContext db, UserManager<Utente> um)
+        public WebApiController(ApplicationDbContext db, UserManager<Utente> userManager)
         {
-            this.db = db;
-            this.um = um;
+            _db = db;
+            _userManager = userManager;
+
+            db.Seed(userManager);
         }
 
         [Authorize]
@@ -32,14 +34,14 @@ namespace DataStorm.Web.Controllers.API
         {
             try
             {
-                var utente = await um.FindByNameAsync(User.Identity.Name);
+                var utente = await _userManager.FindByNameAsync(User.Identity.Name);
                 Immobile nuovoImmobile = Mapper.Map<ImmobileDTO, Immobile>(immobile);
                 nuovoImmobile.UtenteAppartenenza = utente;
-                db.Immobili.Add(
+                _db.Immobili.Add(
                     nuovoImmobile
                     );
 
-                await db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch(Exception ex)
             {
@@ -48,38 +50,38 @@ namespace DataStorm.Web.Controllers.API
         }
         public async Task<ActionResult> EditImmobile(ImmobileDTO immobile)
         {
-            var utente = await um.FindByNameAsync(User.Identity.Name);
+            var utente = await _userManager.FindByNameAsync(User.Identity.Name);
             
-            Immobile immobileCoinvolto = db.Immobili.Single(i => i.Id == immobile.Id);
+            Immobile immobileCoinvolto = _db.Immobili.Single(i => i.Id == immobile.Id);
             if (immobileCoinvolto.UtenteAppartenenza.Id != utente.Id)
             {
                 return InternalServerError(new Exception("Immobile non valido"));
             }
             Mapper.Map(immobile, immobileCoinvolto);
-            await db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
             return Ok();
         }
         [HttpDelete]
         public async Task<ActionResult> DeleteImmobile(int Id)
         {
-            var utente = await um.FindByNameAsync(User.Identity.Name);
+            var utente = await _userManager.FindByNameAsync(User.Identity.Name);
 
-            Immobile immobileCoinvolto = db.Immobili.Single(i => i.Id == Id);
+            Immobile immobileCoinvolto = _db.Immobili.Single(i => i.Id == Id);
             if (immobileCoinvolto.UtenteAppartenenza.Id != utente.Id)
             {
                 return InternalServerError(new Exception("Immobile non valido"));
             }
             else
             {
-                db.Immobili.Remove(immobileCoinvolto);
+                _db.Immobili.Remove(immobileCoinvolto);
             }
             return Ok();
         }
         [HttpGet]
         public async Task<ImmobileDTO> GetImmobile(int Id)
         {
-            var utente = await um.FindByNameAsync(User.Identity.Name);
-            var immobile = await db.Immobili.SingleAsync(im => im.Id == Id);
+            var utente = await _userManager.FindByNameAsync(User.Identity.Name);
+            var immobile = await _db.Immobili.SingleAsync(im => im.Id == Id);
             if(immobile.UtenteAppartenenza.Id!=utente.Id)
             {
                 throw new Exception("Immobile non trovato");
@@ -94,9 +96,9 @@ namespace DataStorm.Web.Controllers.API
         [Route("api/immobili")]
         public async Task<IEnumerable<ImmobileDTO>> GetImmobili()
         {
-            var utente = await um.FindByNameAsync(User.Identity.Name);
+            var utente = await _userManager.FindByNameAsync(User.Identity.Name);
 
-            return await db.Immobili
+            return await _db.Immobili
                 .Where(i => i.UtenteAppartenenza == utente)
                 .Select(i => 
                     Mapper.Map<ImmobileDTO>(i)
@@ -114,13 +116,13 @@ namespace DataStorm.Web.Controllers.API
         [Route("api/avvisi")]
         public async Task<dynamic> GetAvvisi()
         {
-            return await db.Avvisi.Select(a => a.ToDTO()).ToListAsync();
+            return await _db.Avvisi.Select(a => a.ToDTO()).ToListAsync();
         }
 
         [Route("api/avvisi/{id}")]
         public async Task<dynamic> GetAvviso(int ID)
         {
-            return await db.Avvisi.First(a => a.Id == ID).ToDTO();
+            return await _db.Avvisi.First(a => a.Id == ID).ToDTO();
         }
 
         [Route("api/segnalazione")]
@@ -145,7 +147,7 @@ namespace DataStorm.Web.Controllers.API
         [Route("api/elementi-mappa")]
         public async Task<IEnumerable<dynamic>> GetElementiMappa()
         {
-            return await db.AreeMappa.Select(a => a.ToDTO()).ToListAsync();
+            return await _db.AreeMappa.Select(a => a.ToDTO()).ToListAsync();
         }
 
         [Route("api/gps")]

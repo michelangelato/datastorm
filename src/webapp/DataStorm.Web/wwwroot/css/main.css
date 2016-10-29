@@ -167,7 +167,11 @@
 
 #header{
   margin-bottom: 0;
-  padding: 30px 0 60px 0;
+<<<<<<< HEAD
+  padding: 32px 0 32px 0;
+=======
+  padding: 30px 0 0 0;
+>>>>>>> 259ac1e28325d4dd6e15bd52543c6529a80d74c8
 }
 
 #header .navbar-inverse .container{
@@ -628,6 +632,7 @@ margin-bottom:20px;
 #home-slider h1{
   margin-top: 100px;
   margin-bottom: 25px;
+  color:#00897b;
 }
 
 #home-slider .btn-common {
