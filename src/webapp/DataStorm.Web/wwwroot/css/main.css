@@ -58,7 +58,7 @@
   }
 
   h1{
-    color: #686868;
+    color: #e53935;
   }
 
   h2{
@@ -80,7 +80,8 @@
 
   .btn-common {
     font-size: 14px;
-    color: #00897b;
+    background-color: #00897b;
+    color: #ffffff;
     border: 1px solid #00897b;
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
@@ -99,9 +100,9 @@
   .btn-common:hover, 
   .btn-common:focus{
     outline: none;
-    background: none;
+    background: #e53935;
     box-shadow: none;
-    color: #e53935;
+    color: #ffffff;
     border-color:#e53935;
   }
 
@@ -558,7 +559,7 @@ margin-bottom:20px;
 
 #home-slider .main-slider {
   position: relative;
-  height: 450px;
+  height: 400px;
 }
 
 #home-slider .slide-text{
@@ -666,6 +667,27 @@ margin-bottom:20px;
   background-color: #fbfafa;
   background-repeat: repeat-x;
   height: 157px;
+  background-position: center;
+  display: table;
+  position: static;
+  width: 100%;
+}
+
+#action-contatore{
+  background-image: none;
+  background-color: #fbfafa;
+  height: 350px;
+  background-position: center;
+  display: table;
+  position: static;
+  width: 100%;
+}
+
+#action-app {
+  background-image: url(../images/home/tour-bg3.png);
+  background-color: #fbfafa;
+  background-repeat: repeat-x;
+  height: 300px;
   background-position: center;
   display: table;
   position: static;
@@ -798,7 +820,7 @@ margin-bottom:20px;
 }
 
 .tour-button {
-  background-image: url(../images/home/tour-icon2.png);
+  background-image: url(../images/home/tour-icon3.png);
   height: 100%;
   background-repeat: no-repeat;
   position: absolute;
