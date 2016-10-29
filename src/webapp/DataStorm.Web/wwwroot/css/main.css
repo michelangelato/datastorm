@@ -26,7 +26,7 @@
 
 
   a{
-    color:#C03035;
+    color:#e53935;
   }
 
   a:hover {
@@ -101,8 +101,8 @@
     outline: none;
     background: none;
     box-shadow: none;
-    color: #00897b;
-    border-color:#00897b;
+    color: #e53935;
+    border-color:#e53935;
   }
 
   .align-right{
@@ -167,7 +167,11 @@
 
 #header{
   margin-bottom: 0;
+<<<<<<< HEAD
+  padding: 32px 0 32px 0;
+=======
   padding: 30px 0 0 0;
+>>>>>>> 259ac1e28325d4dd6e15bd52543c6529a80d74c8
 }
 
 #header .navbar-inverse .container{
@@ -1012,7 +1016,7 @@ ul.elements li{
 }
 
 ul.elements li > i{
-  color:#C03035;
+  color:#e53935;
   display: inline-block;
   margin-right: 10px;
 }
@@ -1223,8 +1227,8 @@ ul.elements li > i{
 .pagination .active a:focus, 
 .pagination a:focus {
   background: transparent;
-  border-color: #C03035;
-  color: #C03035;
+  border-color: #e53935;
+  color: #e53935;
 }
 
 
@@ -1788,7 +1792,7 @@ Blog with right sidebar
 /* Audio CSS */
 
 .audiojs{
-  background:#C03035;
+  background:#e53935;
   height: 45px;
   width: 100%;
 }
@@ -1881,7 +1885,7 @@ span.stButton_gradient,
 }
 
 .author-profile span a{
-  color: #C03035;
+  color: #e53935;
 }
 
 .response-area{
@@ -1917,12 +1921,12 @@ span.stButton_gradient,
 }
 
 .post-comment .media-body span i{
-  color: #C03035;
+  color: #e53935;
   margin-right: 10px;
 }
 
 .post-comment .media-body span a{
-  color: #C03035;
+  color: #e53935;
   font-weight: 700;
 }
 
@@ -2200,7 +2204,7 @@ span.stButton_gradient,
 } 
 
 .table-two .table-header {
-  background-color:#c03035;
+  background-color:#e53935;
 }
 
 .table-three .table-header {

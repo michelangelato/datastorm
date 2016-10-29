@@ -115,17 +115,23 @@ namespace DataStorm.Web.Controllers.API
             var tipologie = Enum.GetValues(typeof(TipologiaImmobile)).Cast<TipologiaImmobile>().ToArray();
             return tipologie.Select(t => new KeyValuePair<int, string>((int)t, t.ToString()));
         }
-
+        [HttpGet]
         [Route("api/avvisi")]
         public async Task<dynamic> GetAvvisi()
         {
-            return await _db.Avvisi.Select(a => a.ToDTO()).ToListAsync();
+
+            var avvisi = _db.Avvisi.Select(av=>Mapper.Map<AvvisoDTO>(av));
+            await Task.FromResult(0);
+            return avvisi;
+            //return await _db.Avvisi.Select(a => a.ToDTO()).ToListAsync();
         }
 
         [Route("api/avvisi/{id}")]
-        public async Task<dynamic> GetAvviso(int ID)
+        public async Task<dynamic> GetAvviso(int Id)
         {
-            return await _db.Avvisi.First(a => a.Id == ID).ToDTO();
+            var avviso = await _db.Avvisi.SingleAsync(a => a.Id == Id);
+            return Mapper.Map<AvvisoDTO>(avviso);
+            //return await _db.Avvisi.First(a => a.Id == ID).ToDTO();
         }
 
         [Route("api/segnalazione")]
@@ -150,7 +156,8 @@ namespace DataStorm.Web.Controllers.API
         [Route("api/elementi-mappa")]
         public async Task<IEnumerable<dynamic>> GetElementiMappa()
         {
-            return await _db.AreeMappa.Select(a => a.ToDTO()).ToListAsync();
+            throw new NotImplementedException();
+            //return await _db.AreeMappa.Select(a => a.ToDTO()).ToListAsync();
         }
 
         [Route("api/gps")]
@@ -170,14 +177,20 @@ namespace DataStorm.Web.Controllers.API
         //}
         [Route("api/aziende")]
         [HttpGet]
-        public Task<IEnumerable<Azienda>> GetAziende(int? pageNumber)
+        public async Task<IEnumerable<AziendaDTO>> GetAziende(int? pageNumber)
         {
+            await Task.FromResult(0);
             int PageSize = 10;
-            if (pageNumber.HasValue)
-            {
-
-            }
-            throw new NotImplementedException();
+            
+            var skipValue = (pageNumber.GetValueOrDefault(1) - 1) * PageSize;
+            var aziende = _db.Aziende.Skip(skipValue).Take(PageSize);
+            return aziende.Select(az => Mapper.Map<AziendaDTO>(az));
+        }
+        [HttpGet]
+        public async Task<AziendaDTO> GetAzienda(int idAzienda)
+        {
+            var azienda = await _db.Aziende.SingleAsync(az => az.Id == idAzienda);
+            return Mapper.Map<Azienda, AziendaDTO>(azienda);
         }
     }
 }
