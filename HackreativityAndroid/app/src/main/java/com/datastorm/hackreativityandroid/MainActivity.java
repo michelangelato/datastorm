@@ -95,7 +95,6 @@ public class MainActivity extends BaseActivity implements NavigationView
 			if (item != null) onNavigationItemSelected(item, false);
 
 			getSupportFragmentManager().getFragment(savedInstanceState, MAIN_FRAGMENT);
-			getSupportFragmentManager().getFragment(savedInstanceState, RIGHT_PANEL_FRAGMENT);
 		} else {
 			MenuItem item = navigationView.getMenu()
 			                              .findItem(R.id.action_show_alert_list);
@@ -139,10 +138,8 @@ public class MainActivity extends BaseActivity implements NavigationView
 		outState.putString(LAST_ACCOUNT, mChosenAccount);
 		final FragmentManager manager = getSupportFragmentManager();
 		final Fragment main = manager.findFragmentById(R.id.fragment_container);
-		final Fragment rightPanel = manager.findFragmentById(R.id.right_panel_fragment_container);
 
 		if (main != null) manager.putFragment(outState, MAIN_FRAGMENT, main);
-		if (rightPanel != null) manager.putFragment(outState, RIGHT_PANEL_FRAGMENT, rightPanel);
 	}
 
 	@Override
@@ -279,11 +276,8 @@ public class MainActivity extends BaseActivity implements NavigationView
 	private void removeFragments() {
 		final Fragment oldFragment = getSupportFragmentManager().findFragmentById(
 				R.id.fragment_container);
-		final Fragment oldPanelFragment = getSupportFragmentManager().findFragmentById(
-				R.id.right_panel_fragment_container);
 		final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		if (oldFragment != null) transaction.remove(oldFragment);
-		if (oldPanelFragment != null) transaction.remove(oldPanelFragment);
 		transaction.commit();
 	}
 
