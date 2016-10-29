@@ -8,9 +8,10 @@ using DataStorm.Web.Data;
 namespace DataStorm.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161029134708_RimozioneEdificio")]
+    partial class RimozioneEdificio
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1");
@@ -94,7 +95,7 @@ namespace DataStorm.Web.Migrations
 
                     b.HasIndex("UtenteAppartenenzaId");
 
-                    b.ToTable("Immobili");
+                    b.ToTable("Appartamenti");
                 });
 
             modelBuilder.Entity("DataStorm.Web.Models.LinkAvviso", b =>

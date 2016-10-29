@@ -21,13 +21,12 @@ namespace DataStorm.Web.Data
         {
             
             base.OnModelCreating(builder);
-            builder.Entity<Edificio>().ToTable("Edifici").HasKey(ed=>ed.Id);
             builder.Entity<Segnalazione>().ToTable("Segnalazioni").HasKey(s => s.Id);
             builder.Entity<Utente>().ToTable("Utenti").HasKey(user => user.Id);
             builder.Entity<Utente>().HasMany(ue => ue.AppartamentiUtente);
-            builder.Entity<Appartamento>().ToTable("Appartamenti").HasKey(app => app.Id);
-            builder.Entity<Appartamento>().HasOne(app => app.PuntoMappa);
-            builder.Entity<Appartamento>().HasOne(app => app.UtenteAppartenenza);
+            builder.Entity<Immobile>().ToTable("Immobili").HasKey(app => app.Id);
+            builder.Entity<Immobile>().HasOne(app => app.PuntoMappa);
+            builder.Entity<Immobile>().HasOne(app => app.UtenteAppartenenza);
             builder.Entity<LinkAvviso>().ToTable("LinkAvvisi").HasKey(lav => lav.Id);
             builder.Entity<ImmagineAvviso>().ToTable("ImmaginiAvvisi").HasKey(img => img.Id);
             builder.Entity<Avviso>().ToTable("Avvisi").HasKey(av => av.Id);
