@@ -14,5 +14,6 @@ namespace DataStorm.Web.Models.DTO
         public virtual List<ImmagineAvvisoDTO> ImmaginiAvviso { get; set; }
         public virtual List<LinkAvvisoDTO> Links { get; set; }
         public virtual List<AreaMappaDTO> AreeMappe { get; set; }
+        public virtual List<TopicDTO> Topics { get; set; }
     }
 }

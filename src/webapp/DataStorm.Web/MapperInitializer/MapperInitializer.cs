@@ -27,7 +27,9 @@ namespace DataStorm.Web.MapperInitializer
                 .ForMember(dst => dst.TipoMappa, opt => opt.MapFrom(src => src.TipoMappa.ToString()));
                 cfg.CreateMap<LinkAvviso, LinkAvvisoDTO>();
                 cfg.CreateMap<ImmagineAvviso, ImmagineAvvisoDTO>();
+                cfg.CreateMap<Topic, TopicDTO>();
                 cfg.CreateMap<Avviso, AvvisoDTO>();
+
                 }
             
             

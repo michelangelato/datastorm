@@ -32,6 +32,7 @@ namespace DataStorm.Web.Data
             builder.Entity<Avviso>().ToTable("Avvisi").HasKey(av => av.Id);
             builder.Entity<Avviso>().HasMany(av => av.ImmaginiAvviso);
             builder.Entity<Avviso>().HasMany(av => av.Links);
+            builder.Entity<Avviso>().HasMany(av => av.Topics);
             builder.Entity<PuntoMappa>().ToTable("PuntiMappa").HasKey(pm => pm.Id);
             builder.Entity<AreaMappa>().ToTable("AreeMappa").HasKey(am=>am.Id);
             builder.Entity<AreaMappa>().HasMany(am => am.PuntiMappa);
@@ -43,6 +44,7 @@ namespace DataStorm.Web.Data
             builder.Entity<AziendeTipoLavoro>().HasOne(tl => tl.TipoLavoro);
             builder.Entity<Catasto>().ToTable("Catasto").HasKey(ca => ca.IdCatasto);
             builder.Entity<Azienda>().HasMany(az => az.AziendaTipoLavoro);
+            builder.Entity<Topic>().ToTable("Topics");
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);

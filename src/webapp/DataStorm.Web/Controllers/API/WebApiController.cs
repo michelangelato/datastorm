@@ -156,7 +156,7 @@ namespace DataStorm.Web.Controllers.API
         }
 
         [Route("api/elementi-mappa")]
-        public async Task<IEnumerable<dynamic>> GetElementiMappa()
+        public async Task<IEnumerable<dynamic>> GetAreeMappa()
         {
             throw new NotImplementedException();
             //return await _db.AreeMappa.Select(a => a.ToDTO()).ToListAsync();
