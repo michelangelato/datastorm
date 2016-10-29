@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DataStorm.Web.Models
 {
-    public enum TipologiaEdificio
+    public enum TipologiaImmobile
     {
         Appartamento,
         VillaIndipendente,
