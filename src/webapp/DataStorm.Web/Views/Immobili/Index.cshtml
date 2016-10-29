@@ -9,18 +9,28 @@
             function getImmobili() {
                 $.get('/api/immobili', function (data) {
                     console.log(data);
+                    var nuovalstImmobili = $('<ul></ul>');
                     var lstImmobili = $('#immobili-list');
-                    var items = data.map(function (item) {
-                        return item.key + ': ' + item.value;
-                    });
-                    
-                    lstImmobili.empty();
-                        
-                    if (items.length) {
-                        var content = '<li>' + items.join('</li><li>') + '</li>';
-                        var list = $('<ul />').html(content);
-                        lstImmobili.append(list);
+                    var immobiliexists = data.length>0;
+                    for (var i = 0; i < data.length; i++) {
+                        var newEL = $("<li></li>");
+                        nuovalstImmobili.append(newEL);
+                        var singleImmobile = '';
+                        for (var key in data[i]) {
+                            singleImmobile+=" "+key + ': ' + data[i][key];
+                        }
+                        newEL.html(singleImmobile);
                     }
+                    
+                    //var items = $(data).each(function (i, el) {
+                    //    $(el).map(function (item) {
+                    //    immobiliexists=true;
+                    //    nuovalstImmobili.append("<li>"+ item.key + ': ' + item.value+"</li>");
+                    //});
+                    //});
+                    lstImmobili.empty();
+                    lstImmobili.append(nuovalstImmobili);
+                    
                 })
                 .fail(function() {
                     console.log( "error" );
