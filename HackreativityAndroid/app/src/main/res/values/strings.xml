@@ -1,19 +1,21 @@
 <resources>
 	<string name="app_name">HackreativityAndroid</string>
-	<string name="empty_alerts">Non ci sono avvisi</string>
-	<string name="action_show_alert_list">Avvisi</string>
-	<string name="action_show_request_list">Richieste</string>
-	<string name="action_show_report">Segnalazioni</string>
+	<string name="action_show_alert_list">@string/fragment_title_alert_list</string>
+	<string name="action_show_request_list">>@string/fragment_title_requests_list</string>
+	<string name="action_show_report">@string/fragment_title_report</string>
+	<string name="action_show_map">@string/fragment_title_map</string>
 
-	<string name="navigation_drawer_open">Apri il menù laterale</string>
-	<string name="navigation_drawer_close">Chiudi il menù laterale</string>
+	<string name="empty_alerts">Non ci sono avvisi</string>
 	<string name="empty_requests">Non hai richieste in coda</string>
+
 	<string name="fragment_title_request_new">Nuova richiesta</string>
 	<string name="fragment_title_requests_list">Le tue richieste</string>
 	<string name="fragment_title_report">Segnala</string>
 	<string name="fragment_title_alert_list">Avvisi</string>
+	<string name="fragment_title_map">Mappa</string>
 
-
+	<string name="navigation_drawer_open">Apri il menù laterale</string>
+	<string name="navigation_drawer_close">Chiudi il menù laterale</string>
 	<string-array name="request_type">
 		<item>Sopralluogo</item>
 		<item>Recupero Beni</item>

@@ -25,6 +25,7 @@ import com.dadino.quickstart.core.utils.Logs;
 import com.dadino.quickstart.login.mvp.components.Authenticator;
 import com.dadino.quickstart.login.mvp.usecases.lastusedaccount.LastAccountMVP;
 import com.datastorm.hackreativityandroid.fragments.AlertListFragment;
+import com.datastorm.hackreativityandroid.fragments.CustomMapFragment;
 import com.datastorm.hackreativityandroid.fragments.ReportFragment;
 import com.datastorm.hackreativityandroid.fragments.RequestListFragment;
 import com.datastorm.hackreativityandroid.interfaces.DrawerToggleServer;
@@ -39,7 +40,9 @@ import static butterknife.ButterKnife.bind;
 
 public class MainActivity extends BaseActivity implements NavigationView
 		.OnNavigationItemSelectedListener,
-		DrawerToggleServer, OnAlertListInteractionListener, OnRequestListInteractionListener {
+		DrawerToggleServer,
+		OnAlertListInteractionListener,
+		OnRequestListInteractionListener {
 
 	public static final  String MAIN_FRAGMENT                          = "main_fragment";
 	public static final  String RIGHT_PANEL_FRAGMENT                   = "right_panel_fragment";
@@ -187,6 +190,13 @@ public class MainActivity extends BaseActivity implements NavigationView
 				                           .replace(R.id.fragment_container,
 						                           RequestListFragment.newInstance(),
 						                           RequestListFragment.TAG)
+				                           .commitNow();
+				break;
+			case R.id.action_show_map:
+				getSupportFragmentManager().beginTransaction()
+				                           .replace(R.id.fragment_container,
+						                           CustomMapFragment.newInstance(),
+						                           CustomMapFragment.TAG)
 				                           .commitNow();
 				break;
 		}

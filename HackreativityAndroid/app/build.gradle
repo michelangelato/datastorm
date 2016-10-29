@@ -39,17 +39,22 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    //Requery
-    // for android
-    // use an APT plugin
+    //Support
     compile 'com.android.support:appcompat-v7:25.0.0'
+
+    //Quickstart
     compile 'com.dadino.quickstart:core:0.0.3'
     compile 'com.dadino.quickstart:login:0.0.3'
+
+    //Requery
     compile 'io.requery:requery:1.0.0-rc4'
     compile 'io.requery:requery-android:1.0.0-rc4'
-    compile 'com.android.support:support-v4:25.0.0'
-    testCompile 'junit:junit:4.12'
     apt 'io.requery:requery-processor:1.0.0-rc4'
+
+    //Google Play Services
+    compile 'com.google.android.gms:play-services-maps:9.8.0'
+
+    testCompile 'junit:junit:4.12'
 
     debugCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'

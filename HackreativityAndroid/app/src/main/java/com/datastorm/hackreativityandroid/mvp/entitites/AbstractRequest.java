@@ -26,8 +26,6 @@ public class AbstractRequest {
 	@Expose
 	@SerializedName("ServerId")
 	@Column(name = "server_id")
-	@Key
-	@Generated
 	long serverId;
 
 	@Expose
