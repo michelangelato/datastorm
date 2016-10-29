@@ -15,6 +15,7 @@ android {
         versionCode getVersionCodeNumber(MAJOR_RELEASE, MINOR_RELEASE)
         versionName getVersionCodeName(MAJOR_RELEASE, MINOR_RELEASE)
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {

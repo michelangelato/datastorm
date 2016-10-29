@@ -11,11 +11,11 @@ import com.dadino.quickstart.core.interfaces.IPresenter;
 import com.dadino.quickstart.core.mvp.components.presenter.MvpView;
 import com.dadino.quickstart.core.mvp.components.presenter.PresenterManager;
 import com.datastorm.hackreativityandroid.R;
-import com.datastorm.hackreativityandroid.interfaces.OnAlertClickedListener;
-import com.datastorm.hackreativityandroid.interfaces.OnAlertListInteractionListener;
+import com.datastorm.hackreativityandroid.interfaces.OnRequestListInteractionListener;
 import com.datastorm.hackreativityandroid.mvp.entitites.Alert;
 import com.datastorm.hackreativityandroid.mvp.usecases.alertlist.AlertListMVP;
-import com.datastorm.hackreativityandroid.widgets.PresentedAlertListView;
+import com.datastorm.hackreativityandroid.widgets.HideableFab;
+import com.datastorm.hackreativityandroid.widgets.PresentedRequestListView;
 
 import java.util.List;
 
@@ -23,14 +23,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class AlertListFragment extends DrawerToggleFragment implements OnAlertClickedListener {
+public class RequestListFragment extends DrawerToggleFragment {
 
 	public static final  String TAG       = "AlertListFragment";
 	private static final String ARG_TOPIC = "topic";
-	@BindView(R.id.alert_list)
-	PresentedAlertListView alertList;
+
 	@BindView(R.id.toolbar)
-	Toolbar                toolbar;
+	Toolbar                  toolbar;
+	@BindView(R.id.request_list)
+	PresentedRequestListView alertList;
+	@BindView(R.id.request_new_fab)
+	HideableFab              fab;
+
 	private String   mTopic;
 	private Unbinder unbinder;
 
@@ -38,22 +42,22 @@ public class AlertListFragment extends DrawerToggleFragment implements OnAlertCl
 	private MvpView<List<Alert>> iAlertListView = new MvpView<>(this::onError, this);
 
 
-	private OnAlertListInteractionListener mListener;
+	private OnRequestListInteractionListener mListener;
 
-	public AlertListFragment() {
+	public RequestListFragment() {
 		// Required empty public constructor
 	}
 
-	public static AlertListFragment newInstance(String topic) {
-		AlertListFragment fragment = new AlertListFragment();
+	public static RequestListFragment newInstance(String topic) {
+		RequestListFragment fragment = new RequestListFragment();
 		Bundle args = new Bundle();
 		args.putString(ARG_TOPIC, topic);
 		fragment.setArguments(args);
 		return fragment;
 	}
 
-	public static AlertListFragment newInstance() {
-		AlertListFragment fragment = new AlertListFragment();
+	public static RequestListFragment newInstance() {
+		RequestListFragment fragment = new RequestListFragment();
 		Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
@@ -62,11 +66,11 @@ public class AlertListFragment extends DrawerToggleFragment implements OnAlertCl
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
-		if (context instanceof OnAlertListInteractionListener) {
-			mListener = (OnAlertListInteractionListener) context;
+		if (context instanceof OnRequestListInteractionListener) {
+			mListener = (OnRequestListInteractionListener) context;
 		} else {
 			throw new RuntimeException(
-					context.toString() + " must implement OnAlertListInteractionListener");
+					context.toString() + " must implement OnRequestListInteractionListener");
 		}
 	}
 
@@ -83,7 +87,7 @@ public class AlertListFragment extends DrawerToggleFragment implements OnAlertCl
 
 	@Override
 	protected int title() {
-		return R.string.fragment_title_alert_list;
+		return R.string.fragment_title_requests_list;
 	}
 
 	@Override
@@ -104,8 +108,11 @@ public class AlertListFragment extends DrawerToggleFragment implements OnAlertCl
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_alert_list, container, false);
+		View view = inflater.inflate(R.layout.fragment_request_list, container, false);
 		unbinder = ButterKnife.bind(this, view);
+		fab.setOnClickListener(v -> {
+			if (mListener != null) mListener.onNewRequestClicked();
+		});
 		return view;
 	}
 
@@ -128,11 +135,6 @@ public class AlertListFragment extends DrawerToggleFragment implements OnAlertCl
 	public void onDestroyView() {
 		unbinder.unbind();
 		super.onDestroyView();
-	}
-
-	@Override
-	public void onAlertClicked(View view, Alert alert) {
-		if (mListener != null) mListener.onAlertClicked(view, alert);
 	}
 
 	private void onError(Throwable error) {

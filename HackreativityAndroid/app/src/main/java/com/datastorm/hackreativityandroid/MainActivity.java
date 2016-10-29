@@ -25,8 +25,11 @@ import com.dadino.quickstart.core.utils.Logs;
 import com.dadino.quickstart.login.mvp.components.Authenticator;
 import com.dadino.quickstart.login.mvp.usecases.lastusedaccount.LastAccountMVP;
 import com.datastorm.hackreativityandroid.fragments.AlertListFragment;
+import com.datastorm.hackreativityandroid.fragments.ReportFragment;
+import com.datastorm.hackreativityandroid.fragments.RequestListFragment;
 import com.datastorm.hackreativityandroid.interfaces.DrawerToggleServer;
 import com.datastorm.hackreativityandroid.interfaces.OnAlertListInteractionListener;
+import com.datastorm.hackreativityandroid.interfaces.OnRequestListInteractionListener;
 import com.datastorm.hackreativityandroid.mvp.components.ErrorHandler;
 import com.datastorm.hackreativityandroid.mvp.entitites.Alert;
 
@@ -36,8 +39,7 @@ import static butterknife.ButterKnife.bind;
 
 public class MainActivity extends BaseActivity implements NavigationView
 		.OnNavigationItemSelectedListener,
-		DrawerToggleServer,
-		OnAlertListInteractionListener {
+		DrawerToggleServer, OnAlertListInteractionListener, OnRequestListInteractionListener {
 
 	public static final  String MAIN_FRAGMENT                          = "main_fragment";
 	public static final  String RIGHT_PANEL_FRAGMENT                   = "right_panel_fragment";
@@ -173,6 +175,20 @@ public class MainActivity extends BaseActivity implements NavigationView
 						                           AlertListFragment.TAG)
 				                           .commitNow();
 				break;
+			case R.id.action_show_report:
+				getSupportFragmentManager().beginTransaction()
+				                           .replace(R.id.fragment_container,
+						                           ReportFragment.newInstance(), ReportFragment
+								                           .TAG)
+				                           .commitNow();
+				break;
+			case R.id.action_show_request_lists:
+				getSupportFragmentManager().beginTransaction()
+				                           .replace(R.id.fragment_container,
+						                           RequestListFragment.newInstance(),
+						                           RequestListFragment.TAG)
+				                           .commitNow();
+				break;
 		}
 	}
 
@@ -292,5 +308,10 @@ public class MainActivity extends BaseActivity implements NavigationView
 	@Override
 	public void onAlertClicked(View view, Alert alert) {
 		//TODO
+	}
+
+	@Override
+	public void onNewRequestClicked() {
+		RequestNewActivity.show(this);
 	}
 }

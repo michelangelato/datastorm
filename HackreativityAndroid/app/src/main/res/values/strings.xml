@@ -7,5 +7,15 @@
 
 	<string name="navigation_drawer_open">Apri il menù laterale</string>
 	<string name="navigation_drawer_close">Chiudi il menù laterale</string>
+	<string name="empty_requests">Non hai richieste in coda</string>
+	<string name="fragment_title_request_new">Nuova richiesta</string>
+	<string name="fragment_title_requests_list">Le tue richieste</string>
+	<string name="fragment_title_report">Segnala</string>
+	<string name="fragment_title_alert_list">Avvisi</string>
 
+
+	<string-array name="request_type">
+		<item>Sopralluogo</item>
+		<item>Recupero Beni</item>
+	</string-array>
 </resources>

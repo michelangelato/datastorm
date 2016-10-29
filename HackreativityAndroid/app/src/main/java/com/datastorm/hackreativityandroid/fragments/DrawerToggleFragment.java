@@ -56,11 +56,26 @@ public abstract class DrawerToggleFragment extends BaseFragment {
 				        .setDisplayHomeAsUpEnabled(true);
 				activity.getSupportActionBar()
 				        .setDisplayShowHomeEnabled(true);
+				activity.getSupportActionBar()
+				        .setTitle(title());
 			}
 
 			mShouldSetupDrawerToggle = false;
+		} else if (context instanceof AppCompatActivity && toolbar() != null) {
+			final AppCompatActivity activity = (AppCompatActivity) context;
+			activity.setSupportActionBar(toolbar());
+			if (activity.getSupportActionBar() != null) {
+				activity.getSupportActionBar()
+				        .setDisplayHomeAsUpEnabled(true);
+				activity.getSupportActionBar()
+				        .setDisplayShowHomeEnabled(true);
+				activity.getSupportActionBar()
+				        .setTitle(title());
+			}
 		}
 	}
+
+	protected abstract int title();
 
 	private void resetDrawerToggle(Context context) {
 		mShouldSetupDrawerToggle = true;
