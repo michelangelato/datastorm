@@ -39,7 +39,8 @@
       "version": "1.0.0-preview2-final",
       "type": "build"
     },
-    "Microsoft.AspNetCore.Mvc.WebApiCompatShim": "1.0.1"
+    "Microsoft.AspNetCore.Mvc.WebApiCompatShim": "1.0.1",
+    "AutoMapper": "5.1.1"
   },
 
   "tools": {

@@ -86,6 +86,7 @@ namespace DataStorm.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            new MapperInitializer.MapperInitializer().Initialize();
         }
     }
 }

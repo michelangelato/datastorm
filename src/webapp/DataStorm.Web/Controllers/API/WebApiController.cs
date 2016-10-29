@@ -1,4 +1,5 @@
-﻿using DataStorm.Web.Data;
+﻿using AutoMapper;
+using DataStorm.Web.Data;
 using DataStorm.Web.Models;
 using DataStorm.Web.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -106,6 +107,16 @@ namespace DataStorm.Web.Controllers.API
         public async Task PostGPS()
         {
             await Task.FromResult(0);
+        }
+        [Route("api/automapper")]
+        public async Task<ImmobileDTO> ProvaAutoMapper()
+        {
+            await Task.FromResult(0);
+
+            Immobile ImmobileTest = new Immobile();
+            ImmobileTest.Indirizzo = "aaaaa";
+            var mapped= Mapper.Map<Immobile, ImmobileDTO>(ImmobileTest);
+            return mapped;
         }
     }
 }
