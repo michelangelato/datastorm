@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using DataStorm.Web.Data;
 using DataStorm.Web.Models;
@@ -21,11 +22,17 @@ namespace DataStorm.Web.Controllers
 
             db.Seed(userManager);
         }
-
+        
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
-        
+
+        [Authorize]
+        public IActionResult Verifica()
+        {
+            return View();
+        }       
     }
 }
