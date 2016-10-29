@@ -52,6 +52,22 @@ namespace DataStorm.Web.Controllers.API
             await db.SaveChangesAsync();
             return Ok();
         }
+        [HttpDelete]
+        public async Task<ActionResult> DeleteImmobile(int Id)
+        {
+            var utente = await um.FindByNameAsync(User.Identity.Name);
+
+            Immobile immobileCoinvolto = db.Immobili.Single(i => i.Id == Id);
+            if (immobileCoinvolto.UtenteAppartenenza.Id != utente.Id)
+            {
+                return InternalServerError(new Exception("Immobile non valido"));
+            }
+            else
+            {
+                db.Immobili.Remove(immobileCoinvolto);
+            }
+            return Ok();
+        }
         [HttpGet]
         public async Task<ImmobileDTO> GetImmobile(int Id)
         {
