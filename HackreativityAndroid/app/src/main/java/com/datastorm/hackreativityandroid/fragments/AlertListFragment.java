@@ -2,12 +2,10 @@ package com.datastorm.hackreativityandroid.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dadino.quickstart.core.interfaces.IPresenter;
 import com.dadino.quickstart.core.mvp.components.presenter.MvpView;
 import com.dadino.quickstart.core.mvp.components.presenter.PresenterManager;
 import com.datastorm.hackreativityandroid.R;
@@ -23,14 +21,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class AlertListFragment extends DrawerToggleFragment implements OnAlertClickedListener {
+public class AlertListFragment extends BaseFragment implements OnAlertClickedListener {
 
 	public static final  String TAG       = "AlertListFragment";
 	private static final String ARG_TOPIC = "topic";
 	@BindView(R.id.alert_list)
 	PresentedAlertListView alertList;
-	@BindView(R.id.toolbar)
-	Toolbar                toolbar;
+
 	private String   mTopic;
 	private Unbinder unbinder;
 
@@ -71,37 +68,6 @@ public class AlertListFragment extends DrawerToggleFragment implements OnAlertCl
 	}
 
 	@Override
-	public void onDetach() {
-		super.onDetach();
-		mListener = null;
-	}
-
-	@Override
-	Toolbar toolbar() {
-		return toolbar;
-	}
-
-	@Override
-	protected int title() {
-		return R.string.fragment_title_alert_list;
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		if (getArguments() != null) {
-			mTopic = getArguments().getString(ARG_TOPIC);
-		}
-
-		initPresenters();
-	}
-
-	private void initPresenters() {
-		alertListPresenterManager = new PresenterManager<>(this, new AlertListMVP.Factory(),
-				IPresenter::load).bindTo(this);
-	}
-
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_alert_list, container, false);
@@ -128,6 +94,30 @@ public class AlertListFragment extends DrawerToggleFragment implements OnAlertCl
 	public void onDestroyView() {
 		unbinder.unbind();
 		super.onDestroyView();
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mListener = null;
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if (getArguments() != null) {
+			mTopic = getArguments().getString(ARG_TOPIC);
+		}
+
+		initPresenters();
+	}
+
+	private void initPresenters() {
+		alertListPresenterManager = new PresenterManager<>(this, new AlertListMVP.Factory(),
+				presenter -> {
+					presenter.setTopic(mTopic);
+					presenter.load();
+				}).bindTo(this);
 	}
 
 	@Override
