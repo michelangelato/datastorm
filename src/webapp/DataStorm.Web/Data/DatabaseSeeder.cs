@@ -153,7 +153,6 @@ namespace DataStorm.Web.Data
                             Descrizione = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum congue luctus dapibus. Integer ac porta lacus, ultricies aliquet purus. Etiam in ex mi. Duis commodo sit amet metus id consectetur. Aliquam mollis convallis vehicula. Morbi ultricies, dolor at condimentum mattis, arcu leo malesuada est, quis molestie ex mi id purus. Etiam auctor posuere auctor.",
                             Links = await GetLinkEsempio(),
                             ImmaginiAvviso = await GetImmaginiEsempio(),
-                            Topics = new List<Topic> { topic },
                             AreeMappe = new List<AreaMappa>
                             {
                                 new AreaMappa
@@ -163,6 +162,8 @@ namespace DataStorm.Web.Data
                                 }
                             }
                         };
+
+                        avviso.AvvisiTopics = new List<AvvisoTopic> { new AvvisoTopic { AvvisoRiferimento = avviso, TopicRiferimento = topic } };
 
                         if (!await db.Avvisi.AnyAsync(a => a.Titolo == avviso.Titolo))
                         {

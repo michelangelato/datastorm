@@ -60,6 +60,5 @@ namespace DataStorm.Web.Data
         public DbSet<Utente> Utenti { get; set; }
         public DbSet<AreaMappa> AreeMappa { get; set; }
         public DbSet<Segnalazione> Segnalazioni { get; set; }
-        public DbSet<Topic> Topics { get; set; }
     }
 }
