@@ -9,6 +9,6 @@ namespace DataStorm.Web.Models
     {
         public virtual string Id { get; set; }
         public virtual Utente UtenteSegnalazione { get; set; }
-        
+        public virtual TipologiaSegnalazione TipoSegnalazione { get; set; }
     }
 }

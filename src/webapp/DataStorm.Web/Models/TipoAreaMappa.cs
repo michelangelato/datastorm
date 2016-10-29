@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace DataStorm.Web.Models
 {
-    public enum TipologiaEdificio
+    public enum TipoAreaMappa:Int32
     {
-        Appartamento,
-        VillaIndipendente,
-        VillaSchiera
+        Punto=1,
+        Linea=2,
+        Poligono=3
     }
 }
