@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet-DataStorm.Web-7350529e-d802-47c8-bba4-4692df2ffc3b",
 
   "dependencies": {
@@ -38,7 +38,8 @@
     "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": {
       "version": "1.0.0-preview2-final",
       "type": "build"
-    }
+    },
+    "Microsoft.AspNetCore.Mvc.WebApiCompatShim": "1.0.1"
   },
 
   "tools": {

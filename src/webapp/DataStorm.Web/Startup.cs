@@ -45,7 +45,7 @@ namespace DataStorm.Web
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
                 );
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<Utente, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
