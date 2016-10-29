@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Immobili";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<div class="row">
+
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Nuovo Immobile</h4>
+            </div>
+            <div class="panel-body">
+                <div class="form-group row">
+                    <label for="txt-comune" class="col-xs-2 col-form-label">Comune</label>
+                    <div class="col-xs-10">
+                        <input class="form-control" type="text" name="comune" id="txt-comune" placeholder="Comune...">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txt-indirizzo" class="col-xs-2 col-form-label">Indirizzo</label>
+                    <div class="col-xs-10">
+                        <input class="form-control" type="text" name="indirizzo" id="txt-indirizzo" placeholder="Via e civico...">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txt-piano" class="col-xs-2 col-form-label">Piano</label>
+                    <div class="col-xs-10">
+                        <input class="form-control" type="number" name="piano" id="txt-piano" placeholder="Numero o vuoto se intero edificio...">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txt-mq" class="col-xs-2 col-form-label">Metri quadri</label>
+                    <div class="col-xs-10">
+                        <input class="form-control" type="number" name="mq" id="txt-mq" placeholder="Numero dei mq...">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="offset-sm-2 col-sm-10">
+                        <button type="submit" class="btn btn-success">Inserisci</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Lista Immobili</h4>
+            </div>
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="fa fa-home" aria-hidden="true"></i> Via del Colle 6, Monte Roberto</a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="fa fa-home" aria-hidden="true"></i> Via Garibaldi 6, Castelbellino</a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="fa fa-home" aria-hidden="true"></i> Via delle Tavernelle 160, Ancona</a>
+            </div>
+            <div class="panel-body">
+                <a href="#">Visualizza tutti gli immobili...</a>
+            </div>
+        </div>
+    </div>
+
+</div>
