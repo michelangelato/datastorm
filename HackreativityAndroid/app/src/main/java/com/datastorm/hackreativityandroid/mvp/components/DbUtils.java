@@ -32,4 +32,8 @@ public class DbUtils {
 		}
 		return dataStore;
 	}
+
+	public static void seed() {
+		//TODO add stuff to the db
+	}
 }

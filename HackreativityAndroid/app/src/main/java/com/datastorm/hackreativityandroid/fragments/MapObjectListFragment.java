@@ -31,7 +31,7 @@ public class MapObjectListFragment extends DrawerToggleFragment {
 	private Unbinder unbinder;
 
 	private PresenterManager<MapObjectListMVP.Presenter> mapObjectListPresenterManager;
-	private MvpView<List<MapObject>> iAlertListView = new MvpView<>(this::onError, this);
+	private MvpView<List<MapObject>> iMapObjectListView = new MvpView<>(this::onError, this);
 
 	private OnMapObjectListInteractionListener mListener;
 
@@ -97,12 +97,12 @@ public class MapObjectListFragment extends DrawerToggleFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (alertListPresenter() != null) alertListPresenter().addView(iAlertListView);
+		if (alertListPresenter() != null) alertListPresenter().addView(iMapObjectListView);
 	}
 
 	@Override
 	public void onPause() {
-		if (alertListPresenter() != null) alertListPresenter().removeView(iAlertListView);
+		if (alertListPresenter() != null) alertListPresenter().removeView(iMapObjectListView);
 
 		super.onPause();
 	}

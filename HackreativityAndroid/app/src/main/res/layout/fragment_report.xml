@@ -31,26 +31,24 @@
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
+			android:divider="@drawable/empty_tall_divider"
 			android:orientation="vertical"
-			android:padding="16dp">
+			android:showDividers="middle">
 
-			<Button
+			<com.datastorm.hackreativityandroid.widgets.ReportSection
 				android:id="@+id/report_im_in_danger"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:text="Sono in pericolo"/>
+				android:layout_height="match_parent"/>
 
-			<Button
+			<com.datastorm.hackreativityandroid.widgets.ReportSection
 				android:id="@+id/report_collapse"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:text="C'è stato un crollo"/>
+				android:layout_height="match_parent"/>
 
-			<Button
+			<com.datastorm.hackreativityandroid.widgets.ReportSection
 				android:id="@+id/report_block"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:text="C'è un blocco"/>
+				android:layout_height="match_parent"/>
 		</LinearLayout>
 	</android.support.v4.widget.NestedScrollView>
 

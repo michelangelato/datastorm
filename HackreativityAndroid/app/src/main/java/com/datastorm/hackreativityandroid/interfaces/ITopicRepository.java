@@ -12,6 +12,7 @@ import rx.Single;
 public interface ITopicRepository extends IRepository {
 
 	Observable<List<Topic>> retrieve();
+	Observable<List<Topic>> search(String filter);
 	Single<Boolean> upsert(Topic topic);
 	Single<Boolean> upsert(String topicName);
 }

@@ -12,7 +12,7 @@ import io.requery.Key;
 import io.requery.Table;
 
 @Entity(stateless = true)
-@Table(name = "alert")
+@Table(name = "topic")
 public class AbstractTopic {
 
 	@Expose
@@ -25,4 +25,27 @@ public class AbstractTopic {
 	@SerializedName("UltimaSottoscrizione")
 	@Column(name = "last_subscribed_to")
 	Date lastSubscribedTo;
+
+	@Expose
+	@SerializedName("nelat")
+	@Column(name = "ne_lat")
+	double neLat;
+	@Expose
+	@SerializedName("nelon")
+	@Column(name = "ne_lon")
+	double neLon;
+	@Expose
+	@SerializedName("solat")
+	@Column(name = "so_lat")
+	double soLat;
+	@Expose
+	@SerializedName("solon")
+	@Column(name = "so_lon")
+	double soLon;
+
+
+	@Expose
+	@SerializedName("Pinnato")
+	@Column(name = "pinned")
+	boolean pinned;
 }

@@ -45,7 +45,7 @@ public class RequestNewFragment extends DrawerToggleFragment {
 	private Unbinder unbinder;
 
 	private PresenterManager<AlertListMVP.Presenter> alertListPresenterManager;
-	private MvpView<List<Alert>> iAlertListView = new MvpView<>(this::onError, this);
+	private MvpView<List<Alert>> iRequestNewView = new MvpView<>(this::onError, this);
 
 
 	private OnRequestNewInteractionListener mListener;
@@ -112,12 +112,12 @@ public class RequestNewFragment extends DrawerToggleFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (alertListPresenter() != null) alertListPresenter().addView(iAlertListView);
+		if (alertListPresenter() != null) alertListPresenter().addView(iRequestNewView);
 	}
 
 	@Override
 	public void onPause() {
-		if (alertListPresenter() != null) alertListPresenter().removeView(iAlertListView);
+		if (alertListPresenter() != null) alertListPresenter().removeView(iRequestNewView);
 
 		super.onPause();
 	}

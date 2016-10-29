@@ -40,7 +40,7 @@ public class TopicListFragment extends DrawerToggleFragment {
 	private PresenterManager<TopicListMVP.Presenter> topicListPresenterManager;
 	private OnTopicListInteractionListener           mListener;
 	private TopicAlertPagerAdapter                   mAdapter;
-	private MvpView<List<Topic>> iAlertListView = new MvpView<>(this::onTopicsLoaded,
+	private MvpView<List<Topic>> iTopicListView = new MvpView<>(this::onTopicsLoaded,
 			this::onError,
 			this);
 
@@ -78,12 +78,12 @@ public class TopicListFragment extends DrawerToggleFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (alertListPresenter() != null) alertListPresenter().addView(iAlertListView);
+		if (alertListPresenter() != null) alertListPresenter().addView(iTopicListView);
 	}
 
 	@Override
 	public void onPause() {
-		if (alertListPresenter() != null) alertListPresenter().removeView(iAlertListView);
+		if (alertListPresenter() != null) alertListPresenter().removeView(iTopicListView);
 		super.onPause();
 	}
 

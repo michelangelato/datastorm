@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.datastorm.hackreativityandroid.fragments.AddTopicFragment;
 import com.datastorm.hackreativityandroid.fragments.AlertListFragment;
 import com.datastorm.hackreativityandroid.mvp.entitites.Topic;
 
@@ -24,18 +25,20 @@ public class TopicAlertPagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		return topics != null ? topics.size() : 0;
+		return (topics != null ? topics.size() : 0) + 1;
 	}
 
 	@Override
 	public CharSequence getPageTitle(int position) {
+		int lastPosition = getCount() - 1;
+		if (position == lastPosition) return "Aggiungi una colonna";
 		return getTopic(position).getTopic();
 	}
 
 	@Override
 	public Fragment getItem(int position) {
 		int lastPosition = getCount() - 1;
-		//TODO if(position==lastPosition)return AddTopicFragment.newInstance();
+		if (position == lastPosition) return AddTopicFragment.newInstance();
 		return AlertListFragment.newInstance(getTopic(position).getTopic());
 	}
 

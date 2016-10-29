@@ -12,9 +12,10 @@ import io.requery.query.Result;
 import rx.Observable;
 import rx.Single;
 
-public class RequeryTopicRepository extends RequeryRepository implements ITopicRepository {
+//TODO switch to retrofit
+public class RetrofitTopicRepository extends RequeryRepository implements ITopicRepository {
 
-	public RequeryTopicRepository(Context context) {
+	public RetrofitTopicRepository(Context context) {
 		super(context);
 	}
 

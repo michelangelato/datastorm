@@ -16,6 +16,10 @@
 
 	<string name="navigation_drawer_open">Apri il menù laterale</string>
 	<string name="navigation_drawer_close">Chiudi il menù laterale</string>
+	<string name="topic_add_search_box_hint">Digita il nome della città…</string>
+	<string name="report_danger">Sono in pericolo…</string>
+	<string name="report_collapse">E\' crollato…</string>
+	<string name="report_block">E\' bloccato…</string>
 	<string-array name="request_type">
 		<item>Sopralluogo</item>
 		<item>Recupero Beni</item>

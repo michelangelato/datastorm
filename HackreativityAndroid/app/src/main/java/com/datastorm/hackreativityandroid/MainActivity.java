@@ -32,6 +32,7 @@ import com.datastorm.hackreativityandroid.interfaces.DrawerToggleServer;
 import com.datastorm.hackreativityandroid.interfaces.OnAlertListInteractionListener;
 import com.datastorm.hackreativityandroid.interfaces.OnMapObjectListInteractionListener;
 import com.datastorm.hackreativityandroid.interfaces.OnRequestListInteractionListener;
+import com.datastorm.hackreativityandroid.interfaces.OnTopicAddInteractionListener;
 import com.datastorm.hackreativityandroid.interfaces.OnTopicListInteractionListener;
 import com.datastorm.hackreativityandroid.mvp.components.ErrorHandler;
 import com.datastorm.hackreativityandroid.mvp.entitites.Alert;
@@ -46,7 +47,8 @@ public class MainActivity extends BaseActivity implements NavigationView
 		OnAlertListInteractionListener,
 		OnRequestListInteractionListener,
 		OnMapObjectListInteractionListener,
-		OnTopicListInteractionListener {
+		OnTopicListInteractionListener,
+		OnTopicAddInteractionListener {
 
 	public static final  String MAIN_FRAGMENT          = "main_fragment";
 	public static final  String RIGHT_PANEL_FRAGMENT   = "right_panel_fragment";
