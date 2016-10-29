@@ -50,47 +50,39 @@
                     <a class="navbar-brand" href="/">
                     	<h1><img src="/images/logo.png" alt="logo"></h1>
                     </a>
-                    
                 </div>
+
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="index.html">Home</a></li>
-                        <li class="dropdown"><a asp-area="" asp-controller="Immobili" asp-action="Index">Immobili <i class="fa fa-angle-down"></i></a>
+                        <li><a asp-area="" asp-controller="Immobili" asp-action="Index">Immobili</a></li>     
+                        <li><a href="#">Fai una segnalazione</a>                    
+                        <li class="dropdown">
+                            <a href="#">Contatta un'azienda  <i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
-                                <li><a href="#">Aggiungi un nuovo immobile</a></li>
-                                <li><a href="#">I tuoi immobili</a></li>
-                                <li><a href="#">Mappa</a></li>
-                                
-                            </ul>
-                        </li>                    
-                        <li ><a href="#">Valuta il rischio</a>
-                            
-                        </li>
-                        <li ><a href="#">Fai una segnalazione</a>
-                        </li>                         
-                        <li class="dropdown"><a href="#">Contatta un'azienda  <i class="fa fa-angle-down"></i></a>
-                         <ul role="menu" class="sub-menu">
                                 <li><a href="#">Aziende edili</a></li>
                                 <li><a href="#">Liberi professionisti</a></li>
                                 <li><a href="#">Imprese di demolizioni</a></li>
                             </ul>
                         </li>
                     </ul>
+                    @Html.Partial("_LoginPartial")
                 </div>
-                <div class="search">
+                @*<div class="search">
                     <form role="form">
                         <i class="fa fa-search"></i>
                         <div class="field-toggle">
                             <input type="text" class="search-form" autocomplete="off" placeholder="Cerca">
                         </div>
                     </form>
-                </div>
+                </div>*@
             </div>
         </div>
     </header>
     <!--/#header-->
 
-   <div>@RenderBody()</div>
+    <div class="container">
+       @RenderBody()
+    </div>
   
     <footer id="footer">
         <div class="container">
