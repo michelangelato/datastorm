@@ -10,9 +10,8 @@ namespace DataStorm.Web.Data
 {
     public static class DatabaseSeeder
     {
-        public const string USERNAME = "datastorm";
-        public const string PASSWORD = "datastorm";
-        public const string EMAIL = "email@dominio.com";
+        public const string EMAIL = "datastorm@dominio.com";
+        public const string PASSWORD = "Datastorm1!";
 
         public static Random Random = new Random();
 
@@ -48,25 +47,41 @@ namespace DataStorm.Web.Data
             }
         };
 
-        public static async Task Seed(this ApplicationDbContext db, UserManager<Utente> um)
+        public static void Seed(this ApplicationDbContext db, UserManager<Utente> userManager)
+        {
+            using (var t = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    Task.Run(() => db.SeedAsync(userManager)).Wait();
+                    t.Commit();
+                }
+                catch
+                {
+                    t.Rollback();
+                }
+            }
+        }
+
+        public static async Task SeedAsync(this ApplicationDbContext db, UserManager<Utente> userManager)
         {
             #region Seed Utenti
-
-            var utente = await um.FindByNameAsync(USERNAME);
+            
+            var utente = await userManager.FindByEmailAsync(EMAIL);
             if (utente == null)
             {
                 utente = new Utente
                 {
-                    UserName = USERNAME,
+                    UserName = EMAIL,
                     Email = EMAIL,
                     EmailConfirmed = true
                 };
 
-                var result = await um.CreateAsync(utente, PASSWORD);
+                var result = await userManager.CreateAsync(utente, PASSWORD);
 
                 if (!result.Succeeded)
                 {
-                    throw new Exception($"SEED: si sono verificati i seguenti errori durante la creazione dell'utente {USERNAME}: {string.Join("; ", result.Errors)}");
+                    throw new Exception($"SEED: si sono verificati i seguenti errori durante la creazione dell'utente {EMAIL}: {string.Join("; ", result.Errors.Select(e => e.Description))}");
                 }
             }
 
@@ -82,6 +97,8 @@ namespace DataStorm.Web.Data
                     db.TipologieLavoro.Add(tipologiaLavoro);
                 }
             }
+
+            await db.SaveChangesAsync();
 
             #endregion
 
@@ -111,6 +128,8 @@ namespace DataStorm.Web.Data
 
                     db.Aziende.Add(azienda);
                 }
+
+                await db.SaveChangesAsync();
             }
 
             #endregion
