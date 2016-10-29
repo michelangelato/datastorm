@@ -7,6 +7,7 @@ namespace DataStorm.Web.Models
 {
     public enum TipoDissestiTerreno:Int32
     {
+        InformazioneMancante = 0,
         Presenti = 1,
         Assenti = 2
     }

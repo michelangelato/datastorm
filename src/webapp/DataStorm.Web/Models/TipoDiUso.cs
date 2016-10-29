@@ -7,6 +7,7 @@ namespace DataStorm.Web.Models
 {
     public enum TipoDiUso:Int32
     {
+        InformazioneMancante = 0,
         Uffici=1,
         ServizioPubblico=2,
         Deposito=3,

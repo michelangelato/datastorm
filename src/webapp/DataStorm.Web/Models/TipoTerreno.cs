@@ -7,6 +7,7 @@ namespace DataStorm.Web.Models
 {
     public enum TipoDiTerreno:Int32
     {
+        InformazioneMancante = 0,
         Pianura = 1,
         PendioLeggero = 2,
         PendioForte = 3,

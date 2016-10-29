@@ -7,6 +7,7 @@ namespace DataStorm.Web.Models
 {
     public enum TipoDiProprieta:Int32
     {
+        InformazioneMancante = 0,
         Pubblica = 1,
         Privata = 2
     }

@@ -7,6 +7,7 @@ namespace DataStorm.Web.Models
 {
     public enum TipoDiPosizione:Int32
     {
+        InformazioneMancante = 0,
         Isolato=1,
         Interno=2,
         DiEstremita=3,
