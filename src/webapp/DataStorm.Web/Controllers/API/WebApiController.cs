@@ -30,14 +30,21 @@ namespace DataStorm.Web.Controllers.API
         [HttpPut]
         public async Task PutImmobile(ImmobileDTO immobile)
         {
-            var utente = await um.FindByNameAsync(User.Identity.Name);
-            Immobile nuovoImmobile=Mapper.Map<ImmobileDTO, Immobile>(immobile);
-            nuovoImmobile.UtenteAppartenenza = utente;
-            db.Immobili.Add(
-                nuovoImmobile
-                );
+            try
+            {
+                var utente = await um.FindByNameAsync(User.Identity.Name);
+                Immobile nuovoImmobile = Mapper.Map<ImmobileDTO, Immobile>(immobile);
+                nuovoImmobile.UtenteAppartenenza = utente;
+                db.Immobili.Add(
+                    nuovoImmobile
+                    );
 
-            await db.SaveChangesAsync();
+                await db.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
         public async Task<ActionResult> EditImmobile(ImmobileDTO immobile)
         {
@@ -146,15 +153,26 @@ namespace DataStorm.Web.Controllers.API
         {
             await Task.FromResult(0);
         }
-        [Route("api/automapper")]
-        public async Task<ImmobileDTO> ProvaAutoMapper()
-        {
-            await Task.FromResult(0);
+        //[Route("api/automapper")]
+        //public async Task<ImmobileDTO> ProvaAutoMapper()
+        //{
+        //    await Task.FromResult(0);
 
-            Immobile ImmobileTest = new Immobile();
-            ImmobileTest.Indirizzo = "aaaaa";
-            var mapped= Mapper.Map<Immobile, ImmobileDTO>(ImmobileTest);
-            return mapped;
+        //    Immobile ImmobileTest = new Immobile();
+        //    ImmobileTest.Indirizzo = "aaaaa";
+        //    var mapped= Mapper.Map<Immobile, ImmobileDTO>(ImmobileTest);
+        //    return mapped;
+        //}
+        [Route("api/aziende")]
+        [HttpGet]
+        public Task<IEnumerable<Azienda>> GetAziende(int? pageNumber)
+        {
+            int PageSize = 10;
+            if (pageNumber.HasValue)
+            {
+
+            }
+            throw new NotImplementedException();
         }
     }
 }
