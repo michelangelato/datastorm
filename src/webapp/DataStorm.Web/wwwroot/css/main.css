@@ -827,7 +827,8 @@ margin-bottom:20px;
 }
 
 .single-service img {
-  height: 85px;
+  height: 150px;
+  width: 150px;
 }
 
 .tour-button {
