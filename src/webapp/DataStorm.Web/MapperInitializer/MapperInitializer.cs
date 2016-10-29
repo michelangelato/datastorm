@@ -12,7 +12,12 @@ namespace DataStorm.Web.MapperInitializer
     {
         public void Initialize()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<Immobile, ImmobileDTO>());
+            Mapper.Initialize(cfg => {
+                cfg.CreateMap<Immobile, ImmobileDTO>();
+                cfg.CreateMap<ImmobileDTO,Immobile>();
+                }
+            
+            );
             
         }  
      

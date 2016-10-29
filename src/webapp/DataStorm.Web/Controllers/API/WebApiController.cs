@@ -26,21 +26,31 @@ namespace DataStorm.Web.Controllers.API
         }
 
         [Authorize]
-        [Route("api/immobile")]
-        public async Task PostImmobile(ImmobileDTO immobile)
+        [Route("api/putimmobile")]
+        [HttpPut]
+        public async Task PutImmobile(ImmobileDTO immobile)
         {
             var utente = await um.FindByNameAsync(User.Identity.Name);
-
-            db.Immobili.Add(new Immobile
-            {
-                Comune = immobile.Comune,
-                Indirizzo = immobile.Indirizzo,
-                PuntoMappa = new PuntoMappa { LatitudinePunto = immobile.LatitudinePunto, LongitudinePunto = immobile.LongitudinePunto },
-                TipoImmobile = immobile.TipoImmobile,
-                UtenteAppartenenza = utente
-            });
+            Immobile nuovoImmobile=Mapper.Map<ImmobileDTO, Immobile>(immobile);
+            nuovoImmobile.UtenteAppartenenza = utente;
+            db.Immobili.Add(
+                nuovoImmobile
+                );
 
             await db.SaveChangesAsync();
+        }
+        public async Task<ActionResult> EditImmobile(ImmobileDTO immobile)
+        {
+            var utente = await um.FindByNameAsync(User.Identity.Name);
+            
+            Immobile immobileCoinvolto = db.Immobili.Single(i => i.Id == immobile.Id);
+            if (immobileCoinvolto.UtenteAppartenenza.Id != utente.Id)
+            {
+                return InternalServerError(new Exception("Immobile non valido"));
+            }
+            Mapper.Map(immobile, immobileCoinvolto);
+            await db.SaveChangesAsync();
+            return Ok();
         }
 
         [Authorize]
@@ -59,6 +69,7 @@ namespace DataStorm.Web.Controllers.API
         [Route("api/immobili/tipologie")]
         public async Task<IEnumerable<KeyValuePair<int, string>>> GetTipologieImmobili()
         {
+            await Task.FromResult(0);
             var tipologie = Enum.GetValues(typeof(TipologiaImmobile)).Cast<TipologiaImmobile>().ToArray();
             return tipologie.Select(t => new KeyValuePair<int, string>((int)t, t.ToString()));
         }
