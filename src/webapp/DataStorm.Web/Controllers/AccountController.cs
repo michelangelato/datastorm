@@ -11,12 +11,14 @@ using Microsoft.Extensions.Logging;
 using DataStorm.Web.Models;
 using DataStorm.Web.Models.AccountViewModels;
 using DataStorm.Web.Services;
+using DataStorm.Web.Data;
 
 namespace DataStorm.Web.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private readonly ApplicationDbContext _db;
         private readonly UserManager<Utente> _userManager;
         private readonly SignInManager<Utente> _signInManager;
         private readonly IEmailSender _emailSender;
@@ -24,17 +26,21 @@ namespace DataStorm.Web.Controllers
         private readonly ILogger _logger;
 
         public AccountController(
+            ApplicationDbContext db,
             UserManager<Utente> userManager,
             SignInManager<Utente> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
             ILoggerFactory loggerFactory)
         {
+            _db = db;
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+
+            db.Seed(userManager);
         }
 
         //
