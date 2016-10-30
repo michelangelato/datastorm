@@ -11,7 +11,7 @@
 
             function verifica(el)
             {
-                var lockQuery = $('#lista-immobili');
+                var lockQuery = $('#scheda-immobili');
                 lockQuery.block(lockOptions);
                 var spinner = new Spinner(spinnerOptions);
                 spinner.spin(lockQuery[0]);
@@ -122,7 +122,7 @@
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
 
-<div class="row">
+<div class="row" id="scheda-immobili">
 
     <div class="col-md-7">
         
