@@ -3,6 +3,7 @@ using DataStorm.Web.Data;
 using DataStorm.Web.Models;
 using DataStorm.Web.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -33,7 +36,7 @@ namespace DataStorm.Web.Controllers.API
         [Authorize]
         [Route("api/putimmobile")]
         [HttpPut]
-        public async Task PutImmobile(ImmobileDTO immobile)
+        public async Task<HttpResponseMessage> PutImmobile(ImmobileDTO immobile)
         {
             try
             {
@@ -45,10 +48,12 @@ namespace DataStorm.Web.Controllers.API
                     );
 
                 await _db.SaveChangesAsync();
+
+                return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch(Exception ex)
             {
-                throw ex;
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
         }
         public async Task<ActionResult> EditImmobile(ImmobileDTO immobile)
@@ -166,7 +171,7 @@ namespace DataStorm.Web.Controllers.API
 
         [HttpPut]
         [Route("api/segnalazione")]
-        public async Task PostSegnalazione(SegnalazioneDTO segnalazione)
+        public async Task<HttpResponseMessage> PutSegnalazione(SegnalazioneDTO segnalazione)
         {
             var utente = await _userManager.FindByNameAsync(User.Identity.Name);
             _db.Segnalazioni.Add(new Segnalazione
@@ -176,6 +181,8 @@ namespace DataStorm.Web.Controllers.API
                 UtenteSegnalazione = utente
             });
             await _db.SaveChangesAsync();
+
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         [Route("api/topics")]
