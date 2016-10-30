@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -50,6 +52,68 @@ namespace DataStorm.Web.Data
 
         public static async Task SeedAsync(this ApplicationDbContext db, UserManager<Utente> userManager, RoleManager<IdentityRole> roleManager)
         {
+            #region Seed comuni italiani
+
+            if (!db.Regioni.Any() && !db.Province.Any() && !db.Comuni.Any())
+            {
+                var regioni = new List<Regione>();
+                var province = new List<Provincia>();
+                var comuni = new List<Comune>();
+
+                var assembly = typeof(DatabaseSeeder).GetTypeInfo().Assembly;
+                var resourceName = $"{nameof(DataStorm)}.{nameof(Web)}.Resources.Elenco-codici-statistici-e-denominazioni-al-01_07_2016.csv";
+
+                var primaLineaPassata = false;
+
+                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var linea = reader.ReadLine();
+
+                        if (!primaLineaPassata)
+                        {
+                            primaLineaPassata = true;
+                            continue;
+                        }
+
+                        var celle = linea.Split(';');
+
+                        int codiceRegione;
+                        if (int.TryParse(celle[0], out codiceRegione))
+                        {
+                            var nomeCittà = celle[5];
+                            var nomeRegione = celle[9];
+                            var nomeProvincia = string.Equals(celle[11], "-") ? celle[10] : celle[11];
+                            var siglaProvincia = celle[13];
+
+                            var regione = regioni.SingleOrDefault(r => r.Nome == nomeRegione);
+                            if (regione == null)
+                            {
+                                regione = new Regione { ID = codiceRegione, Nome = nomeRegione };
+                                regioni.Add(regione);
+                            }
+
+                            var provincia = province.SingleOrDefault(p => p.Sigla == siglaProvincia);
+                            if (provincia == null)
+                            {
+                                provincia = new Provincia { Sigla = siglaProvincia, Denominazione = nomeProvincia, RegioneID = regione.ID, Regione = regione };
+                                province.Add(provincia);
+                            }
+
+                            var comune = new Comune { Denominazione = nomeCittà, SiglaProvincia = siglaProvincia, Provincia = provincia };
+                            comuni.Add(comune);
+                            db.Comuni.Add(comune);
+                        }
+                    }
+                }
+
+                await db.SaveChangesAsync();
+            }
+
+            #endregion
+
             #region Seed Ruoli utente
             {
                 var ruoli = Enum.GetValues(typeof(Ruolo)).Cast<Ruolo>();

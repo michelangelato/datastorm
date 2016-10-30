@@ -7,10 +7,11 @@ namespace DataStorm.Web.Models
 {
     public enum TipoDiCostruzione:Int32
     {
+
         InformazioneMancante = 0,
-        ConTelaioInAcciaio = 1,
-        ConParetiInCementoArmato = 2,
-        ConTelaioInCementoArmato = 3,
-        StrutturaInMuratura = 4
+        Con_telaio_in_acciaio = 1,
+        Con_pareti_in_cemento_armato = 2,
+        Con_telaio_in_cemento_armato = 3,
+        Strutture_in_muratura = 4
     }
 }

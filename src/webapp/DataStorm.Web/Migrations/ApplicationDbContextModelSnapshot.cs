@@ -147,6 +147,23 @@ namespace DataStorm.Web.Migrations
                     b.ToTable("Catasto");
                 });
 
+            modelBuilder.Entity("DataStorm.Web.Models.Comune", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Denominazione")
+                        .IsRequired();
+
+                    b.Property<string>("SiglaProvincia");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("SiglaProvincia");
+
+                    b.ToTable("Comuni");
+                });
+
             modelBuilder.Entity("DataStorm.Web.Models.ImmagineAvviso", b =>
                 {
                     b.Property<int>("Id")
@@ -213,6 +230,22 @@ namespace DataStorm.Web.Migrations
                     b.ToTable("LinkAvvisi");
                 });
 
+            modelBuilder.Entity("DataStorm.Web.Models.Provincia", b =>
+                {
+                    b.Property<string>("Sigla");
+
+                    b.Property<string>("Denominazione")
+                        .IsRequired();
+
+                    b.Property<int>("RegioneID");
+
+                    b.HasKey("Sigla");
+
+                    b.HasIndex("RegioneID");
+
+                    b.ToTable("Province");
+                });
+
             modelBuilder.Entity("DataStorm.Web.Models.PuntoMappa", b =>
                 {
                     b.Property<int>("Id")
@@ -229,6 +262,19 @@ namespace DataStorm.Web.Migrations
                     b.HasIndex("AreaMappaId");
 
                     b.ToTable("PuntiMappa");
+                });
+
+            modelBuilder.Entity("DataStorm.Web.Models.Regione", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Nome")
+                        .IsRequired();
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Regioni");
                 });
 
             modelBuilder.Entity("DataStorm.Web.Models.Segnalazione", b =>
@@ -482,6 +528,13 @@ namespace DataStorm.Web.Migrations
                         .HasForeignKey("PuntoMappaId");
                 });
 
+            modelBuilder.Entity("DataStorm.Web.Models.Comune", b =>
+                {
+                    b.HasOne("DataStorm.Web.Models.Provincia", "Provincia")
+                        .WithMany()
+                        .HasForeignKey("SiglaProvincia");
+                });
+
             modelBuilder.Entity("DataStorm.Web.Models.ImmagineAvviso", b =>
                 {
                     b.HasOne("DataStorm.Web.Models.Avviso")
@@ -505,6 +558,14 @@ namespace DataStorm.Web.Migrations
                     b.HasOne("DataStorm.Web.Models.Avviso")
                         .WithMany("Links")
                         .HasForeignKey("AvvisoId");
+                });
+
+            modelBuilder.Entity("DataStorm.Web.Models.Provincia", b =>
+                {
+                    b.HasOne("DataStorm.Web.Models.Regione", "Regione")
+                        .WithMany()
+                        .HasForeignKey("RegioneID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DataStorm.Web.Models.PuntoMappa", b =>

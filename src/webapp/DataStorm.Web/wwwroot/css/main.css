@@ -51,7 +51,9 @@
     border-color:#00897b !important;
   }
 
-
+#risultato{
+  margin-top:50px;
+}
 
   ul {
     list-style: none;
@@ -2092,6 +2094,10 @@ span.stButton_gradient,
   margin-bottom: 96px;
 }
 
+.single-price  { 
+  margin:20px;
+}
+
 .single-price ul {
   padding: 0;
   margin: 0;
@@ -2118,21 +2124,28 @@ span.stButton_gradient,
 }
 
 .single-price.price-one .plan-name {
-  background-color: #0e76bc;
+  background-color: #4d0500;
 }
 
 .single-price.price-two .plan-name {
-  background-color: #ac2429;
+  background-color: #770b03;
 }
 
 .single-price.price-three .plan-name {
-  background-color: #ed8d1b;
+  background-color: #b60d00;
 }
 
 .single-price.price-four .plan-name {
-  background-color: #6c825f;
+  background-color: #d46400;
 }
 
+.single-price.price-five .plan-name {
+  background-color: #9bd400;
+}
+
+.single-price.price-six .plan-name {
+  background-color: #357e00;
+}
 
 .single-price .plan-price { 
   color: #fff;

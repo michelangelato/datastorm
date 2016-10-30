@@ -10,7 +10,7 @@ namespace DataStorm.Web.Models
     {
         public int ID { get; set; }
 
-        [Required, StringLength(40)]
+        [Required]
         public string Denominazione { get; set; }
 
         public string SiglaProvincia { get; set; }
