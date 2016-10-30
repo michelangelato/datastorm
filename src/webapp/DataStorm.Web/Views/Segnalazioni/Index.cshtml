@@ -1,0 +1,76 @@
+﻿@model IEnumerable<SelectListItem>
+
+@{
+    ViewData["Title"] = "Segnalazioni";
+}
+
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<div class="row">
+    <div class="col-md-7">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Nuovo Immobile</h4>
+            </div>
+            <div class="panel-body">
+                <div class="form-group row">
+                    <label for="txt-comune" class="col-xs-2 col-form-label">Descrizione</label>
+                    <div class="col-xs-10">
+                        <textarea class="form-control" type="text" id="txt-descrizione" placeholder="Descrizione..."></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txt-indirizzo" class="col-xs-2 col-form-label">Indirizzo</label>
+                    <div class="col-xs-10">
+                        <select class="form-control" id="select-tipo">
+                            @foreach (var item in Model)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="offset-sm-2 col-sm-10">
+                        <button id="btn-segnala" type="submit" class="btn btn-success">Segnala</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+    </div>
+</div>
+
+@section scripts {
+    <script>
+
+        $(document).ready(function ()
+        {
+            $("#btn-segnala").click(function () {
+                var segnalazione = {
+                    "Descrizione": $("#txt-descrizione").val(),
+                    "TipoSegnalazione": $("#select-tipo").val()
+                };
+                $.ajax({
+                    type: 'PUT', // Use POST with X-HTTP-Method-Override or a straight PUT if appropriate.
+                    dataType: 'json', // Set datatype - affects Accept header
+                    url: "/api/segnalazione", // A valid URL
+                    headers: {"X-HTTP-Method-Override": "PUT"}, // X-HTTP-Method-Override set to PUT.
+                    data: segnalazione // Some data e.g. Valid JSON as a string
+                })
+                .done(function() {
+                    console.log("success");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .complete(function() {
+                    console.log("complete");
+                });
+            });
+        });
+
+    </script>
+}

@@ -164,11 +164,20 @@ namespace DataStorm.Web.Controllers.API
             //return await _db.Avvisi.First(a => a.Id == ID).ToDTO();
         }
 
+        [HttpPut]
         [Route("api/segnalazione")]
-        public async Task PostSegnalazione()
+        public async Task PostSegnalazione(SegnalazioneDTO segnalazione)
         {
-            await Task.FromResult(0);
+            var utente = await _userManager.FindByNameAsync(User.Identity.Name);
+            _db.Segnalazioni.Add(new Segnalazione
+            {
+                Descrizione = segnalazione.Descrizione,
+                TipoSegnalazione = segnalazione.TipoSegnalazione,
+                UtenteSegnalazione = utente
+            });
+            await _db.SaveChangesAsync();
         }
+
         [Route("api/topics")]
         public async Task<IEnumerable<TopicDTO>> GetTopics(string ricerca)
         {
