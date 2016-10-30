@@ -132,14 +132,41 @@ namespace DataStorm.Web.Data
 
             #region Seed Utenti
             {
+                var utentiAggiunti = new List<string>();
+
                 var ruoli = await roleManager.Roles.ToListAsync();
                 foreach (var ruolo in ruoli)
                 {
                     for (var i = 1; i <= 5; i++)
                     {
-                        await userManager.CreaUtente(db, $"{ruolo.Name}{i}@dastastorm.com", ruolo.Name);
+                        var email = $"{ruolo.Name}{i}@test.it";
+                        await userManager.CreaUtente(db, email, ruolo.Name);
+                        utentiAggiunti.Add(email);
                     }
                 }
+
+                var utentiDaEliminare = await userManager.Users.Where(u => !utentiAggiunti.Contains(u.Email)).ToListAsync();
+                foreach (var utente in utentiDaEliminare)
+                {
+                    var segnalazioniDaEliminare = await db.Segnalazioni.Where(s => s.UtenteSegnalazione == utente).ToListAsync();
+                    foreach(var segnalazione in segnalazioniDaEliminare)
+                    {
+                        db.Segnalazioni.Remove(segnalazione);
+                    }
+
+                    var immobiliDaEliminare = await db.Immobili.Where(i => i.UtenteAppartenenza == utente).ToListAsync();
+                    foreach (var immobile in immobiliDaEliminare)
+                    {
+                        db.Immobili.Remove(immobile);
+                    }
+
+                    var eliminazioneUtente = await userManager.DeleteAsync(utente);
+                    if (!eliminazioneUtente.Succeeded)
+                    {
+                        throw new Exception($"SEED: si sono verificati i seguenti errori durante l\'eliminazione dell\'utente {utente.Email}: {string.Join("; ", eliminazioneUtente.Errors.Select(e => e.Description))}");
+                    }
+                }
+
             }
             #endregion
 
