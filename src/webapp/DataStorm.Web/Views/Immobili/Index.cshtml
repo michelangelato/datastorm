@@ -91,10 +91,10 @@
                     data: immobile // Some data e.g. Valid JSON as a string
                 })
                 .done(function() {
-                    console.log("success");
+                    swal('Successo', 'Il nuovo immobile è stato inserito con successo!', 'success');
                 })
                 .fail(function() {
-                    console.log("error");
+                    swal('Errore', 'Si è verificato un errore durante l\'inserimento dell\'immobile.', 'error');
                 })
                 .complete(function() {
                     console.log("complete");

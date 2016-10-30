@@ -67,11 +67,11 @@
                     headers: {"X-HTTP-Method-Override": "PUT"}, // X-HTTP-Method-Override set to PUT.
                     data: segnalazione // Some data e.g. Valid JSON as a string
                 })
-                .done(function() {
-                    console.log("success");
+                .done(function () {
+                    swal('Successo', 'La segnalazione è stata inviata con successo!', 'success');
                 })
                 .fail(function() {
-                    console.log("error");
+                    swal('Errore', 'Si è verificato un errore durante l\'invio della segnalazione.', 'error');
                 })
                 .complete(function() {
                     console.log("complete");
