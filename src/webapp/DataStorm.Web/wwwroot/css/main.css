@@ -181,11 +181,10 @@ color:#e53935 !important;
 
 #header{
   margin-bottom: 0;
-<<<<<<< HEAD
+
   padding: 32px 0 32px 0;
-=======
-  padding: 30px 0 0 0;
->>>>>>> 259ac1e28325d4dd6e15bd52543c6529a80d74c8
+
+
 }
 
 #header .navbar-inverse .container{
@@ -296,7 +295,7 @@ color:#e53935 !important;
   color: #000;
   font-size: 12px;
   padding: 20px;
-  text-trans: uppercase;
+  text-transform: uppercase;
   font-weight: 300;
 }
 
@@ -330,7 +329,7 @@ ul.sub-menu {
   padding: 5px 0;
   font-size: 13px;
   display: block;
-  text-trans: capitalize;
+  text-transform: capitalize;
 }
 
 #header .navbar-nav li ul.sub-menu li .active{
@@ -2098,7 +2097,7 @@ span.stButton_gradient,
   font-size: 20px;
   margin-bottom: 0;
   padding: 10px 0;
-  text-trans: capitalize;
+  text-transform: capitalize;
 }
 
 .single-price.price-one .plan-name {
