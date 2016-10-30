@@ -1,5 +1,3 @@
-Dal 1962 al 1971	Regione	Dal 1972 al 1981
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
