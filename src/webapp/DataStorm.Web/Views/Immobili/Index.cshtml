@@ -9,86 +9,112 @@
             // initialize page
             $("#verifica-immobile").hide();
 
-            function verifica(el) {
+            function verifica(el)
+            {
+                var lockQuery = $('#lista-immobili');
+                lockQuery.block(lockOptions);
+                var spinner = new Spinner(spinnerOptions);
+                spinner.spin(lockQuery[0]);
+
                 var id = el.data("id");
                 //console.log(id);
 
                 // show/display tabs
                 $("#verifica-immobile").show();
                 $("#nuovo-immobile").hide();
-                $.get('@Url.Action("DettaglioImmobile")', {idImmobile:id},
+                $.get('@Url.Action("DettaglioImmobile")', { idImmobile: id },
                     function (data) {
                         $('#dettaglio-immobile').empty();
                         $("#dettaglio-immobile").html(data);
                     }
-                    );
-                  }
+                    ).always(function () {
+                        lockQuery.unblock();
+                        spinner.stop();
+                    });
+            }
 
-            $("#btn-nuovo-immobile").click(function() {
+            $("#btn-nuovo-immobile").click(function () {
                 $("#verifica-immobile").hide();
                 $("#nuovo-immobile").show();
             });
 
-                        function getImmobili() {
+            function getImmobili() {
+                var lockQuery = $('#lista-immobili');
+                lockQuery.block(lockOptions);
+                var spinner = new Spinner(spinnerOptions);
+                spinner.spin(lockQuery[0]);
+
                 $.get('/api/immobili', function (data) {
-                                console.log(data);
+                    console.log(data);
 
-                                var lstImmobili = $('#immobili-list');
-                                var lista = '<ul>';
+                    var lstImmobili = $('#immobili-list');
+                    var lista = '<ul>';
 
-                                var immobiliexists = data.length > 0;
-                                for (var i = 0; i < data.length; i++) {
-                                    lista +=
-                                        '<a href="javascript:void(0);" data-id="' + data[i]["id"] + '" class="list-group-item list-group-item-action li-immobile">' +
-                                        '<i class="fa fa-home" aria-hidden="true"></i> ' +
-                                        data[i]["comune"] + ', ' + data[i]["indirizzo"] +
-                                        '</a>';
-                                }
+                    var immobiliexists = data.length > 0;
+                    for (var i = 0; i < data.length; i++) {
+                        lista +=
+                            '<a href="javascript:void(0);" data-id="' + data[i]["id"] + '" class="list-group-item list-group-item-action li-immobile">' +
+                            '<i class="fa fa-home" aria-hidden="true"></i> ' +
+                            data[i]["comune"] + ', ' + data[i]["indirizzo"] +
+                            '</a>';
+                    }
 
-                                lista += '</ul>'
+                    lista += '</ul>'
 
 
                     lstImmobili.empty();
-                                lstImmobili.append(lista);
-                    $(".li-immobile").each(function(i, el) {
-                        $(el).click(function() {
-                                        verifica($(this));
-                                    });
-                                })
-                    
-                })
-                .fail(function() {
-                                console.log( "error" );
-                            });
-                        }
+                    lstImmobili.append(lista);
+                    $(".li-immobile").each(function (i, el) {
+                        $(el).click(function () {
+                            verifica($(this));
+                        });
+                    })
 
-                        getImmobili();
+                })
+                .fail(function () {
+                    console.log("error");
+                })
+                .always(function () {
+                    lockQuery.unblock();
+                    spinner.stop();
+                });
+            }
+
+            getImmobili();
 
             $("#btn-aggiungi-immobile").click(function () {
-                            var immobile = {
-                    "Comune": $("#txt-comune").val(), 
-                    "Indirizzo": $("#txt-indirizzo").val(), 
+                var lockQuery = $('#nuovo-immobile');
+                lockQuery.block(lockOptions);
+                var spinner = new Spinner(spinnerOptions);
+                spinner.spin(lockQuery[0]);
+
+                var immobile = {
+                    "Comune": $("#txt-comune").val(),
+                    "Indirizzo": $("#txt-indirizzo").val(),
                     "TipoImmobile": 0
                 };
                 $.ajax({
-                        type: 'PUT', // Use POST with X-HTTP-Method-Override or a straight PUT if appropriate.
+                    type: 'PUT', // Use POST with X-HTTP-Method-Override or a straight PUT if appropriate.
                     dataType: 'json', // Set datatype - affects Accept header
                     url: "/api/putimmobile", // A valid URL
-                    headers: {"X-HTTP-Method-Override": "PUT"}, // X-HTTP-Method-Override set to PUT.
+                    headers: { "X-HTTP-Method-Override": "PUT" }, // X-HTTP-Method-Override set to PUT.
                     data: immobile // Some data e.g. Valid JSON as a string
                 })
-                .done(function() {
-                            console.log("success");
-                        })
-                .fail(function() {
-                            console.log("error");
-                        })
-                .complete(function() {
-                            console.log("complete");
-                            getImmobili()
+                .done(function () {
+                    swal('Successo', 'Il nuovo immobile è stato inserito con successo!', 'success');
+                })
+                .fail(function () {
+                    swal('Errore', 'Si è verificato un errore durante l\'inserimento del nuovo immobile.', 'error');
+                })
+                .complete(function () {
+                    console.log("complete");
+                    getImmobili()
+                })
+                .always(function () {
+                    lockQuery.unblock();
+                    spinner.stop();
                 });
-                    });
-
+            });
         });
     </script>
 }
@@ -143,7 +169,7 @@
     </div>
 
     <div class="col-md-5">
-        <div class="panel panel-default">
+        <div class="panel panel-default" id="lista-immobili">
             <div class="panel-heading">
                 <h4>Lista Immobili</h4>
             </div>
