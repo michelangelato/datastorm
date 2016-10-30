@@ -64,7 +64,8 @@ namespace DataStorm.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RichiediValutazione(string numeroDiPiani, string proprieta, string annoDiCostruzione, string costruzione, string percentualeUtilizzo, string uso, string posizione, string cateneCordoli, string comune) {
+        public async Task<IActionResult> RichiediValutazione(string numeroDiPiani, string proprieta, string annoDiCostruzione, string costruzione, string percentualeUtilizzo, string uso, string posizione, string cateneCordoli, string comune)
+        {
             await InvokeRequestResponseService(numeroDiPiani, proprieta, annoDiCostruzione, costruzione, percentualeUtilizzo, uso, posizione, cateneCordoli, comune);
         }
 
