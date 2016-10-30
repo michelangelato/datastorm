@@ -9,9 +9,9 @@
 
 <div class="row">
     <div class="col-md-7">
-        <div class="panel panel-default">
+        <div id="form-segnalazione" class="panel panel-default">
             <div class="panel-heading">
-                <h4>Nuovo Immobile</h4>
+                <h4>Nuova segnalazione</h4>
             </div>
             <div class="panel-body">
                 <div class="form-group row">
@@ -48,11 +48,18 @@
 
         $(document).ready(function ()
         {
-            $("#btn-segnala").click(function () {
+            $("#btn-segnala").click(function ()
+            {
+                var lockQuery = $('#form-segnalazione');
+                lockQuery.block(lockOptions);
+                var spinner = new Spinner(spinnerOptions);
+                spinner.spin(lockQuery[0]);
+
                 var segnalazione = {
                     "Descrizione": $("#txt-descrizione").val(),
                     "TipoSegnalazione": $("#select-tipo").val()
                 };
+
                 $.ajax({
                     type: 'PUT', // Use POST with X-HTTP-Method-Override or a straight PUT if appropriate.
                     dataType: 'json', // Set datatype - affects Accept header
@@ -68,6 +75,10 @@
                 })
                 .complete(function() {
                     console.log("complete");
+                })
+                .always(function () {
+                    lockQuery.unblock();
+                    spinner.stop();
                 });
             });
         });

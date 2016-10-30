@@ -28,6 +28,11 @@
             });
 
             function getImmobili() {
+                var lockQuery = $('#lista-immobili');
+                lockQuery.block(lockOptions);
+                var spinner = new Spinner(spinnerOptions);
+                spinner.spin(lockQuery[0]);
+
                 $.get('/api/immobili', function (data) {
                     console.log(data);
 
@@ -56,17 +61,28 @@
                 })
                 .fail(function() {
                     console.log( "error" );
+                })
+                .always(function () {
+                    lockQuery.unblock();
+                    spinner.stop();
                 });
             }
 
             getImmobili();
 
-            $("#nuovo-immobile").click(function () {
+            $("#nuovo-immobile").click(function ()
+            {
+                var lockQuery = $('#form-immobile');
+                lockQuery.block(lockOptions);
+                var spinner = new Spinner(spinnerOptions);
+                spinner.spin(lockQuery[0]);
+
                 var immobile = { 
                     "Comune": $("#txt-comune").val(), 
                     "Indirizzo": $("#txt-indirizzo").val(), 
                     "TipoImmobile": 0 
                 };
+
                 $.ajax({
                     type: 'PUT', // Use POST with X-HTTP-Method-Override or a straight PUT if appropriate.
                     dataType: 'json', // Set datatype - affects Accept header
@@ -83,6 +99,10 @@
                 .complete(function() {
                     console.log("complete");
                     getImmobili()
+                })
+                .always(function () {
+                    lockQuery.unblock();
+                    spinner.stop();
                 });
             });
 
@@ -97,7 +117,7 @@
 
     <div class="col-md-7">
         
-        <div class="panel panel-default" id="nuovo-immobile">
+        <div class="panel panel-default" id="form-immobile">
             <div class="panel-heading">
                 <h4>Nuovo Immobile</h4>
             </div>
@@ -147,7 +167,7 @@
     </div>
 
     <div class="col-md-5">
-        <div class="panel panel-default">
+        <div class="panel panel-default" id="lista-immobili">
             <div class="panel-heading">
                 <h4>Lista Immobili</h4>
             </div>

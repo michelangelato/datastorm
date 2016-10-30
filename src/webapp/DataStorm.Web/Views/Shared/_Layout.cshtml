@@ -11,7 +11,14 @@
     <link href="/css/lightbox.css" rel="stylesheet"> 
 	<link href="/css/main.css" rel="stylesheet">
 	<link href="/css/responsive.css" rel="stylesheet">
+    <script>
+        var lockOptions = {
+            message: null,
+            overlayCSS: { backgroundColor: '#FFF', color: '#FFF' }
+        };
 
+        var spinnerOptions = { color: '#333', lines: 16, opacity: 0, length: 8, width: 4, radius: 16 };
+    </script>
     <environment names="Development">
         @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />*@
     </environment>
@@ -112,6 +119,8 @@
 
     <script type="text/javascript" src="/js/jquery.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.blockUI.js"></script>
+    <script type="text/javascript" src="/js/spin.min.js"></script>
     <script type="text/javascript" src="/js/lightbox.min.js"></script>
     <script type="text/javascript" src="/js/wow.min.js"></script>
     <script type="text/javascript" src="/js/main.js"></script>   
