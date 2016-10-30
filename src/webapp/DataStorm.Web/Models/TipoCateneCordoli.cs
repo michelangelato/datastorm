@@ -8,7 +8,7 @@ namespace DataStorm.Web.Models
     public enum TipoCateneCordoli:Int32
     {
         InformazioneMancante = 0,
-        ConCateneCordoli = 1,
-        SenzaCateneCordoli = 2
+        Con_catene_e_cordoli = 1,
+        Senza_catene_e_cordoli = 2
     }
 }
