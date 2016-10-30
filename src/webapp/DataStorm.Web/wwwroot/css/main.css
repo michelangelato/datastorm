@@ -239,6 +239,10 @@ color:#e53935 !important;
   border-radius: 4px;
 }
 
+#fascia-social{
+  margin-bottom:15px;
+}
+
 .social-icons ul li{
   padding: 0 10px;
 
@@ -256,23 +260,23 @@ color:#e53935 !important;
 }
 
 .social-icons ul li a:hover .fa-facebook {
-  color:#00897b;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover .fa-twitter {
-  color:#00897b;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover .fa-google-plus {
-  color:#A22523;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover .fa-dribbble {
-  color:#E94989;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover .fa-linkedin {
-  color:#00897b;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover,
