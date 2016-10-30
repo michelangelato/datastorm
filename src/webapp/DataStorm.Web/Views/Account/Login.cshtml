@@ -39,33 +39,37 @@
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                 </div>
+                
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
+
+                    <div class="row">
+  <div class="col-md-offset-2 col-md-5"> 
+      <div class="checkbox">
                             <label asp-for="RememberMe">
                                 <input asp-for="RememberMe" />
-                                @Html.DisplayNameFor(m => m.RememberMe)
+                               Ricordami
                             </label>
                         </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <button type="submit" class="btn btn-default">Log in</button>
-                    </div>
-                </div>
-                <p>
-                    <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
+                        <button type="submit" class="btn btn-common">Log in</button></div>
+  <div class="col-md-5"> <p>
+                    <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Sei nuovo? Registrati</a>
                 </p>
                 <p>
-                    <a asp-action="ForgotPassword">Forgot your password?</a>
-                </p>
+                    <a asp-action="ForgotPassword">Hai dimenticato la password?</a>
+                </p></div>
+</div>
+
+                   <!-- <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-common">Log in</button>
+                    </div> -->
+                </div>
+               
             </form>
         </section>
     </div>
     <div class="col-md-4">
         <section>
-            <h4>Use another service to log in.</h4>
+            <h4>Loggati con i Social Network</h4>
             <hr />
             @{
                 var loginProviders = SignInManager.GetExternalAuthenticationSchemes().ToList();
@@ -73,8 +77,8 @@
                 {
                     <div>
                         <p>
-                            There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
+                            Non ci sono servizi di autenticazione esterni configurati. <!--See <a href="http://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                            for details on setting up this ASP.NET application to support logging in via external services.-->
                         </p>
                     </div>
                 }

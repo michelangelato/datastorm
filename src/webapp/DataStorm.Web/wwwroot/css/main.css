@@ -74,6 +74,8 @@
 color:#e53935 !important;
 }
 
+
+
   .overflow{
     overflow: hidden;
   }
@@ -505,6 +507,10 @@ margin-bottom:20px;
   outline: none;
   box-shadow: none;
   height: 40px;
+}
+
+.checkbox {
+  margin-bottom:15px !important;
 }
 
 .form-control:hover, 
