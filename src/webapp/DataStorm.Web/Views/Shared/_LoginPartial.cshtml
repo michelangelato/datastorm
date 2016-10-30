@@ -11,8 +11,9 @@
             Area personale
         </a>
     </li>
-    <li>
-        <a class="btn btn-link navbar-btn navbar-link" asp-controller="Account" asp-action="Logout">Logout</a>
+    <li><form asp-action="Logout" asp-controller="Login" >
+        <button class="btn btn-common2" >LOGOUT</button>
+        </form>
     </li>
 }
 else
