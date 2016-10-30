@@ -81,7 +81,7 @@
                             {
                                 <li><a asp-area="" asp-controller="Immobili" asp-action="Index">Segnala situazione emergenza</a></li>
                                 <li><a asp-area="" asp-controller="Immobili" asp-action="Index">Pubblica avviso</a></li>
-                            }
+                                <li><a asp-area="" asp-controller="Segnalazioni" asp-action="Lista">Vedi segnalazioni</a></li>                            }
                             else if (User.Identity.Name.StartsWith(nameof(Ruolo.Azienda), StringComparison.CurrentCultureIgnoreCase))
                             {
 

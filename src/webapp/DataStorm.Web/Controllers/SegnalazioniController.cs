@@ -9,9 +9,11 @@ using DataStorm.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataStorm.Web.Controllers
 {
+    [Authorize]
     public class SegnalazioniController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -26,12 +28,16 @@ namespace DataStorm.Web.Controllers
 
             db.Seed(userManager, roleManager);
         }
-
-        [Authorize]
+        
         public IActionResult Index()
         {
             var tipologie = Enum.GetValues(typeof(TipologiaSegnalazione)).Cast<TipologiaSegnalazione>();
             return View(tipologie.Select(t => new SelectListItem { Text = Enum.GetName(typeof(TipologiaSegnalazione), t), Value = ((int)t).ToString() }));
+        }
+        
+        public async Task<IActionResult> Lista()
+        {
+            return View(await _db.Segnalazioni.ToListAsync());
         }
     }
 }
