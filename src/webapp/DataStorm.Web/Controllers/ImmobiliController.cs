@@ -63,14 +63,13 @@ namespace DataStorm.Web.Controllers
                 return PartialView("_DettaglioImmobile", result);
             }
         }
-
+        /*
         [HttpPost]
         public async Task<IActionResult> RichiediValutazione(string numeroDiPiani, string proprieta, string annoDiCostruzione, string costruzione, string percentualeUtilizzo, string uso, string posizione, string cateneCordoli, string comune)
         {
             await InvokeRequestResponseService(numeroDiPiani, proprieta, annoDiCostruzione, costruzione, percentualeUtilizzo, uso, posizione, cateneCordoli, comune);
         }
-
-
+        */
         static async Task<string> InvokeRequestResponseService(string numeroDiPiani, string proprieta, string annoDiCostruzione, string costruzione, string percentualeUtilizzo, string uso, string posizione, string cateneCordoli, string comune)
         {
             using (var client = new HttpClient())
