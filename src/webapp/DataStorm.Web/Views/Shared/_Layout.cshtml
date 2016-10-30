@@ -62,40 +62,37 @@
 
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                       
                         @if (User.Identity.Name != null)
                         {
-                        @if (User.Identity.Name.StartsWith(nameof(Ruolo.Cittadino), StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            <li><a asp-area="" asp-controller="Immobili" asp-action="Index">Immobili</a></li>
-                            <li><a asp-area="" asp-controller="Segnalazioni" asp-action="Index">Fai una segnalazione</a></li>
-                            <li class="dropdown">
-                                <a href="#">Contatta un'azienda  <i class="fa fa-angle-down"></i></a>
-                                <ul role="menu" class="sub-menu">
-                                    <li><a href="#">Aziende edili</a></li>
-                                    <li><a href="#">Liberi professionisti</a></li>
-                                    <li><a href="#">Imprese di demolizioni</a></li>
-                                </ul>
-                            </li>
-                        }
-                        else if (User.Identity.Name.StartsWith(nameof(Ruolo.ProtezioneCivile), StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            <li><a asp-area="" asp-controller="Immobili" asp-action="Index">Segnala situazione emergenza</a></li>
-                            <li><a asp-area="" asp-controller="Immobili" asp-action="Index">Pubblica avviso</a></li>
-                        }
-                        else if (User.Identity.Name.StartsWith(nameof(Ruolo.Azienda), StringComparison.CurrentCultureIgnoreCase))
-                        {
+                            if (User.Identity.Name.StartsWith(nameof(Ruolo.Cittadino), StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                <li><a asp-area="" asp-controller="Immobili" asp-action="Index">Immobili</a></li>
+                                <li><a asp-area="" asp-controller="Segnalazioni" asp-action="Index">Fai una segnalazione</a></li>
+                                <li class="dropdown">
+                                    <a href="#">Contatta un'azienda  <i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="#">Aziende edili</a></li>
+                                        <li><a href="#">Liberi professionisti</a></li>
+                                        <li><a href="#">Imprese di demolizioni</a></li>
+                                    </ul>
+                                </li>
+                            }
+                            else if (User.Identity.Name.StartsWith(nameof(Ruolo.ProtezioneCivile), StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                <li><a asp-area="" asp-controller="Avvisi" asp-action="Nuovo">Pubblica avviso</a></li>
+                                <li><a asp-area="" asp-controller="Segnalazioni" asp-action="Lista">Vedi segnalazioni</a></li>                            }
+                            else if (User.Identity.Name.StartsWith(nameof(Ruolo.Azienda), StringComparison.CurrentCultureIgnoreCase))
+                            {
 
-                        }
-                        else if (User.Identity.Name.StartsWith(nameof(Ruolo.PA), StringComparison.CurrentCultureIgnoreCase))
-                        {
+                            }
+                            else if (User.Identity.Name.StartsWith(nameof(Ruolo.PA), StringComparison.CurrentCultureIgnoreCase))
+                            {
 
-                        }
-                        else
-                        {
+                            }
+                            else
+                            {
 
-
-                        }
+                            }
                         }
                         @Html.Partial("_LoginPartial")
                     </ul>
@@ -125,11 +122,13 @@
                     <img src="/images/home/footer-bg1.png" class="img-responsive inline" alt="">
                 </div>
              </div>
-             <div class="col-sm-12 " id="contact">             
+             <div class="col-sm-12 " id="contact">
+                 <a class="pull-right" asp-action="OpenData" asp-controller="Home"><img width="90" style="margin-top:15px;" src="/images/iodl.png" /></a>             
                 <div class="contact-info text-center">
                         <p>Se rilevi inesattezze nel sito contattaci all'indirizzo e-mail <address>
                         <a href="mailto:datastorm.hack@gmail.com">datastorm.hack@gmail.com</a> <br> 
                         </address></p>
+                        
                  </div>
             </div>
             <div class="col-sm-12 ">

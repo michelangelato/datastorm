@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Nuovo avviso";
+}
+
+@section scripts {
+	<script>
+        $(document).ready(function ()
+        {
+            $("#btn-pubblica-avviso").click(function ()
+            {
+                var lockQuery = $('#nuovo-avviso');
+                lockQuery.block(lockOptions);
+                var spinner = new Spinner(spinnerOptions);
+                spinner.spin(lockQuery[0]);
+
+                var avviso = {
+                    "Titolo": $("#txt-titolo").val(),
+                    "Descrizione": $("#txt-descrizione").val(),
+                    "AreeMappe": [],
+                    "ImmaginiAvviso": [],
+                    "Links": [],
+                    "Topics": [],
+                };
+
+                $.ajax({
+                    type: 'PUT', // Use POST with X-HTTP-Method-Override or a straight PUT if appropriate.
+                    dataType: 'json', // Set datatype - affects Accept header
+                    url: "/api/avviso", // A valid URL
+                    headers: { "X-HTTP-Method-Override": "PUT" }, // X-HTTP-Method-Override set to PUT.
+                    data: avviso // Some data e.g. Valid JSON as a string
+                })
+                .done(function () {
+                    swal('Successo', 'Il nuovo avviso è stato pubblicato con successo!', 'success');
+                })
+                .fail(function () {
+                    swal('Errore', 'Si è verificato un errore durante l\'inserimento del nuovo avviso.', 'error');
+                })
+                .always(function () {
+                    lockQuery.unblock();
+                    spinner.stop();
+                });
+            });
+        });
+    </script>
+}
+
+<!--inizio breadcrumbs-->
+
+<ol class="breadcrumb">
+  <li><a asp-action="Index" asp-controller="Home" >Home</a></li>
+  <li class="active">@ViewData["Title"]</li>
+</ol>
+
+<!--fine breadcrumbs-->
+
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<div class="panel panel-default" id="nuovo-avviso">
+    <div class="panel-body">
+        <div class="form-group row">
+            <label for="txt-comune" class="col-xs-2 col-form-label">Titolo</label>
+            <div class="col-xs-10">
+                <input class="form-control" type="text" id="txt-titolo" placeholder="Titolo...">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="txt-comune" class="col-xs-2 col-form-label">Descrizione</label>
+            <div class="col-xs-10">
+                <textarea class="form-control" type="text" id="txt-descrizione" placeholder="Descrizione..."></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button id="btn-pubblica-avviso" type="submit" class="btn btn-common">Pubblica</button>
+            </div>
+        </div>
+    </div>
+</div>

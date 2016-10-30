@@ -137,8 +137,7 @@ namespace DataStorm.Web.Controllers
         }
 
         //
-        // POST: /Account/Logout
-        [HttpGet]
+        // /Account/Logout
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

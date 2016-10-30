@@ -2115,7 +2115,9 @@ span.stButton_gradient,
 .single-price.price-one .plan-name, 
 .single-price.price-two .plan-name, 
 .single-price.price-three .plan-name, 
-.single-price.price-four .plan-name {   
+.single-price.price-four .plan-name, 
+.single-price.price-five .plan-name, 
+.single-price.price-six .plan-name {   
   color: #fff;
   font-size: 20px;
   margin-bottom: 0;
@@ -2221,7 +2223,9 @@ span.stButton_gradient,
 .price-one .btn-buynow, 
 .price-two .btn-buynow, 
 .price-three .btn-buynow, 
-.price-four .btn-buynow   {  
+.price-four .btn-buynow , 
+.price-five .btn-buynow , 
+.price-six .btn-buynow {  
   border-radius: 0;
   color: #fff;
   padding: 12px;
@@ -2232,37 +2236,52 @@ span.stButton_gradient,
 }
 
 .price-one .btn-buynow  {
-  background-color: #0d6fb1;
+  background-color: #4d0500;
 }
 
 .price-two .btn-buynow  {
-  background-color: #ac2429;
+  background-color: #770b03;
 }
 
 .price-three .btn-buynow  {
-  background-color: #e78817;
+  background-color: #b60d00;
+}
+
+.price-five .btn-buynow  {
+  background-color: #9bd400;
+}
+
+.price-six .btn-buynow  {
+  background-color: #357e00;
 }
 
 .price-four .btn-buynow  {
-  background-color: #5f7452;
+  background-color: #d46400;
 }
 
 .price-one .btn-buynow:hover  {
-  background-color: #0a5a90;
+  background-color: #770b03;
 }
 
 .price-two .btn-buynow:hover  {
-  background-color: #821b1e;
+  background-color: #b60d00;
 }
 
 .price-three .btn-buynow:hover  {
-  background-color: #c57413;
+  background-color: #d46400;
 }
 
 .price-four .btn-buynow:hover  {
-  background-color: #48583e;
+  background-color: #9bd400;
 }
 
+.price-five .btn-buynow:hover  {
+  background-color: #357e00;
+}
+
+.price-six .btn-buynow:hover  {
+  background-color: #225100;
+}
 
 .price-table2, .price-table3{
   margin-bottom:125px;

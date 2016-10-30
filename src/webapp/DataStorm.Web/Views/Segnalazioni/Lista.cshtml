@@ -1,0 +1,27 @@
+﻿@model IEnumerable<DataStorm.Web.Models.Segnalazione>
+
+@{
+    ViewData["Title"] = "Lista segnalazioni";
+}
+
+<!--inizio breadcrumbs-->
+
+<ol class="breadcrumb">
+    <li><a asp-action="Index" asp-controller="Home">Home</a></li>
+    <li class="active">@ViewData["Title"]</li>
+</ol>
+
+<!--fine breadcrumbs-->
+
+
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<div class="panel panel-default" id="lista-immobili">
+    @foreach (var segnalazione in Model)
+    {
+        <p>@segnalazione.Descrizione<br /><span style="font-size:80%;">@segnalazione.TipoSegnalazione &mdash; Segnalato da @segnalazione.UtenteSegnalazione.Email</span></p>
+        <hr />
+    }
+    <div class="list-group" id="immobili-list"></div>
+</div>
