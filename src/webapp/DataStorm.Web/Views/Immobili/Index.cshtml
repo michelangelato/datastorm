@@ -11,100 +11,83 @@
 
             function verifica(el) {
                 var id = el.data("id");
-                console.log(id);
+                //console.log(id);
 
                 // show/display tabs
                 $("#verifica-immobile").show();
                 $("#nuovo-immobile").hide();
-
-                // view the data
-                $("#view-comune").html("Comune di pollo");
-                $("#view-indirizzo").html("Via di pollo");
-            }
+                $.get('@Url.Action("DettaglioImmobile")', {idImmobile:id},
+                    function (data) {
+                        $('#dettaglio-immobile').empty();
+                        $("#dettaglio-immobile").html(data);
+                    }
+                    );
+                  }
 
             $("#btn-nuovo-immobile").click(function() {
                 $("#verifica-immobile").hide();
                 $("#nuovo-immobile").show();
             });
 
-            function getImmobili() {
-                var lockQuery = $('#lista-immobili');
-                lockQuery.block(lockOptions);
-                var spinner = new Spinner(spinnerOptions);
-                spinner.spin(lockQuery[0]);
-
+                        function getImmobili() {
                 $.get('/api/immobili', function (data) {
-                    console.log(data);
+                                console.log(data);
 
-                    var lstImmobili = $('#immobili-list');
-                    var lista = '<ul>';
+                                var lstImmobili = $('#immobili-list');
+                                var lista = '<ul>';
 
-                    var immobiliexists = data.length > 0;
-                    for (var i = 0; i < data.length; i++) {
-                        lista += 
-                            '<a href="#" data-id="' + data[i]["id"] + '" class="list-group-item list-group-item-action li-immobile">' +
-                            '<i class="fa fa-home" aria-hidden="true"></i> ' +
-                            data[i]["comune"] + ', ' + data[i]["indirizzo"] +
-                            '</a>';
-                    }
+                                var immobiliexists = data.length > 0;
+                                for (var i = 0; i < data.length; i++) {
+                                    lista +=
+                                        '<a href="javascript:void(0);" data-id="' + data[i]["id"] + '" class="list-group-item list-group-item-action li-immobile">' +
+                                        '<i class="fa fa-home" aria-hidden="true"></i> ' +
+                                        data[i]["comune"] + ', ' + data[i]["indirizzo"] +
+                                        '</a>';
+                                }
 
-                    lista += '</ul>'
-                    
+                                lista += '</ul>'
+
+
                     lstImmobili.empty();
-                    lstImmobili.append(lista);
+                                lstImmobili.append(lista);
                     $(".li-immobile").each(function(i, el) {
                         $(el).click(function() {
-                            verifica($(this));
-                        });
-                    })
+                                        verifica($(this));
+                                    });
+                                })
                     
                 })
                 .fail(function() {
-                    console.log( "error" );
-                })
-                .always(function () {
-                    lockQuery.unblock();
-                    spinner.stop();
-                });
-            }
+                                console.log( "error" );
+                            });
+                        }
 
-            getImmobili();
+                        getImmobili();
 
-            $("#nuovo-immobile").click(function ()
-            {
-                var lockQuery = $('#form-immobile');
-                lockQuery.block(lockOptions);
-                var spinner = new Spinner(spinnerOptions);
-                spinner.spin(lockQuery[0]);
-
-                var immobile = { 
+            $("#btn-aggiungi-immobile").click(function () {
+                            var immobile = {
                     "Comune": $("#txt-comune").val(), 
                     "Indirizzo": $("#txt-indirizzo").val(), 
-                    "TipoImmobile": 0 
+                    "TipoImmobile": 0
                 };
-
                 $.ajax({
-                    type: 'PUT', // Use POST with X-HTTP-Method-Override or a straight PUT if appropriate.
+                        type: 'PUT', // Use POST with X-HTTP-Method-Override or a straight PUT if appropriate.
                     dataType: 'json', // Set datatype - affects Accept header
                     url: "/api/putimmobile", // A valid URL
                     headers: {"X-HTTP-Method-Override": "PUT"}, // X-HTTP-Method-Override set to PUT.
                     data: immobile // Some data e.g. Valid JSON as a string
                 })
                 .done(function() {
-                    swal('Successo', 'Il nuovo immobile è stato inserito con successo!', 'success');
-                })
+                            console.log("success");
+                        })
                 .fail(function() {
-                    swal('Errore', 'Si è verificato un errore durante l\'inserimento dell\'immobile.', 'error');
-                })
+                            console.log("error");
+                        })
                 .complete(function() {
-                    console.log("complete");
-                    getImmobili()
-                })
-                .always(function () {
-                    lockQuery.unblock();
-                    spinner.stop();
+                            console.log("complete");
+                            getImmobili()
                 });
-            });
+                    });
 
         });
     </script>
@@ -117,7 +100,7 @@
 
     <div class="col-md-7">
         
-        <div class="panel panel-default" id="form-immobile">
+        <div class="panel panel-default" id="nuovo-immobile">
             <div class="panel-heading">
                 <h4>Nuovo Immobile</h4>
             </div>
@@ -136,7 +119,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="offset-sm-2 col-sm-10">
-                        <button id="nuovo-immobile" type="submit" class="btn btn-success">Inserisci</button>
+                        <button id="btn-aggiungi-immobile" type="submit" class="btn btn-success">Inserisci</button>
                     </div>
                 </div>
             </div>
@@ -151,23 +134,16 @@
                 <button id="btn-nuovo-immobile" class="btn btn-default">
                     <i class="fa fa-plus" aria-hidden="true"></i> Nuovo</button>
                 <hr>
-                <table class="table">
-                    <tr>
-                        <th>Comune</th>
-                        <th>Indirizzo</th>
-                    </tr>
-                    <tr>
-                        <td id="view-comune"></td>
-                        <td id="view-indirizzo"></td>
-                    </tr>
-                </table>
+                <div id="dettaglio-immobile">
+
+                </div>
             </div>
         </div>
 
     </div>
 
     <div class="col-md-5">
-        <div class="panel panel-default" id="lista-immobili">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 <h4>Lista Immobili</h4>
             </div>

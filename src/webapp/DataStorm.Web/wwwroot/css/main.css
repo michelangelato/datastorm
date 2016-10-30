@@ -63,12 +63,18 @@
 
   h2{
     font-size: 24px;
-    color: #686868;
+    color: #00897b;
   }
 
   h3{
     font-size: 18px;
   }
+
+.red{
+color:#e53935 !important;
+}
+
+
 
   .overflow{
     overflow: hidden;
@@ -80,7 +86,8 @@
 
   .btn-common {
     font-size: 14px;
-    color: #00897b;
+    background-color: #00897b;
+    color: #ffffff;
     border: 1px solid #00897b;
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
@@ -99,9 +106,9 @@
   .btn-common:hover, 
   .btn-common:focus{
     outline: none;
-    background: none;
+    background: #e53935;
     box-shadow: none;
-    color: #e53935;
+    color: #ffffff;
     border-color:#e53935;
   }
 
@@ -391,6 +398,7 @@ ul.sub-menu {
 **************************/
 
 #footer {
+  margin-top:70px;
   padding-bottom: 10px;
   /**background-image: url(../images/home/footer-bg1.png);
   background-repeat: repeat-xt;
@@ -473,7 +481,7 @@ ul.sub-menu {
 }
 
 #contact{
-background-color: #c4cfd4;
+background-color: #e8e8e8;
 width: 100%;
 margin-bottom:20px;
 }
@@ -500,6 +508,10 @@ margin-bottom:20px;
   outline: none;
   box-shadow: none;
   height: 40px;
+}
+
+.checkbox {
+  margin-bottom:15px !important;
 }
 
 .form-control:hover, 
@@ -558,7 +570,7 @@ margin-bottom:20px;
 
 #home-slider .main-slider {
   position: relative;
-  height: 450px;
+  height: 400px;
 }
 
 #home-slider .slide-text{
@@ -672,6 +684,34 @@ margin-bottom:20px;
   width: 100%;
 }
 
+#action-contatore{
+  background-image: url(../images/home/tour-bg.png);
+  background-color: #fbfafa;
+  height: 157px;
+  background-position: center;
+  display: table;
+  position: static;
+  width: 100%;
+  margin-top:50px;
+  margin-bottom:50px;
+}
+
+#action-app {
+  background-image: url(../images/tour-icon3.png);
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  height: 200px;
+  background-position: right;
+  display: table;
+  position: static;
+  width: 100%;
+  
+}
+
+#services {
+  margin-top:50px;
+}
+
 .vertical-center{
   display: table-cell;
   vertical-align: middle;
@@ -713,7 +753,7 @@ margin-bottom:20px;
 }
 
 .action .btn-common{
-  margin-top: 55px;
+  margin-top: 35px;
   float: left;
 }
 
@@ -780,6 +820,15 @@ margin-bottom:20px;
   width: 100%;
 }
 
+.breadcrumb{
+  margin-top:40px;
+  margin-bottom:30px;
+}
+
+.breadcrumb li{
+  font-size:12px;
+}
+
 #team {
   padding: 85px 0;
 }
@@ -794,17 +843,15 @@ margin-bottom:20px;
 }
 
 .single-service img {
-  height: 85px;
+
 }
 
 .tour-button {
-  background-image: url(../images/home/tour-icon2.png);
   height: 100%;
-  background-repeat: no-repeat;
   position: absolute;
   width: 100%;
   left: 0;
-  background-position: 151px 4px;
+  
 }
 
 .about-image {
