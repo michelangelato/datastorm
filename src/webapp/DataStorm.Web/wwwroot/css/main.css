@@ -47,6 +47,11 @@
     transition: 300ms;
   }
 
+  .form-control:focus{
+    border-color:#00897b !important;
+  }
+
+
 
   ul {
     list-style: none;
@@ -63,28 +68,49 @@
 
   h2{
     font-size: 24px;
-    color: #686868;
+    color: #00897b;
   }
 
   h3{
     font-size: 18px;
   }
 
+.red{
+color:#e53935 !important;
+}
+
+.spazio-top{
+  margin-top:10px;
+}
+
   .overflow{
     overflow: hidden;
   }
 
   .uppercase{
-    text-transform: uppercase;
+    text-trans: uppercase;
   }
 
   .btn-common {
     font-size: 14px;
-    color: #00897b;
+    background-color: #00897b;
+    color: #ffffff;
     border: 1px solid #00897b;
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
     padding: 10px 25px;
+  }
+
+   .btn-common2 {
+    font-size: 12px;
+    background-color: #00897b;
+    color: #ffffff;
+    border: 1px solid #00897b;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    padding: 10px 25px;
+    margin-top:10px;
+    
   }
 
   #action .col-sm-5{
@@ -96,12 +122,13 @@
   }
 
 
+
   .btn-common:hover, 
   .btn-common:focus{
     outline: none;
-    background: none;
+    background: #e53935;
     box-shadow: none;
-    color: #e53935;
+    color: #ffffff;
     border-color:#e53935;
   }
 
@@ -167,11 +194,10 @@
 
 #header{
   margin-bottom: 0;
-<<<<<<< HEAD
+
   padding: 32px 0 32px 0;
-=======
-  padding: 30px 0 0 0;
->>>>>>> 259ac1e28325d4dd6e15bd52543c6529a80d74c8
+
+
 }
 
 #header .navbar-inverse .container{
@@ -201,7 +227,7 @@
   height: 50px;
 }
 
-.search-form{
+.search-{
   padding-left: 10px;
   height: 40px;
   font-size: 18px;
@@ -211,6 +237,10 @@
   border: 1px solid #00897b;
   margin-top: 20px;
   border-radius: 4px;
+}
+
+#fascia-social{
+  margin-bottom:15px;
 }
 
 .social-icons ul li{
@@ -230,23 +260,23 @@
 }
 
 .social-icons ul li a:hover .fa-facebook {
-  color:#00897b;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover .fa-twitter {
-  color:#00897b;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover .fa-google-plus {
-  color:#A22523;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover .fa-dribbble {
-  color:#E94989;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover .fa-linkedin {
-  color:#00897b;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover,
@@ -358,30 +388,30 @@ ul.sub-menu {
 @-webkit-keyframes scaleIn {
   0% {
     opacity: 0;
-    -webkit-transform: scale(0);
-    transform: scale(0);
+    -webkit-trans: scale(0);
+    trans: scale(0);
   }
 
   100% {
     opacity: 1;
-    -webkit-transform: scale(1);
-    transform: scale(1);
+    -webkit-trans: scale(1);
+    trans: scale(1);
   }
 }
 
 @keyframes scaleIn {
   0% {
     opacity: 0;
-    -webkit-transform: scale(0);
-    -ms-transform: scale(0);
-    transform: scale(0);
+    -webkit-trans: scale(0);
+    -ms-trans: scale(0);
+    trans: scale(0);
   }
 
   100% {
     opacity: 1;
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1);
+    -webkit-trans: scale(1);
+    -ms-trans: scale(1);
+    trans: scale(1);
   }
 }
 
@@ -391,6 +421,7 @@ ul.sub-menu {
 **************************/
 
 #footer {
+  margin-top:70px;
   padding-bottom: 10px;
   /**background-image: url(../images/home/footer-bg1.png);
   background-repeat: repeat-xt;
@@ -455,9 +486,9 @@ ul.sub-menu {
   font-size: 40px;
   color: #ea2c00;
   font-family: 'Noto Sans', sans-serif;
-  transform:rotate(180deg);
-  -ms-transform:rotate(180deg); /* IE 9 */
-  -webkit-transform: rotate(180deg); /* Opera, Chrome, and Safari */
+  trans:rotate(180deg);
+  -ms-trans:rotate(180deg); /* IE 9 */
+  -webkit-trans: rotate(180deg); /* Opera, Chrome, and Safari */
   line-height: 0;
 }
 
@@ -473,7 +504,7 @@ ul.sub-menu {
 }
 
 #contact{
-background-color: #c4cfd4;
+background-color: #e8e8e8;
 width: 100%;
 margin-bottom:20px;
 }
@@ -494,7 +525,7 @@ margin-bottom:20px;
   margin-bottom: 40px;
 }
 
-.form-control {
+.-control {
   border: 1px solid #eaeaea;
   font-weight: 300;
   outline: none;
@@ -502,8 +533,12 @@ margin-bottom:20px;
   height: 40px;
 }
 
-.form-control:hover, 
-.form-control:focus{
+.checkbox {
+  margin-bottom:15px !important;
+}
+
+.-control:hover, 
+.-control:focus{
   border-color: #00897b;
   outline: none;
   box-shadow: none;
@@ -516,7 +551,7 @@ margin-bottom:20px;
   font-size: 14px;
   font-weight: 300;
   letter-spacing: 5px;
-  text-transform: uppercase;
+  text-trans: uppercase;
   border-radius: 3px;
   margin-top: 5px;
   border-bottom: 3px solid #2f9697;
@@ -558,7 +593,7 @@ margin-bottom:20px;
 
 #home-slider .main-slider {
   position: relative;
-  height: 450px;
+  height: 400px;
 }
 
 #home-slider .slide-text{
@@ -672,6 +707,34 @@ margin-bottom:20px;
   width: 100%;
 }
 
+#action-contatore{
+  background-image: url(../images/home/tour-bg.png);
+  background-color: #fbfafa;
+  height: 157px;
+  background-position: center;
+  display: table;
+  position: static;
+  width: 100%;
+  margin-top:50px;
+  margin-bottom:50px;
+}
+
+#action-app {
+  background-image: url(../images/tour-icon3.png);
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  height: 200px;
+  background-position: right;
+  display: table;
+  position: static;
+  width: 100%;
+  
+}
+
+#services {
+  margin-top:50px;
+}
+
 .vertical-center{
   display: table-cell;
   vertical-align: middle;
@@ -713,7 +776,7 @@ margin-bottom:20px;
 }
 
 .action .btn-common{
-  margin-top: 55px;
+  margin-top: 35px;
   float: left;
 }
 
@@ -780,6 +843,15 @@ margin-bottom:20px;
   width: 100%;
 }
 
+.breadcrumb{
+  margin-top:40px;
+  margin-bottom:30px;
+}
+
+.breadcrumb li{
+  font-size:12px;
+}
+
 #team {
   padding: 85px 0;
 }
@@ -788,23 +860,21 @@ margin-bottom:20px;
   margin-top: 80px;
 }
 
-#company-information .padding-top{
+#company-ination .padding-top{
   padding-top: 172px;
   
 }
 
 .single-service img {
-  height: 85px;
+
 }
 
 .tour-button {
-  background-image: url(../images/home/tour-icon2.png);
   height: 100%;
-  background-repeat: no-repeat;
   position: absolute;
   width: 100%;
   left: 0;
-  background-position: 151px 4px;
+  
 }
 
 .about-image {
@@ -951,7 +1021,7 @@ h3.top-zero{
   font-size: 20px;
 }
 
-#company-information .about-us h2{
+#company-ination .about-us h2{
   margin-bottom: 45px;
 }
 
@@ -996,11 +1066,11 @@ h3.top-zero{
   padding-top: 30px;
 }
 
-#company-information.choose .padding-top{
+#company-ination.choose .padding-top{
   padding-top: 50px;
 }
 
-#company-information h2{
+#company-ination h2{
   margin-bottom: 25px;
   margin-top: 0;
 }
@@ -1021,7 +1091,7 @@ ul.elements li > i{
   margin-right: 10px;
 }
 
-#company-information h1.margin-bottom{
+#company-ination h1.margin-bottom{
   margin-bottom: 26px;
 }
 
@@ -1124,7 +1194,7 @@ ul.elements li > i{
   font-size: 18px;
   font-weight: 300;
   padding: 0 25px;
-  text-transform: capitalize;
+  text-trans: capitalize;
   border: none;
 }
 
@@ -1439,11 +1509,11 @@ Portfolio with right sidebar
 }
 
 .isotope .isotope-item {
-  -webkit-transition-property: -webkit-transform, opacity;
-  -moz-transition-property: -moz-transform, opacity;
-  -ms-transition-property: -ms-transform, opacity;
-  -o-transition-property: -o-transform, opacity;
-  transition-property: transform, opacity;
+  -webkit-transition-property: -webkit-trans, opacity;
+  -moz-transition-property: -moz-trans, opacity;
+  -ms-transition-property: -ms-trans, opacity;
+  -o-transition-property: -o-trans, opacity;
+  transition-property: trans, opacity;
 }
 
 /**** disabling Isotope CSS3 transitions ****/
@@ -1464,7 +1534,7 @@ Portfolio with right sidebar
 Portfolio Details
 *****************************/
 
-#portfolio-information.padding-top{
+#portfolio-ination.padding-top{
   padding-top: 100px;
 }
 
@@ -1988,11 +2058,11 @@ span.stButton_gradient,
   color:#00897b
 }
 
-#contact-form #message{
+#contact- #message{
   resize:none;
 }
 
-#contact-form .btn-submit {
+#contact- .btn-submit {
   width: 28%;
   margin: 5px auto;
 }
@@ -2144,7 +2214,7 @@ span.stButton_gradient,
   padding: 12px;
   font-weight: 300;
   letter-spacing: 3px;
-  text-transform: uppercase;
+  text-trans: uppercase;
   display: block;
 }
 
@@ -2313,7 +2383,7 @@ span.stButton_gradient,
   display: inline-block;
   overflow: hidden;
   padding: 20px 0 0 0;
-  text-transform: uppercase;
+  text-trans: uppercase;
   letter-spacing: 3px;
 }
 
@@ -2378,14 +2448,14 @@ span.stButton_gradient,
 
 #error-page h2 {
   font-size:36px;
-  text-transform: uppercase;
+  text-trans: uppercase;
 }
 
 .btn-error {
   font-weight: 300;
   margin-top: 30px;
   padding:25px 55px;
-  text-transform: uppercase;
+  text-trans: uppercase;
   font-size: 16px;
   letter-spacing: 5px;
   background-color: transparent;
@@ -2469,7 +2539,7 @@ span.stButton_gradient,
 
 #error-page h2 {
   font-size:36px;
-  text-transform: uppercase;
+  text-trans: uppercase;
 }
 
 .btn-error {
@@ -2482,7 +2552,7 @@ span.stButton_gradient,
   margin-bottom: 50px;
   margin-top: 50px;
   padding: 25px 53px;
-  text-transform: uppercase;
+  text-trans: uppercase;
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -2641,7 +2711,7 @@ span.stButton_gradient,
 
 #subscribe h2 {
   color: #fff;
-  text-transform: uppercase;
+  text-trans: uppercase;
 }
 
 #subscribe .fa-envelope-o {
@@ -2649,7 +2719,7 @@ span.stButton_gradient,
   margin-right: 5px;
 }
 
-#subscribe .form-control {
+#subscribe .-control {
   background-color: transparent;
   height: 52px;
   color: #fff;
@@ -2720,6 +2790,9 @@ span.stButton_gradient,
   border-top-color: #eee;
 }
 
+.panel-body{
+  margin-top:15px !important;
+}
 
 .nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus{
   background-color: #4FCCCD;

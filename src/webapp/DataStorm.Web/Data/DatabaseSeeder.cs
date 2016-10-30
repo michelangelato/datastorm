@@ -177,7 +177,7 @@ namespace DataStorm.Web.Data
             #endregion
 
             #region Seed Segnalazioni
-            {/*
+            {
                 if (!await db.Segnalazioni.AnyAsync())
                 {
                     var tipologieSegnalazioni = Enum.GetValues(typeof(TipologiaSegnalazione)).Cast<TipologiaSegnalazione>().ToArray();
@@ -197,20 +197,13 @@ namespace DataStorm.Web.Data
                                     UtenteSegnalazione = utente
                                 };
 
-                                try
-                                {
-                                    db.Segnalazioni.Add(segnalazione);
-                                }
-                                catch (Exception ex)
-                                {
-
-                                }
+                                db.Segnalazioni.Add(segnalazione);
                             }
 
                             await db.SaveChangesAsync();
                         }
                     }
-                }*/
+                }
             }
             #endregion
         }

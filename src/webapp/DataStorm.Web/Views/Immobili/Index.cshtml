@@ -9,25 +9,41 @@
             // initialize page
             $("#verifica-immobile").hide();
 
-            function verifica(el) {
+            function verifica(el)
+            {
+                var lockQuery = $('#scheda-immobili');
+                lockQuery.block(lockOptions);
+                var spinner = new Spinner(spinnerOptions);
+                spinner.spin(lockQuery[0]);
+
                 var id = el.data("id");
-                console.log(id);
+                //console.log(id);
 
                 // show/display tabs
                 $("#verifica-immobile").show();
                 $("#nuovo-immobile").hide();
-
-                // view the data
-                $("#view-comune").html("Comune di pollo");
-                $("#view-indirizzo").html("Via di pollo");
+                $.get('@Url.Action("DettaglioImmobile")', { idImmobile: id },
+                    function (data) {
+                        $('#dettaglio-immobile').empty();
+                        $("#dettaglio-immobile").html(data);
+                    }
+                    ).always(function () {
+                        lockQuery.unblock();
+                        spinner.stop();
+                    });
             }
 
-            $("#btn-nuovo-immobile").click(function() {
+            $("#btn-nuovo-immobile").click(function () {
                 $("#verifica-immobile").hide();
                 $("#nuovo-immobile").show();
             });
 
             function getImmobili() {
+                var lockQuery = $('#lista-immobili');
+                lockQuery.block(lockOptions);
+                var spinner = new Spinner(spinnerOptions);
+                spinner.spin(lockQuery[0]);
+
                 $.get('/api/immobili', function (data) {
                     console.log(data);
 
@@ -36,70 +52,94 @@
 
                     var immobiliexists = data.length > 0;
                     for (var i = 0; i < data.length; i++) {
-                        lista += 
-                            '<a href="#" data-id="' + data[i]["id"] + '" class="list-group-item list-group-item-action li-immobile">' +
+                        lista +=
+                            '<a href="javascript:void(0);" data-id="' + data[i]["id"] + '" class="list-group-item list-group-item-action li-immobile">' +
                             '<i class="fa fa-home" aria-hidden="true"></i> ' +
                             data[i]["comune"] + ', ' + data[i]["indirizzo"] +
                             '</a>';
                     }
 
                     lista += '</ul>'
-                    
+
+
                     lstImmobili.empty();
                     lstImmobili.append(lista);
-                    $(".li-immobile").each(function(i, el) {
-                        $(el).click(function() {
+                    $(".li-immobile").each(function (i, el) {
+                        $(el).click(function () {
                             verifica($(this));
                         });
                     })
-                    
+
                 })
-                .fail(function() {
-                    console.log( "error" );
+                .fail(function () {
+                    console.log("error");
+                })
+                .always(function () {
+                    lockQuery.unblock();
+                    spinner.stop();
                 });
             }
 
             getImmobili();
 
-            $("#nuovo-immobile").click(function () {
-                var immobile = { 
-                    "Comune": $("#txt-comune").val(), 
-                    "Indirizzo": $("#txt-indirizzo").val(), 
-                    "TipoImmobile": 0 
+            $("#btn-aggiungi-immobile").click(function () {
+                var lockQuery = $('#nuovo-immobile');
+                lockQuery.block(lockOptions);
+                var spinner = new Spinner(spinnerOptions);
+                spinner.spin(lockQuery[0]);
+
+                var immobile = {
+                    "Comune": $("#txt-comune").val(),
+                    "Indirizzo": $("#txt-indirizzo").val(),
+                    "TipoImmobile": 0
                 };
                 $.ajax({
                     type: 'PUT', // Use POST with X-HTTP-Method-Override or a straight PUT if appropriate.
                     dataType: 'json', // Set datatype - affects Accept header
                     url: "/api/putimmobile", // A valid URL
-                    headers: {"X-HTTP-Method-Override": "PUT"}, // X-HTTP-Method-Override set to PUT.
+                    headers: { "X-HTTP-Method-Override": "PUT" }, // X-HTTP-Method-Override set to PUT.
                     data: immobile // Some data e.g. Valid JSON as a string
                 })
-                .done(function() {
-                    console.log("success");
+                .done(function () {
+                    swal('Successo', 'Il nuovo immobile è stato inserito con successo!', 'success');
                 })
-                .fail(function() {
-                    console.log("error");
+                .fail(function () {
+                    swal('Errore', 'Si è verificato un errore durante l\'inserimento del nuovo immobile.', 'error');
                 })
-                .complete(function() {
+                .complete(function () {
                     console.log("complete");
                     getImmobili()
+                })
+                .always(function () {
+                    lockQuery.unblock();
+                    spinner.stop();
                 });
             });
-
         });
     </script>
 }
 
+
+<!--inizio breadcrumbs-->
+
+<ol class="breadcrumb">
+  <li><a asp-action="Index" asp-controller="Home" >Home</a></li>
+  <li class="active">Immobili</li>
+</ol>
+
+<!--fine breadcrumbs-->
+
+
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
 
-<div class="row">
+<div class="row" id="scheda-immobili">
 
     <div class="col-md-7">
         
         <div class="panel panel-default" id="nuovo-immobile">
             <div class="panel-heading">
-                <h4>Nuovo Immobile</h4>
+                <h4>Aggiungi un nuovo immobile</h4>
             </div>
             <div class="panel-body">
                 <div class="form-group row">
@@ -114,9 +154,9 @@
                         <input class="form-control" type="text" name="indirizzo" id="txt-indirizzo" placeholder="Via e civico...">
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="offset-sm-2 col-sm-10">
-                        <button id="nuovo-immobile" type="submit" class="btn btn-success">Inserisci</button>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button id="btn-aggiungi-immobile" type="submit" class="btn btn-common">Inserisci</button>
                     </div>
                 </div>
             </div>
@@ -131,23 +171,16 @@
                 <button id="btn-nuovo-immobile" class="btn btn-default">
                     <i class="fa fa-plus" aria-hidden="true"></i> Nuovo</button>
                 <hr>
-                <table class="table">
-                    <tr>
-                        <th>Comune</th>
-                        <th>Indirizzo</th>
-                    </tr>
-                    <tr>
-                        <td id="view-comune"></td>
-                        <td id="view-indirizzo"></td>
-                    </tr>
-                </table>
+                <div id="dettaglio-immobile">
+
+                </div>
             </div>
         </div>
 
     </div>
 
     <div class="col-md-5">
-        <div class="panel panel-default">
+        <div class="panel panel-default" id="lista-immobili">
             <div class="panel-heading">
                 <h4>Lista Immobili</h4>
             </div>
