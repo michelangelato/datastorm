@@ -28,12 +28,12 @@ public class AbstractAlertImage {
 	@Expose
 	@SerializedName("Larghezza")
 	@Column(name = "width")
-	int width;
+	Integer width;
 
 	@Expose
 	@SerializedName("Altezza")
 	@Column(name = "height")
-	int height;
+	Integer height;
 
 	@ManyToOne
 	@Column(name = "alert")

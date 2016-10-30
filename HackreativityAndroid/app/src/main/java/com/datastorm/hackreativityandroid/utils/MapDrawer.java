@@ -50,9 +50,9 @@ public class MapDrawer {
 	public static void setupMap(Context context, GoogleMap googleMap, List<MapObject> mapObjects) {
 		List<LatLng> locs = new ArrayList<>();
 		for (MapObject mapObject : mapObjects) {
-			if (mapObject.getType() == MapObject.TYPE_POINT) drawPoint(googleMap, mapObject);
-			if (mapObject.getType() == MapObject.TYPE_POLYLINE) drawPolyline(googleMap, mapObject);
-			if (mapObject.getType() == MapObject.TYPE_POLYGON) drawPolygon(googleMap, mapObject);
+			if (mapObject.getType() == Constants.TYPE_POINT) drawPoint(googleMap, mapObject);
+			if (mapObject.getType() == Constants.TYPE_POLYLINE) drawPolyline(googleMap, mapObject);
+			if (mapObject.getType() == Constants.TYPE_POLYGON) drawPolygon(googleMap, mapObject);
 
 			for (MapPoint mapPoint : mapObject.getPoints()) {
 				locs.add(new LatLng(mapPoint.getLat(), mapPoint.getLon()));

@@ -23,12 +23,12 @@ public class AbstractMapPoint {
 	@Expose
 	@SerializedName("Lat")
 	@Column(name = "lat")
-	double lat;
+	Double lat;
 
 	@Expose
 	@SerializedName("Lon")
 	@Column(name = "lon")
-	double lon;
+	Double lon;
 
 	@ManyToOne
 	@Column(name = "map_object")

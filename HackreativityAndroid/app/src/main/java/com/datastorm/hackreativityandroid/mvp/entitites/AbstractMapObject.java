@@ -18,10 +18,6 @@ import io.requery.Table;
 @Table(name = "map_object")
 public class AbstractMapObject {
 
-	public static final int TYPE_POINT    = 1;
-	public static final int TYPE_POLYLINE = 2;
-	public static final int TYPE_POLYGON  = 3;
-
 	@Expose
 	@SerializedName("Id")
 	@Column(name = "id")

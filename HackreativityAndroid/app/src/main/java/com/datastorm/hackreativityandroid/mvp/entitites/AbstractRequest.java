@@ -26,7 +26,7 @@ public class AbstractRequest {
 	@Expose
 	@SerializedName("ServerId")
 	@Column(name = "server_id")
-	long serverId;
+	Long serverId;
 
 	@Expose
 	@SerializedName("Indirizzo")
@@ -36,7 +36,7 @@ public class AbstractRequest {
 	@Expose
 	@SerializedName("Tipo")
 	@Column(name = "type")
-	int type;
+	Integer type;
 
 	@Expose
 	@SerializedName("DataRichiesta")
@@ -46,13 +46,13 @@ public class AbstractRequest {
 	@Expose
 	@SerializedName("CondizionePorta")
 	@Column(name = "condition_door")
-	boolean conditionDoor;
+	Boolean conditionDoor;
 
 	@Expose
 	@SerializedName("CondizioneScale")
 	@Column(name = "condition_stairs")
-	boolean conditionStairs;
+	Boolean conditionStairs;
 
 	@Column(name = "synced")
-	boolean synced;
+	Boolean synced;
 }

@@ -34,5 +34,5 @@ public class AbstractReport {
 	Date reportedAt;
 
 	@Column(name = "synced")
-	boolean synced;
+	Boolean synced;
 }
