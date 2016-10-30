@@ -9,8 +9,10 @@ namespace OpenDataProcessor.Services {
     public class Ricostruttore {
 
 private readonly PropertyInfo property;
+private readonly Random random;
 public Ricostruttore (Expression<Func<Output, object>> proprieta)
 {
+    this.random = new Random();
   var memberSelectorExpression = proprieta.Body as MemberExpression;
         if (memberSelectorExpression == null)
         throw new Exception("Non è una MemberExpression");
@@ -23,11 +25,11 @@ public Ricostruttore (Expression<Func<Output, object>> proprieta)
 }
 
  //http://stackoverflow.com/questions/9601707/how-to-set-property-value-using-expressions
-        public void Ricostruisci(Output istanza, ref List<Indicatore> indicatori) {
+        public void Ricostruisci(ref Output istanza, ref List<Indicatore> indicatori) {
 
             var percentuali = indicatori.Select(i => i.PercentualeInagibili);
             var somma = percentuali.Sum();
-            var random = new Random();
+            
             var numero = random.Next(0, somma);
             var accumulatore = 0;
             var valore = "";
@@ -35,18 +37,21 @@ public Ricostruttore (Expression<Func<Output, object>> proprieta)
                 var indicatore = indicatori[i];
                 accumulatore += indicatore.PercentualeInagibili;
                 valore = indicatore.Nome;
-                if (accumulatore <= somma) {
+                if (accumulatore >= numero) {
                     if (indicatore.Istanze <= 1) {
+                        //Console.WriteLine("Elimino " + indicatore.Nome);
                         indicatori.Remove(indicatore);
                         percentuali = indicatori.Select(ind => ind.PercentualeInagibili);
-                        somma = percentuali.Sum();
+                        property.SetValue(istanza, valore, null);
                     } else {
                         indicatore.Istanze -= 1;
+                        property.SetValue(istanza, valore, null);
                     }
+                    //Console.Write("#" + valore);
                     break;
                 }
             }
-            property.SetValue(istanza, valore, null);
+        
         
         }
     }

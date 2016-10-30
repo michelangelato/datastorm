@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace DataStorm.Web.Data
@@ -54,7 +55,7 @@ namespace DataStorm.Web.Data
                 var ruoli = Enum.GetValues(typeof(Ruolo)).Cast<Ruolo>();
                 foreach (var ruolo in ruoli)
                 {
-                    var ruoloString = ruolo.ToString().ToLower();
+                    var ruoloString = Enum.GetName(typeof(Ruolo), ruolo);
                     var identityRole = await roleManager.FindByNameAsync(ruoloString);
                     if (identityRole == null)
                     {
@@ -72,7 +73,7 @@ namespace DataStorm.Web.Data
                 {
                     for (var i = 1; i <= 5; i++)
                     {
-                        await userManager.CreaUtente($"{ruolo.Name}{i}@dominio.com", ruolo.Name);
+                        await userManager.CreaUtente(db, $"{ruolo.Name}{i}@dastastorm.com", ruolo.Name);
                     }
                 }
             }
@@ -208,7 +209,7 @@ namespace DataStorm.Web.Data
             #endregion
         }
 
-        private static async Task CreaUtente(this UserManager<Utente> userManager, string email, string ruolo)
+        private static async Task CreaUtente(this UserManager<Utente> userManager, ApplicationDbContext db, string email, string ruolo)
         {
             var utente = await userManager.FindByEmailAsync(email);
             if (utente == null)
