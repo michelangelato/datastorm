@@ -109,6 +109,10 @@ color:#e53935 !important;
     right: 0;
   }
 
+.navbar-btn{
+    margin-top:0px;
+    margin-botom:0px;
+  }
 
   .btn-common:hover, 
   .btn-common:focus{
@@ -2773,6 +2777,9 @@ span.stButton_gradient,
   border-top-color: #eee;
 }
 
+.panel-body{
+  margin-top:15px !important;
+}
 
 .nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus{
   background-color: #4FCCCD;
