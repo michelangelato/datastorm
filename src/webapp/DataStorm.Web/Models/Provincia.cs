@@ -9,10 +9,10 @@ namespace DataStorm.Web.Models
 {
     public class Provincia
     {
-        [Key, StringLength(2, MinimumLength = 2), Column(TypeName = "char")]
+        [Key]
         public string Sigla { get; set; }
 
-        [Required, StringLength(40)]
+        [Required]
         public string Denominazione { get; set; }
 
         public int RegioneID { get; set; }

@@ -47,6 +47,12 @@ namespace DataStorm.Web.Data
             builder.Entity<Azienda>().HasMany(az => az.AziendaTipoLavoro);
             builder.Entity<Topic>().ToTable("Topics").HasKey(t=>t.Id);
             builder.Entity<Topic>().HasMany(t => t.AvvisiTopics);
+
+            builder.Entity<Regione>().ToTable("Regioni").HasKey(r => r.ID);
+            builder.Entity<Provincia>().ToTable("Province").HasKey(p => p.Sigla);
+            builder.Entity<Provincia>().HasOne(p => p.Regione).WithMany().HasForeignKey(p => p.RegioneID);
+            builder.Entity<Comune>().ToTable("Comuni").HasKey(c => c.ID);
+            builder.Entity<Comune>().HasOne(c => c.Provincia).WithMany().HasForeignKey(c => c.SiglaProvincia);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
@@ -60,5 +66,9 @@ namespace DataStorm.Web.Data
         public DbSet<Utente> Utenti { get; set; }
         public DbSet<AreaMappa> AreeMappa { get; set; }
         public DbSet<Segnalazione> Segnalazioni { get; set; }
+
+        public DbSet<Regione> Regioni { get; set; }
+        public DbSet<Provincia> Province { get; set; }
+        public DbSet<Comune> Comuni { get; set; }
     }
 }

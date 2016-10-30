@@ -10,7 +10,7 @@ namespace DataStorm.Web.Models
     {
         public int ID { get; set; }
 
-        [Required, StringLength(40)]
+        [Required]
         public string Nome { get; set; }
     }
 }
