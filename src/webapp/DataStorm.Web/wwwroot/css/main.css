@@ -101,6 +101,18 @@ color:#e53935 !important;
     padding: 10px 25px;
   }
 
+   .btn-common2 {
+    font-size: 12px;
+    background-color: #00897b;
+    color: #ffffff;
+    border: 1px solid #00897b;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    padding: 10px 25px;
+    margin-top:10px;
+    
+  }
+
   #action .col-sm-5{
     position: absolute;
 
@@ -109,10 +121,7 @@ color:#e53935 !important;
     right: 0;
   }
 
-.navbar-btn{
-    margin-top:0px;
-    margin-botom:0px;
-  }
+
 
   .btn-common:hover, 
   .btn-common:focus{
@@ -230,6 +239,10 @@ color:#e53935 !important;
   border-radius: 4px;
 }
 
+#fascia-social{
+  margin-bottom:15px;
+}
+
 .social-icons ul li{
   padding: 0 10px;
 
@@ -247,23 +260,23 @@ color:#e53935 !important;
 }
 
 .social-icons ul li a:hover .fa-facebook {
-  color:#00897b;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover .fa-twitter {
-  color:#00897b;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover .fa-google-plus {
-  color:#A22523;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover .fa-dribbble {
-  color:#E94989;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover .fa-linkedin {
-  color:#00897b;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover,
