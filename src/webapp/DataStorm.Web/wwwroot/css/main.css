@@ -2115,7 +2115,9 @@ span.stButton_gradient,
 .single-price.price-one .plan-name, 
 .single-price.price-two .plan-name, 
 .single-price.price-three .plan-name, 
-.single-price.price-four .plan-name {   
+.single-price.price-four .plan-name, 
+.single-price.price-five .plan-name, 
+.single-price.price-six .plan-name {   
   color: #fff;
   font-size: 20px;
   margin-bottom: 0;
