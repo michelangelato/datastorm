@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	rosso-rosa:#e53935 - #f5706d - #a81d1a
+	<color name="colorPrimary">#00897b</color>
+	<color name="colorPrimaryLight">#23baab</color>
+	<color name="colorPrimaryExtraLight">#23baab</color>
+	<color name="colorPrimaryDark">#075049</color>
+	<color name="colorAccentDark">#a81d1a</color>
+	<color name="colorAccent">#e53935</color>
+	<color name="colorAccentLight">#f5706d</color>
+	<color name="colorHighlight">@color/md_deep_orange_200</color>
+	<color name="colorAccentBackground">@color/md_deep_orange_A100</color>
+	<color name="login_disabled_section_header_color">@color/white_secondary_text</color>
+	<color name="login_enabled_section_header_color">@color/white_primary_text</color>
+	<color name="circle_attribute_background">@color/md_grey_100</color>
+	<color name="circle_attribute_content_color">@color/black_secondary_text</color>
+	<color name="circle_attribute_secondary_content_color">@color/black_hint_text</color>
+	<color name="program_table_background_color">@color/md_blue_500</color>
+	<color name="program_table_background_color_light">@color/md_blue_300</color>
+	<color name="program_table_background_color_dark">@color/md_blue_800</color>
+
+	<color name="white_primary_text">#ffffffff</color>
+	<color name="white_secondary_text">#b3ffffff</color>
+	<color name="white_hint_text">#4dffffff</color>
+	<color name="white_divider">#1fffffff</color>
+	<color name="black">#ff000000</color>
+	<color name="black_primary_text">#de000000</color>
+	<color name="black_secondary_text">#8a000000</color>
+	<color name="black_hint_text">#61000000</color>
+	<color name="black_divider">#1f000000</color>
+	<color name="transparent">#00000000</color>
+	<color name="background">#f3f3f3</color>
+	<color name="toolbar_light_icon">#deffffff</color>
+	<color name="toolbar_dark_icon">#de000000</color>
+	<color name="ticket_builder_text">@color/white_primary_text</color>
+	<color name="ticket_builder_background">@color/colorPrimaryLight</color>
+	<color name="ticket_date_time_background">@color/colorPrimaryLight</color>
+</resources>

@@ -1,0 +1,42 @@
+<resources>
+	<string name="app_name">GoSafe</string>
+	<string name="action_show_alert_list">@string/fragment_title_alert_list</string>
+	<string name="action_show_request_list">@string/fragment_title_requests_list</string>
+	<string name="action_show_report">@string/fragment_title_report</string>
+	<string name="action_show_map">@string/fragment_title_map</string>
+
+	<string name="empty_alerts">Non ci sono avvisi</string>
+	<string name="empty_requests">Non hai richieste in coda</string>
+
+	<string name="fragment_title_request_new">Nuova richiesta</string>
+	<string name="fragment_title_requests_list">Le tue richieste</string>
+	<string name="fragment_title_report">Segnala</string>
+	<string name="fragment_title_alert_list">Avvisi</string>
+	<string name="fragment_title_map">Mappa</string>
+
+	<string name="navigation_drawer_open">Apri il menù laterale</string>
+	<string name="navigation_drawer_close">Chiudi il menù laterale</string>
+	<string name="topic_add_search_box_hint">Digita il nome della città…</string>
+	<string name="report_danger">Sono in pericolo…</string>
+	<string name="report_collapse">E\' crollato…</string>
+	<string name="report_block">E\' bloccato…</string>
+	<string name="new_request_address_hint">Scrivi l\'indirizzo completo</string>
+	<string name="request_new_conditions">Condizioni</string>
+	<string name="request_new_condition_door">Porta bloccata</string>
+	<string name="request_new_condition_stairs">Scale inagibili</string>
+	<string name="request_new_condition_send">Richiedi intervento</string>
+	<string name="request_new_type">Tipo di intervento</string>
+	<string name="alert_report_shortcut_title">Segnala un pericolo</string>
+	<string name="alert_report_shortcut_description">Clicca qui per vedere come fare</string>
+	<string name="alert_request_shortcut_title">Richiedi un intervento</string>
+	<string name="alert_request_shortcut_description">Clicca per vedere come fare</string>
+	<string name="alert_map_shortcut_title">Mappa della zona</string>
+	<string name="alert_map_shortcut_description">Clicca per allargare</string>
+	<string name="request_type_check">Sopralluogo</string>
+	<string name="request_type_rescue">Recupero Beni</string>
+	<string name="report_sent">Segnalazione inviata!</string>
+	<string-array name="request_type">
+		<item>Sopralluogo</item>
+		<item>Recupero Beni</item>
+	</string-array>
+</resources>

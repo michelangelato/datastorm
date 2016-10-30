@@ -1,0 +1,109 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+    defaultConfig {
+        applicationId "com.datastorm.hackreativityandroid"
+        minSdkVersion 15
+        targetSdkVersion 25
+        final MAJOR_RELEASE = 0
+        final MINOR_RELEASE = 12
+        versionCode getVersionCodeNumber(MAJOR_RELEASE, MINOR_RELEASE)
+        versionName getVersionCodeName(MAJOR_RELEASE, MINOR_RELEASE)
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+    signingConfigs {
+        releaseConfig {
+            storeFile file("keystore.jks");
+            storePassword("datastorm");
+            keyAlias "datastorm";
+            keyPassword "datastorm";
+        }
+        debugConfig {
+            storeFile file("keystore_debug.jks");
+            storePassword("datastorm");
+            keyAlias "datastorm";
+            keyPassword "datastorm";
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.releaseConfig
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            signingConfig signingConfigs.debugConfig
+            minifyEnabled false
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    dataBinding {
+        enabled = false
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    //Support
+    compile 'com.android.support:appcompat-v7:25.0.0'
+
+    //Quickstart
+    compile 'com.dadino.quickstart:core:0.1.1'
+    compile 'com.dadino.quickstart:login:0.1.1'
+
+    //Requery
+    compile 'io.requery:requery:1.0.1'
+    compile 'io.requery:requery-android:1.0.1'
+    apt 'io.requery:requery-processor:1.0.1'
+
+    //Google Play Services
+    compile 'com.google.android.gms:play-services-maps:9.8.0'
+
+    testCompile 'junit:junit:4.12'
+
+    debugCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
+    //Square
+    compile 'com.jakewharton:butterknife:8.2.1'
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+}
+
+
+retrolambda {
+    oldJdk JAVA7_HOME
+    jdk JAVA8_HOME
+    javaVersion JavaVersion.VERSION_1_7
+}
+
+def getVersionCodeName(int major, int minor) {
+    def versionCodeName = major * 100 + minor
+    return "${versionCodeName}"
+}
+
+def getVersionCodeNumber(int major, int minor) {
+    def versionCodeName = major * 100 + minor
+    return versionCodeName
+}
+
+apply plugin: 'com.google.gms.google-services'
