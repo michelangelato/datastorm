@@ -80,9 +80,8 @@ else
                 
                 if (value == "Dato non disponibile")
                 return;
-
-
-                cateneCordoli = value.Replace("_", ""); }
+                cateneCordoli = value.Replace("_", ""); 
+                }
         }
         public string Regione {get; set;}
         public string Latitudine {get; set;}
