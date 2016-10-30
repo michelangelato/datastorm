@@ -6,21 +6,84 @@ using System.Reflection;
 using CsvHelper.Configuration;
 
 namespace OpenDataProcessor.Models {
+         
+
 
     public class Output {
         public string Codice {get; set;}
-        public string NumeroDiPiani {get;set;}
-        public string Proprieta {get;set;}
-        public string AnnoDiCostruzione {get;set;}
-        public string Costruzione {get;set;} 
-        public string AreaInMq {get; set;}
-        public string PercentualeUtilizzo {get;set;}
-        public string Uso {get;set;}
-        public string Posizione {get;set;}
-        public string CateneCordoli {get;set;}
-        public string DissestiTerreno {get;set;}
-        public string Terreno {get;set;}
 
+        private string numeroDiPiani;
+        public string NumeroDiPiani {
+        get {
+            return numeroDiPiani;
+        }
+        set {
+             numeroDiPiani = value;
+             }
+        }
+        private string proprieta;
+        public string Proprieta {get
+        {
+            return proprieta;
+            }
+        set{proprieta = value;}
+        }
+        private string annoDiCostruzione;
+        public string AnnoDiCostruzione {get {
+            return annoDiCostruzione;
+        }
+        set{
+            annoDiCostruzione = value.Replace(" ", "_");
+        }
+        }
+        private string costruzione;
+        public string Costruzione {get {return costruzione;} set{
+            if (value == "Struttura non identificata" || value == "Dato non disponibile") return;
+            costruzione = value.Replace(" ", "_");}}
+
+        private string percentualeUtilizzo;
+        public string PercentualeUtilizzo {get { return percentualeUtilizzo; } set{
+if (value == "Dato non disponibile" || value == "Non finito" || value == "In costruzione") return;
+
+
+
+             percentualeUtilizzo = value.Replace(" ", "_").Replace("%", "");
+             } }
+        private string uso;
+        public string Uso {get {
+        return uso;
+        }
+        set{
+        uso = value.Replace(" ", "");
+        }}
+        private string posizione;
+        public string Posizione {
+            get{return posizione;}
+            set {
+                if (value == "Dato non disponibile") return;
+
+if (value.Contains("isolato"))
+posizione = "Isolato";
+else if (value.Contains("estremit"))
+posizione = "DiEstremita";
+else if (value.Contains("interno"))
+posizione = "Interno";
+else if (value.Contains("angolo"))
+posizione = "DiAngolo";
+else
+                posizione = value.Replace(" ", "").Replace("-", "_");
+            }
+        }
+        private string cateneCordoli;
+        public string CateneCordoli {
+            get { return cateneCordoli; } set{
+                
+                if (value == "Dato non disponibile")
+                return;
+
+
+                cateneCordoli = value.Replace("_", ""); }
+        }
         public string Regione {get; set;}
         public string Latitudine {get; set;}
         public string Longitudine {get;set;}

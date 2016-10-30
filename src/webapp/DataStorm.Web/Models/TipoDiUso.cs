@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace DataStorm.Web.Models
 {
+    
     public enum TipoDiUso:Int32
     {
         InformazioneMancante = 0,

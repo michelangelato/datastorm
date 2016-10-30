@@ -57,21 +57,25 @@ namespace DataStorm.Web.Controllers.API
             }
             catch(Exception ex)
             {
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
         }
         public async Task<ActionResult> EditImmobile(ImmobileDTO immobile)
         {
+          
             var utente = await _userManager.FindByNameAsync(User.Identity.Name);
-            
+
             Immobile immobileCoinvolto = _db.Immobili.Single(i => i.Id == immobile.Id);
             if (immobileCoinvolto.UtenteAppartenenza.Id != utente.Id)
             {
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 return InternalServerError(new Exception("Immobile non valido"));
             }
             Mapper.Map(immobile, immobileCoinvolto);
             await _db.SaveChangesAsync();
             return Ok();
+           
         }
         [HttpDelete]
         public async Task<ActionResult> DeleteImmobile(int Id)
@@ -81,6 +85,7 @@ namespace DataStorm.Web.Controllers.API
             Immobile immobileCoinvolto = _db.Immobili.Single(i => i.Id == Id);
             if (immobileCoinvolto.UtenteAppartenenza.Id != utente.Id)
             {
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 return InternalServerError(new Exception("Immobile non valido"));
             }
             else
@@ -89,78 +94,87 @@ namespace DataStorm.Web.Controllers.API
             }
             return Ok();
         }
-        [HttpGet]
-        [Route("api/verifica/{id}")]
-        public async Task<dynamic> GetVerifica(int Id)
-        {
-            var utente = await _userManager.FindByNameAsync(User.Identity.Name);
-            var immobile = await _db.Immobili.SingleAsync(im => im.Id == Id);
-            if (immobile.UtenteAppartenenza.Id != utente.Id)
-            {
-                throw new Exception("Immobile non trovato");
-
-            }
-            else
-            {
-                var agibilità = Enum.GetValues(typeof(TipoAgibilita)).Cast<TipoAgibilita>().ToArray();
-
-                return new
-                {
-                    Immobile = Mapper.Map<ImmobileDTO>(immobile),
-                    MessaggioEsito = agibilità.ToString(),
-                    CodiceEsito = agibilità[new Random().Next(agibilità.Length)]
-                };
-            }
-        }
+        
         [HttpGet]
         [Route("api/immobili/{id}")]
         public async Task<ImmobileDTO> GetImmobile(int Id)
         {
-            var utente = await _userManager.FindByNameAsync(User.Identity.Name);
-            var immobile = await _db.Immobili.SingleAsync(im => im.Id == Id);
-
-            if (immobile.UtenteAppartenenza.Id != utente.Id)
+            try
             {
-                throw new Exception("Immobile non trovato");
+                var utente = await _userManager.FindByNameAsync(User.Identity.Name);
+                var immobile = await _db.Immobili.SingleAsync(im => im.Id == Id);
 
+                if (immobile.UtenteAppartenenza.Id != utente.Id)
+                {
+                    throw new Exception("Immobile non trovato");
+
+                }
+                else
+                {
+                    var result = Mapper.Map<ImmobileDTO>(immobile);
+                    var rnd = new Random();
+                    var rand = rnd.Next(1, 6);
+                    result.TipoAgibilita = ((TipoAgibilita)rand).ToString();
+                    return result;
+                }
             }
-            else
+            catch
             {
-                var result = Mapper.Map<ImmobileDTO>(immobile);
-                var rnd = new Random();
-                var rand = rnd.Next(1, 6);
-                result.TipoAgibilita = ((TipoAgibilita)rand).ToString();
-                return result;
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                throw new Exception("Errore nella richiesta immobile");
             }
         }
         [Authorize]
         [Route("api/immobili")]
         public async Task<IEnumerable<ImmobileDTO>> GetImmobili()
         {
-            var utente = await _userManager.FindByNameAsync(User.Identity.Name);
+            try
+            {
+                var utente = await _userManager.FindByNameAsync(User.Identity.Name);
 
-            return await _db.Immobili
-                .Where(i => i.UtenteAppartenenza == utente)
-                .Select(i => 
-                    Mapper.Map<ImmobileDTO>(i)
-                ).ToListAsync();
+                return await _db.Immobili
+                    .Where(i => i.UtenteAppartenenza == utente)
+                    .Select(i =>
+                        Mapper.Map<ImmobileDTO>(i)
+                    ).ToListAsync();
+            }
+            catch(Exception ex)
+            {
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                throw new Exception("Errore nella richiesta immobili");
+            }
         }
 
         [Route("api/immobili/tipologie")]
         public async Task<IEnumerable<KeyValuePair<int, string>>> GetTipologieImmobili()
         {
-            await Task.FromResult(0);
-            var tipologie = Enum.GetValues(typeof(TipologiaImmobile)).Cast<TipologiaImmobile>().ToArray();
-            return tipologie.Select(t => new KeyValuePair<int, string>((int)t, t.ToString()));
+            try
+            {
+                await Task.FromResult(0);
+                var tipologie = Enum.GetValues(typeof(TipologiaImmobile)).Cast<TipologiaImmobile>().ToArray();
+                return tipologie.Select(t => new KeyValuePair<int, string>((int)t, t.ToString()));
+            }
+            catch(Exception ex)
+            {
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                throw new Exception("Errore nella richiesta tipologie immobili");
+            }
         }
         [HttpGet]
         [Route("api/avvisi")]
         public async Task<IEnumerable<AvvisoDTO>> GetAvvisi()
         {
-
-            var avvisi = _db.Avvisi.Select(av=>Mapper.Map<AvvisoDTO>(av));
-            await Task.FromResult(0);
-            return avvisi;
+            try
+            {
+                var avvisi = _db.Avvisi.Select(av => Mapper.Map<AvvisoDTO>(av));
+                await Task.FromResult(0);
+                return avvisi;
+            }
+            catch(Exception ex)
+            {
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                throw new Exception("Errore nella richiesta degli avvisi");
+            }
             //return await _db.Avvisi.Select(a => a.ToDTO()).ToListAsync();
         }
 
@@ -168,95 +182,151 @@ namespace DataStorm.Web.Controllers.API
         [HttpGet]
         public async Task<AvvisoDTO> GetAvviso(int Id)
         {
-            var avviso = await _db.Avvisi.SingleAsync(a => a.Id == Id);
-            return Mapper.Map<AvvisoDTO>(avviso);
-            //return await _db.Avvisi.First(a => a.Id == ID).ToDTO();
+            try
+            {
+                var avviso = await _db.Avvisi.SingleAsync(a => a.Id == Id);
+                return Mapper.Map<AvvisoDTO>(avviso);
+                //return await _db.Avvisi.First(a => a.Id == ID).ToDTO();
+            }
+            catch(Exception ex)
+            {
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                throw new Exception("Errore nella richiesta dell'avviso");
+            }
         }
 
         [HttpPut]
         [Route("api/segnalazione")]
         public async Task<HttpResponseMessage> PutSegnalazione(SegnalazioneDTO segnalazione)
         {
-            var utente = await _userManager.FindByNameAsync(User.Identity.Name);
-            _db.Segnalazioni.Add(new Segnalazione
+            try
             {
-                Descrizione = segnalazione.Descrizione,
-                TipoSegnalazione = segnalazione.TipoSegnalazione,
-                UtenteSegnalazione = utente
-            });
-            await _db.SaveChangesAsync();
+                var utente = await _userManager.FindByNameAsync(User.Identity.Name);
+                _db.Segnalazioni.Add(new Segnalazione
+                {
+                    Descrizione = segnalazione.Descrizione,
+                    TipoSegnalazione = segnalazione.TipoSegnalazione,
+                    UtenteSegnalazione = utente
+                });
+                await _db.SaveChangesAsync();
 
-            return new HttpResponseMessage(HttpStatusCode.OK);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch(Exception ex)
+            {
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                throw new Exception("Errore nell'inserimento della segnalazione");
+            }
         }
 
         [Route("api/topics")]
         public async Task<IEnumerable<TopicDTO>> GetTopics(string ricerca)
         {
-            var result= _db.Topics.Where(t => t.Codice.Contains(ricerca)).Select(t=>Mapper.Map<TopicDTO>(t));
-            
-            await Task.FromResult(0);
-            return result;
-            
+            try
+            {
+                var result = _db.Topics.Where(t => t.Codice.Contains(ricerca)).Select(t => Mapper.Map<TopicDTO>(t));
+
+                await Task.FromResult(0);
+                return result;
+            }
+            catch(Exception ex)
+            {
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                throw new Exception("Errore nella ricerca dei topic");
+            }
         }
         [Route("api/topics/{id}")]
 
         public async Task<TopicDTO> GetTopic(int Id)
         {
-            var topic = await _db.Topics.SingleAsync(t => t.Id == Id);
-            return Mapper.Map<TopicDTO>(topic);
+            try
+            {
+                var topic = await _db.Topics.SingleAsync(t => t.Id == Id);
+                return Mapper.Map<TopicDTO>(topic);
+            }
+            catch(Exception ex)
+            {
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                throw new Exception("Errore nella richiesta del topic");
+            }
         }
         [HttpPut]
         [Route("api/topic/addtopic")]
-        public async Task<IActionResult> AddTopic(string topic)
+        public async Task<IActionResult> PutTopic(string topic)
         {
-            if (topic.Length >= 2)
+            try
             {
-                var utente = await _userManager.FindByNameAsync(User.Identity.Name);
-                var roles = await _userManager.GetRolesAsync(utente);
-                if (roles.Contains(Ruolo.PA.ToString()) || roles.Contains(Ruolo.ProtezioneCivile.ToString()))
+                if (topic.Length >= 2)
                 {
-                    return InternalServerError(new Exception("Sessione scaduta"));
-                }
-                Topic NuovoTopic = new Topic();
-                NuovoTopic.Codice = topic;
-                Topic topicPresente = await _db.Topics.SingleOrDefaultAsync(t => t.Codice == topic);
-                if (topicPresente != null)
-                {
-                    throw new Exception("Topic già presente");
+                    var utente = await _userManager.FindByNameAsync(User.Identity.Name);
+                    var roles = await _userManager.GetRolesAsync(utente);
+                    if (roles.Contains(Ruolo.PA.ToString()) || roles.Contains(Ruolo.ProtezioneCivile.ToString()))
+                    {
+                        return InternalServerError(new Exception("Sessione scaduta"));
+                    }
+                    Topic NuovoTopic = new Topic();
+                    NuovoTopic.Codice = topic;
+                    Topic topicPresente = await _db.Topics.SingleOrDefaultAsync(t => t.Codice == topic);
+                    if (topicPresente != null)
+                    {
+                        throw new Exception("Topic già presente");
+                    }
+                    else
+                    {
+                        _db.Topics.Add(NuovoTopic);
+                        _db.SaveChanges();
+                    }
+                    return Ok();
                 }
                 else
                 {
-                    _db.Topics.Add(NuovoTopic);
-                    _db.SaveChanges();
+                    return new EmptyResult();
                 }
-                return Ok();
             }
-            else
+            catch(Exception ex)
             {
-                return new EmptyResult();
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                throw new Exception("Errore nell'inserimento del topic");
             }
         }
         [HttpDelete]
         [Route("api/topic/delete")]
         public async Task<IActionResult> RemoveTopic(int Id)
         {
-            var utente = await _userManager.FindByNameAsync(User.Identity.Name);
-            var roles = await _userManager.GetRolesAsync(utente);
-            if (roles.Contains(Ruolo.PA.ToString())||roles.Contains(Ruolo.ProtezioneCivile.ToString()))
+            try
             {
-                return InternalServerError(new Exception("Sessione scaduta"));
+                var utente = await _userManager.FindByNameAsync(User.Identity.Name);
+                var roles = await _userManager.GetRolesAsync(utente);
+                if (roles.Contains(Ruolo.PA.ToString()) || roles.Contains(Ruolo.ProtezioneCivile.ToString()))
+                {
+                    ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    return InternalServerError(new Exception("Sessione scaduta"));
+                }
+                var topic = _db.Topics.Single(t => t.Id == Id);
+                _db.Topics.Remove(topic);
+                return Ok();
             }
-            var topic = _db.Topics.Single(t => t.Id == Id);
-            _db.Topics.Remove(topic);
-            return Ok();
+            catch(Exception ex)
+            {
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                throw new Exception("Impossibile rimuovere il topic");
+            }
         }
         [HttpGet]
         [Route("api/avvisi/topic")]
         public async Task<IEnumerable<AvvisoDTO>> GetAvvisiByTopic(string ricerca)
         {
-            await Task.FromResult(0);
-            var avvisi = _db.Avvisi.Where(av => av.AvvisiTopics.Any(avt => avt.TopicRiferimento.Codice == ricerca));
-            return avvisi.Select(av => Mapper.Map<AvvisoDTO>(av));
+            try
+            {
+                await Task.FromResult(0);
+                var avvisi = _db.Avvisi.Where(av => av.AvvisiTopics.Any(avt => avt.TopicRiferimento.Codice == ricerca));
+                return avvisi.Select(av => Mapper.Map<AvvisoDTO>(av));
+            }
+            catch(Exception ex)
+            {
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                throw new Exception("Impossibile ottenere gli avvisi");
+            }
         }
         [Route("api/richiesta")]
         public async Task PostRichiesta()
@@ -275,10 +345,63 @@ namespace DataStorm.Web.Controllers.API
         
 
         [Route("api/elementi-mappa")]
-        public async Task<IEnumerable<dynamic>> GetAreeMappa()
+        public async Task<IEnumerable<AreaMappaDTO>> GetAreeMappa(PuntoMappaDTO puntoNordEst,PuntoMappaDTO puntoSudOvest)
         {
-            throw new NotImplementedException();
-            //return await _db.AreeMappa.Select(a => a.ToDTO()).ToListAsync();
+            await Task.FromResult(0);
+            try
+            {
+                var areeMappa = _db.AreeMappa.Where(am =>
+                  am.PuntiMappa.All(
+                      pm => pm.LatitudinePunto >= puntoNordEst.LatitudinePunto
+                      && pm.LongitudinePunto <= puntoNordEst.LongitudinePunto
+                      &&pm.LatitudinePunto<=puntoSudOvest.LongitudinePunto
+                      &&pm.LongitudinePunto>=puntoSudOvest.LongitudinePunto
+                ));
+                return areeMappa.Select(am => Mapper.Map<AreaMappaDTO>(am));
+            }
+            catch(Exception ex)
+            {
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                throw new Exception("Errore nella richiesta per le aree mappa");
+            }
+        }
+        [Route("api/areamappa/{id}")]
+        [HttpGet]
+        public async Task<AreaMappaDTO> GetAreaMappa(int Id)
+        {
+            try
+            {
+                var areaMappa =await _db.AreeMappa.SingleAsync(am => am.Id == Id);
+                var result = Mapper.Map<AreaMappaDTO>(areaMappa);
+                return result;
+            }
+            catch(Exception ex)
+            {
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                throw new Exception("Errore nella richiesta per l'area mappa");
+            }
+        }
+        [Route("api/editamappa")]
+        [HttpPost]
+        public async Task EditMappa(AreaMappaDTO areaMappa)
+        {
+            await Task.FromResult(0);
+            try
+            {
+                var utente = await _userManager.FindByNameAsync(User.Identity.Name);
+                var roles=await _userManager.GetRolesAsync(utente);
+                if (!roles.Contains(Ruolo.PA.ToString()) && !roles.Contains(Ruolo.ProtezioneCivile.ToString()))
+                {
+                    throw new Exception("Sessione scaduta");
+                }
+                var mappa = _db.AreeMappa.Single(am => am.Id == areaMappa.Id);
+                mappa = Mapper.Map(areaMappa, mappa);
+            }
+            catch(Exception ex)
+            {
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                throw new Exception("Errore nell'aggiornamento dell'area mappa");
+            }
         }
 
         [Route("api/gps")]
