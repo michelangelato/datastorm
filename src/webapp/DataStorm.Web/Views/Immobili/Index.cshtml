@@ -8,83 +8,88 @@
 	<script>
         $(document).ready(function () {
 
-            function getImmobili() {
-                $.get('/api/immobili', function (data) {
-                    console.log(data);
+            // initialize page
+            $("#verifica-immobile").hide();
 
-                    var lstImmobili = $('#immobili-list');
-                    var lista = '<ul>';
+            function verifica(el) {
+                var id = el.data("id");
+                //console.log(id);
 
-                    var immobiliexists = data.length > 0;
-                    for (var i = 0; i < data.length; i++) {
-                        lista += 
-                            '<a href="#" class="list-group-item list-group-item-action">' +
-                            '<i class="fa fa-home" aria-hidden="true"></i> ' +
-                            data[i]["comune"] + ', ' + data[i]["indirizzo"] +
-                            '</a>';
+                // show/display tabs
+                $("#verifica-immobile").show();
+                $("#nuovo-immobile").hide();
+                $.get('@Url.Action("DettaglioImmobile")', {idImmobile:id},
+                    function (data) {
+                        $('#dettaglio-immobile').empty();
+                        $("#dettaglio-immobile").html(data);
                     }
+                    );
+                  }
 
-                    lista += '</ul>'
-                    
+            $("#btn-nuovo-immobile").click(function() {
+                $("#verifica-immobile").hide();
+                $("#nuovo-immobile").show();
+            });
+
+                        function getImmobili() {
+                $.get('/api/immobili', function (data) {
+                                console.log(data);
+
+                                var lstImmobili = $('#immobili-list');
+                                var lista = '<ul>';
+
+                                var immobiliexists = data.length > 0;
+                                for (var i = 0; i < data.length; i++) {
+                                    lista +=
+                                        '<a href="javascript:void(0);" data-id="' + data[i]["id"] + '" class="list-group-item list-group-item-action li-immobile">' +
+                                        '<i class="fa fa-home" aria-hidden="true"></i> ' +
+                                        data[i]["comune"] + ', ' + data[i]["indirizzo"] +
+                                        '</a>';
+                                }
+
+                                lista += '</ul>'
+
+
                     lstImmobili.empty();
-                    lstImmobili.append(lista);
+                                lstImmobili.append(lista);
+                    $(".li-immobile").each(function(i, el) {
+                        $(el).click(function() {
+                                        verifica($(this));
+                                    });
+                                })
                     
                 })
                 .fail(function() {
-                    console.log( "error" );
-                });
-            }
+                                console.log( "error" );
+                            });
+                        }
 
-            getImmobili();
+                        getImmobili();
 
-            $("#nuovo-immobile").click(function () {
-                var immobile = { 
+            $("#btn-aggiungi-immobile").click(function () {
+                            var immobile = {
                     "Comune": $("#txt-comune").val(), 
                     "Indirizzo": $("#txt-indirizzo").val(), 
-                    "TipoImmobile": 0 
+                    "TipoImmobile": 0
                 };
                 $.ajax({
-                    type: 'PUT', // Use POST with X-HTTP-Method-Override or a straight PUT if appropriate.
+                        type: 'PUT', // Use POST with X-HTTP-Method-Override or a straight PUT if appropriate.
                     dataType: 'json', // Set datatype - affects Accept header
                     url: "/api/putimmobile", // A valid URL
                     headers: {"X-HTTP-Method-Override": "PUT"}, // X-HTTP-Method-Override set to PUT.
                     data: immobile // Some data e.g. Valid JSON as a string
                 })
                 .done(function() {
-                    console.log("success");
-                })
+                            console.log("success");
+                        })
                 .fail(function() {
-                    console.log("error");
-                })
+                            console.log("error");
+                        })
                 .complete(function() {
-                    console.log("complete");
-                    getImmobili()
+                            console.log("complete");
+                            getImmobili()
                 });
-            });
-            
-            /*
-            $("#nuovo-immobile").click(function () {
-
-                var data = {
-                    "id": 1,
-                    "name": "pollo"
-                };
-
-                $.post("index.html", function(data) {
-                    //$("#show-result").html(data);
-                    console.log("success");
-                    console.log(data);
-                })
-                .done(function() {
-                    console.log("second success");
-                })
-                .fail(function() {
-                    console.log("error");
-                })
-                .always(function() {
-                    console.log("finished");
-                });
-            });*/
+                    });
 
         });
     </script>
@@ -105,7 +110,8 @@
 <div class="row">
 
     <div class="col-md-7">
-        <div class="panel panel-default">
+        
+        <div class="panel panel-default" id="nuovo-immobile">
             <div class="panel-heading">
                 <h4>Nuovo Immobile</h4>
             </div>
@@ -124,11 +130,27 @@
                 </div>
                 <div class="form-group row">
                     <div class="offset-sm-2 col-sm-10">
-                        <button id="nuovo-immobile" type="submit" class="btn btn-success">Inserisci</button>
+                        <button id="btn-aggiungi-immobile" type="submit" class="btn btn-success">Inserisci</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        
+        <div class="panel panel-default" id="verifica-immobile">
+            <div class="panel-heading">
+                <h4>Verifica</h4>
+            </div>
+            <div class="panel-body">
+                <button id="btn-nuovo-immobile" class="btn btn-default">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Nuovo</button>
+                <hr>
+                <div id="dettaglio-immobile">
+
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="col-md-5">
@@ -136,18 +158,8 @@
             <div class="panel-heading">
                 <h4>Lista Immobili</h4>
             </div>
-            <div class="list-group" id="immobili-list">
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="fa fa-home" aria-hidden="true"></i> Via del Colle 6, Monte Roberto</a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="fa fa-home" aria-hidden="true"></i> Via Garibaldi 6, Castelbellino</a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="fa fa-home" aria-hidden="true"></i> Via delle Tavernelle 160, Ancona</a>
-            </div>
 
-            <div class="panel-body">
-                <a href="#">Visualizza tutti gli immobili...</a>
-            </div>
+            <div class="list-group" id="immobili-list"></div>
         </div>
     </div>
 

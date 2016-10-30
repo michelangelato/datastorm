@@ -8,9 +8,10 @@ using DataStorm.Web.Data;
 namespace DataStorm.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161029213513_CorrezioneTopic")]
+    partial class CorrezioneTopic
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1");
@@ -174,15 +175,35 @@ namespace DataStorm.Web.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("AnnoDiCostruzione");
+
+                    b.Property<int>("AreaInMq");
+
+                    b.Property<int>("CateneCordoli");
+
                     b.Property<string>("Comune");
+
+                    b.Property<int>("Costruzione");
+
+                    b.Property<int>("DissestiTerreno");
 
                     b.Property<string>("Indirizzo");
 
+                    b.Property<int>("NumeroDiPiani");
+
+                    b.Property<int>("PercentualeUtilizzo");
+
+                    b.Property<int>("Posizione");
+
+                    b.Property<int>("Proprieta");
+
                     b.Property<int?>("PuntoMappaId");
 
-                    b.Property<int>("TipoAgibilita");
+                    b.Property<int>("Terreno");
 
                     b.Property<int>("TipoImmobile");
+
+                    b.Property<int>("Uso");
 
                     b.Property<string>("UtenteAppartenenzaId");
 
@@ -233,8 +254,7 @@ namespace DataStorm.Web.Migrations
 
             modelBuilder.Entity("DataStorm.Web.Models.Segnalazione", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<string>("Descrizione");
 

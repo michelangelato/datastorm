@@ -8,7 +8,7 @@ namespace DataStorm.Web.Models
 {
     public class Segnalazione
     {
-        public virtual string Id { get; set; }
+        public virtual int Id { get; set; }
         public virtual Utente UtenteSegnalazione { get; set; }
         public virtual TipologiaSegnalazione TipoSegnalazione { get; set; }
         public virtual string Descrizione { get; set; }

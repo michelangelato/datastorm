@@ -81,18 +81,47 @@ namespace DataStorm.Web.Controllers.API
             return Ok();
         }
         [HttpGet]
+        [Route("api/verifica/{id}")]
+        public async Task<dynamic> GetVerifica(int Id)
+        {
+            var utente = await _userManager.FindByNameAsync(User.Identity.Name);
+            var immobile = await _db.Immobili.SingleAsync(im => im.Id == Id);
+            if (immobile.UtenteAppartenenza.Id != utente.Id)
+            {
+                throw new Exception("Immobile non trovato");
+
+            }
+            else
+            {
+                var agibilità = Enum.GetValues(typeof(TipoAgibilita)).Cast<TipoAgibilita>().ToArray();
+
+                return new
+                {
+                    Immobile = Mapper.Map<ImmobileDTO>(immobile),
+                    MessaggioEsito = agibilità.ToString(),
+                    CodiceEsito = agibilità[new Random().Next(agibilità.Length)]
+                };
+            }
+        }
+        [HttpGet]
+        [Route("api/immobili/{id}")]
         public async Task<ImmobileDTO> GetImmobile(int Id)
         {
             var utente = await _userManager.FindByNameAsync(User.Identity.Name);
             var immobile = await _db.Immobili.SingleAsync(im => im.Id == Id);
-            if(immobile.UtenteAppartenenza.Id!=utente.Id)
+
+            if (immobile.UtenteAppartenenza.Id != utente.Id)
             {
                 throw new Exception("Immobile non trovato");
-                
+
             }
             else
             {
-                return Mapper.Map<ImmobileDTO>(immobile);
+                var result = Mapper.Map<ImmobileDTO>(immobile);
+                var rnd = new Random();
+                var rand = rnd.Next(1, 6);
+                result.TipoAgibilita = ((TipoAgibilita)rand).ToString();
+                return result;
             }
         }
         [Authorize]
@@ -117,7 +146,7 @@ namespace DataStorm.Web.Controllers.API
         }
         [HttpGet]
         [Route("api/avvisi")]
-        public async Task<dynamic> GetAvvisi()
+        public async Task<IEnumerable<AvvisoDTO>> GetAvvisi()
         {
 
             var avvisi = _db.Avvisi.Select(av=>Mapper.Map<AvvisoDTO>(av));
@@ -127,22 +156,101 @@ namespace DataStorm.Web.Controllers.API
         }
 
         [Route("api/avvisi/{id}")]
-        public async Task<dynamic> GetAvviso(int Id)
+        [HttpGet]
+        public async Task<AvvisoDTO> GetAvviso(int Id)
         {
             var avviso = await _db.Avvisi.SingleAsync(a => a.Id == Id);
             return Mapper.Map<AvvisoDTO>(avviso);
             //return await _db.Avvisi.First(a => a.Id == ID).ToDTO();
         }
 
+        [HttpPut]
         [Route("api/segnalazione")]
-        public async Task PostSegnalazione()
+        public async Task PostSegnalazione(SegnalazioneDTO segnalazione)
         {
-            await Task.FromResult(0);
+            var utente = await _userManager.FindByNameAsync(User.Identity.Name);
+            _db.Segnalazioni.Add(new Segnalazione
+            {
+                Descrizione = segnalazione.Descrizione,
+                TipoSegnalazione = segnalazione.TipoSegnalazione,
+                UtenteSegnalazione = utente
+            });
+            await _db.SaveChangesAsync();
         }
 
+        [Route("api/topics")]
+        public async Task<IEnumerable<TopicDTO>> GetTopics(string ricerca)
+        {
+            var result= _db.Topics.Where(t => t.Codice.Contains(ricerca)).Select(t=>Mapper.Map<TopicDTO>(t));
+            
+            await Task.FromResult(0);
+            return result;
+            
+        }
+        [Route("api/topics/{id}")]
+
+        public async Task<TopicDTO> GetTopic(int Id)
+        {
+            var topic = await _db.Topics.SingleAsync(t => t.Id == Id);
+            return Mapper.Map<TopicDTO>(topic);
+        }
+        [HttpPut]
+        [Route("api/topic/addtopic")]
+        public async Task<IActionResult> AddTopic(string topic)
+        {
+            if (topic.Length >= 2)
+            {
+                var utente = await _userManager.FindByNameAsync(User.Identity.Name);
+                var roles = await _userManager.GetRolesAsync(utente);
+                if (roles.Contains(Ruolo.PA.ToString()) || roles.Contains(Ruolo.ProtezioneCivile.ToString()))
+                {
+                    return InternalServerError(new Exception("Sessione scaduta"));
+                }
+                Topic NuovoTopic = new Topic();
+                NuovoTopic.Codice = topic;
+                Topic topicPresente = await _db.Topics.SingleOrDefaultAsync(t => t.Codice == topic);
+                if (topicPresente != null)
+                {
+                    throw new Exception("Topic già presente");
+                }
+                else
+                {
+                    _db.Topics.Add(NuovoTopic);
+                    _db.SaveChanges();
+                }
+                return Ok();
+            }
+            else
+            {
+                return new EmptyResult();
+            }
+        }
+        [HttpDelete]
+        [Route("api/topic/delete")]
+        public async Task<IActionResult> RemoveTopic(int Id)
+        {
+            var utente = await _userManager.FindByNameAsync(User.Identity.Name);
+            var roles = await _userManager.GetRolesAsync(utente);
+            if (roles.Contains(Ruolo.PA.ToString())||roles.Contains(Ruolo.ProtezioneCivile.ToString()))
+            {
+                return InternalServerError(new Exception("Sessione scaduta"));
+            }
+            var topic = _db.Topics.Single(t => t.Id == Id);
+            _db.Topics.Remove(topic);
+            return Ok();
+        }
+        [HttpGet]
+        [Route("api/avvisi/topic")]
+        public async Task<IEnumerable<AvvisoDTO>> GetAvvisiByTopic(string ricerca)
+        {
+            await Task.FromResult(0);
+            var avvisi = _db.Avvisi.Where(av => av.AvvisiTopics.Any(avt => avt.TopicRiferimento.Codice == ricerca));
+            return avvisi.Select(av => Mapper.Map<AvvisoDTO>(av));
+        }
         [Route("api/richiesta")]
         public async Task PostRichiesta()
         {
+            
             await Task.FromResult(0);
         }
 
@@ -153,8 +261,10 @@ namespace DataStorm.Web.Controllers.API
             return null;
         }
 
+        
+
         [Route("api/elementi-mappa")]
-        public async Task<IEnumerable<dynamic>> GetElementiMappa()
+        public async Task<IEnumerable<dynamic>> GetAreeMappa()
         {
             throw new NotImplementedException();
             //return await _db.AreeMappa.Select(a => a.ToDTO()).ToListAsync();
@@ -165,27 +275,24 @@ namespace DataStorm.Web.Controllers.API
         {
             await Task.FromResult(0);
         }
-        //[Route("api/automapper")]
-        //public async Task<ImmobileDTO> ProvaAutoMapper()
-        //{
-        //    await Task.FromResult(0);
 
-        //    Immobile ImmobileTest = new Immobile();
-        //    ImmobileTest.Indirizzo = "aaaaa";
-        //    var mapped= Mapper.Map<Immobile, ImmobileDTO>(ImmobileTest);
-        //    return mapped;
-        //}
-        [Route("api/aziende")]
+        [Route("api/aziende/{pageNumber:int?}")]
         [HttpGet]
-        public async Task<IEnumerable<AziendaDTO>> GetAziende(int? pageNumber)
+        public async Task<PagedResult<AziendaDTO>> GetAziende(int? pageNumber)
         {
             await Task.FromResult(0);
             int PageSize = 10;
             
             var skipValue = (pageNumber.GetValueOrDefault(1) - 1) * PageSize;
             var aziende = _db.Aziende.Skip(skipValue).Take(PageSize);
-            return aziende.Select(az => Mapper.Map<AziendaDTO>(az));
+
+            var aziendeDTO=aziende.Select(az => Mapper.Map<AziendaDTO>(az));
+            PagedResult<AziendaDTO> result = new PagedResult<AziendaDTO>();
+            result.Risultati = aziendeDTO;
+            result.PageNumber = pageNumber.GetValueOrDefault(1);
+            return result;
         }
+        [Route("api/aziende/{id}")]
         [HttpGet]
         public async Task<AziendaDTO> GetAzienda(int idAzienda)
         {

@@ -7,7 +7,7 @@ namespace DataStorm.Web.Models
 {
     public enum TipoAgibilita:Int32
     {
-        NonIndicato = 0,
+        InformazioneMancante = 0,
         A_Agibile = 1,
         B_AgibileConProntoIntervento = 2,
         C_ParzialmenteInagibile = 3,

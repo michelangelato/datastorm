@@ -8,9 +8,10 @@ using DataStorm.Web.Data;
 namespace DataStorm.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161029210821_AggiuntaTopic")]
+    partial class AggiuntaTopic
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1");
@@ -43,24 +44,6 @@ namespace DataStorm.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Avvisi");
-                });
-
-            modelBuilder.Entity("DataStorm.Web.Models.AvvisoTopic", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("AvvisoRiferimentoId");
-
-                    b.Property<int?>("TopicRiferimentoId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AvvisoRiferimentoId");
-
-                    b.HasIndex("TopicRiferimentoId");
-
-                    b.ToTable("AvvisiTopics");
                 });
 
             modelBuilder.Entity("DataStorm.Web.Models.Azienda", b =>
@@ -174,15 +157,35 @@ namespace DataStorm.Web.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("AnnoDiCostruzione");
+
+                    b.Property<int>("AreaInMq");
+
+                    b.Property<int>("CateneCordoli");
+
                     b.Property<string>("Comune");
+
+                    b.Property<int>("Costruzione");
+
+                    b.Property<int>("DissestiTerreno");
 
                     b.Property<string>("Indirizzo");
 
+                    b.Property<int>("NumeroDiPiani");
+
+                    b.Property<int>("PercentualeUtilizzo");
+
+                    b.Property<int>("Posizione");
+
+                    b.Property<int>("Proprieta");
+
                     b.Property<int?>("PuntoMappaId");
 
-                    b.Property<int>("TipoAgibilita");
+                    b.Property<int>("Terreno");
 
                     b.Property<int>("TipoImmobile");
+
+                    b.Property<int>("Uso");
 
                     b.Property<string>("UtenteAppartenenzaId");
 
@@ -233,8 +236,7 @@ namespace DataStorm.Web.Migrations
 
             modelBuilder.Entity("DataStorm.Web.Models.Segnalazione", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<string>("Descrizione");
 
@@ -272,9 +274,13 @@ namespace DataStorm.Web.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("AvvisoId");
+
                     b.Property<string>("Codice");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AvvisoId");
 
                     b.ToTable("Topics");
                 });
@@ -442,17 +448,6 @@ namespace DataStorm.Web.Migrations
                         .HasForeignKey("AvvisoId");
                 });
 
-            modelBuilder.Entity("DataStorm.Web.Models.AvvisoTopic", b =>
-                {
-                    b.HasOne("DataStorm.Web.Models.Avviso", "AvvisoRiferimento")
-                        .WithMany("AvvisiTopics")
-                        .HasForeignKey("AvvisoRiferimentoId");
-
-                    b.HasOne("DataStorm.Web.Models.Topic", "TopicRiferimento")
-                        .WithMany("AvvisiTopics")
-                        .HasForeignKey("TopicRiferimentoId");
-                });
-
             modelBuilder.Entity("DataStorm.Web.Models.Azienda", b =>
                 {
                     b.HasOne("DataStorm.Web.Models.PuntoMappa", "Posizione")
@@ -523,6 +518,13 @@ namespace DataStorm.Web.Migrations
                     b.HasOne("DataStorm.Web.Models.Utente", "UtenteSegnalazione")
                         .WithMany()
                         .HasForeignKey("UtenteSegnalazioneId");
+                });
+
+            modelBuilder.Entity("DataStorm.Web.Models.Topic", b =>
+                {
+                    b.HasOne("DataStorm.Web.Models.Avviso")
+                        .WithMany("Topics")
+                        .HasForeignKey("AvvisoId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
