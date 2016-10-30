@@ -42,7 +42,9 @@
 
 <div id="risultato">
 <h3 class="text-center">Il tuo immobile risulta</h3>
-<div class="single-price price-one">
+    @switch (Model.TipoAgibilita) {
+                case "F":
+<div class="single-price price-one evaluation evaluation-f">
                         <div class="table-heading">
                             <p class="plan-name"><b>F</b> - Rischio molto alto</p>
                         </div>
@@ -56,9 +58,9 @@
                         </ul>
                         <a href="#" class="btn btn-buynow">Richiedi un preventivo</a>
                     </div>
-
-
-                    <div class="single-price price-two">
+                    break;
+                case "E":
+<div class="single-price price-two evaluation evaluation-e">
                         <div class="table-heading">
                             <p class="plan-name"><b>E</b> - Rischio alto</p>
                         </div>
@@ -72,9 +74,9 @@
                         </ul>
                         <a href="#" class="btn btn-buynow">Richiedi un preventivo</a>
                     </div>
-
-
-                    <div class="single-price price-three">
+                    break;
+                case "D":
+<div class="single-price price-three evaluation evaluation-d">
                         <div class="table-heading">
                             <p class="plan-name"><b>D</b> - Rischio importante</p>
                         </div>
@@ -88,8 +90,9 @@
                         </ul>
                         <a href="#" class="btn btn-buynow">Richiedi un preventivo</a>
                     </div>
-
-<div class="single-price price-four">
+                    break;
+                case "C":
+<div class="single-price price-four evaluation evaluation-c">
                         <div class="table-heading">
                             <p class="plan-name"><b>C</b> - Rischio moderato</p>
                         </div>
@@ -103,8 +106,9 @@
                         </ul>
                         <a href="#" class="btn btn-buynow">Scopri come migliorare</a>
                     </div>
-
-<div class="single-price price-five">
+                    break;
+                case "B":
+<div class="single-price price-five evaluation evaluation-b">
                         <div class="table-heading">
                             <p class="plan-name"><b>B</b> - Rischio basso</p>
                         </div>
@@ -118,9 +122,9 @@
                         </ul>
                         <a href="#" class="btn btn-buynow">Scopri come migliorare</a>
                     </div>
-
-
-                    <div class="single-price price-six">
+                    break;
+                case "A":
+<div class="single-price price-six evaluation evaluation-a">
                         <div class="table-heading">
                             <p class="plan-name"><b>A</b> - Rischio trascurabile</p>
                         </div>
@@ -134,7 +138,8 @@
                         </ul>
                         <a href="#" class="btn btn-buynow">Scopri come manutenerlo</a>
                     </div>
-
+            break;
+    }
 </div>
 
 

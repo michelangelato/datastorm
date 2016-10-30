@@ -37,23 +37,40 @@ namespace DataStorm.Web.Controllers.API
         {
             using (var client = new HttpClient())
             {
-                var scoreRequest = new
-                {
+                var scoreRequest = @"{
+  ""Inputs"": {
+    ""input1"": {
+      ""ColumnNames"": [
+        ""NumeroDiPiani"",
+        ""Proprieta"",
+        ""AnnoDiCostruzione"",
+        ""Costruzione"",
+        ""PercentualeUtilizzo"",
+        ""Uso"",
+        ""Posizione"",
+        ""CateneCordoli"",
+        ""Agibilita"",
+        ""Comune""
+      ],
+      ""Values"": [
+        [
+          """+numeroDiPiani+@""",
+          """+proprieta+@""",
+          """+annoDiCostruzione+ @""",
+          """+costruzione+ @""",
+          """+percentualeUtilizzo+ @""",
+          """+uso+ @""",
+          """+posizione+ @""",
+          """+cateneCordoli+ @""",
+          null,
+          """+comune+@"""
+        ]
+      ]
+    }
+  },
+  ""GlobalParameters"": {}
+}";
 
-                    Inputs = new Dictionary<string, StringTable>() {
-                        {
-                            "input1",
-                            new StringTable()
-                            {
-                                ColumnNames = new string[] {"NumeroDiPiani", "Proprieta", "AnnoDiCostruzione", "Costruzione", "PercentualeUtilizzo", "Uso", "Posizione", "CateneCordoli", "Agibilita", "Comune"},
-                                Values = new string[,] { { numeroDiPiani, proprieta, annoDiCostruzione, costruzione, percentualeUtilizzo, uso, posizione, cateneCordoli, null, comune },  }
-                            }
-                        },
-                    },
-                    GlobalParameters = new Dictionary<string, string>()
-                    {
-                    }
-                };
                 const string apiKey = "vWUGp6GZ80V4VeMoY/j1DXYpiqRB6GUZkS+mTLkAOX8ma+S8UVCSv9/7iHXkbggq+YB6ee8vEBNvLQL3P67naA=="; // Replace this with the API key for the web service
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
 
@@ -66,13 +83,11 @@ namespace DataStorm.Web.Controllers.API
                 // with the following:
                 //      result = await DoSomeTask().ConfigureAwait(false)
 
-
-                HttpResponseMessage response = await client.PostAsJsonAsync("", scoreRequest);
-
+                HttpResponseMessage response =await  client.PostAsync("", new StringContent(scoreRequest, System.Text.Encoding.UTF8, "application/json"));
                 if (response.IsSuccessStatusCode)
                 {
                     string result = await response.Content.ReadAsStringAsync();
-                    return result;
+                    return result.Trim('{').Trim('}').Trim(']').Split(',').Last().Trim('\"');
                 }
                 else
                 {
@@ -83,7 +98,31 @@ namespace DataStorm.Web.Controllers.API
         private async Task<TipoAgibilita> RichiediValutazione(string numeroDiPiani, string proprieta, string annoDiCostruzione, string costruzione, string percentualeUtilizzo, string uso, string posizione, string cateneCordoli, string comune)
         {
             var risposta = await InvokeRequestResponseService(numeroDiPiani, proprieta, annoDiCostruzione, costruzione, percentualeUtilizzo, uso, posizione, cateneCordoli, comune);
-            var agibilita = (TipoAgibilita)Enum.Parse(typeof(TipoAgibilita), risposta);
+            TipoAgibilita agibilita;
+            switch (risposta)
+            {
+                case "A":
+                    agibilita = TipoAgibilita.A_Agibile;
+                    break;
+                case "B":
+                    agibilita = TipoAgibilita.B_AgibileConProntoIntervento;
+                    break;
+                case "C":
+                    agibilita = TipoAgibilita.C_ParzialmenteInagibile;
+                    break;
+                case "D":
+                    agibilita = TipoAgibilita.D_TemporaneamenteInagibile;
+                    break;
+                case "E":
+                    agibilita = TipoAgibilita.E_Inagibile;
+                    break;
+                case "F":
+                    agibilita = TipoAgibilita.F_InagibilePerRischioEsterno;
+                    break;
+                default:
+                    agibilita = TipoAgibilita.InformazioneMancante;
+                    break;
+            }
             return agibilita;
         }
 

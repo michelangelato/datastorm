@@ -57,9 +57,27 @@ namespace DataStorm.Web.Controllers
             else
             {
                 var result = Mapper.Map<ImmobileDTO>(immobile);
-                var rnd = new Random();
-                var rand = rnd.Next(1, 6);
-                result.TipoAgibilita = ((TipoAgibilita)rand).ToString();
+                switch(immobile.TipoAgibilita)
+                {
+                    case TipoAgibilita.A_Agibile:
+                        result.TipoAgibilita = "A";
+                        break;
+                    case TipoAgibilita.B_AgibileConProntoIntervento:
+                        result.TipoAgibilita = "B";
+                        break;
+                    case TipoAgibilita.C_ParzialmenteInagibile:
+                        result.TipoAgibilita = "C";
+                        break;
+                    case TipoAgibilita.D_TemporaneamenteInagibile:
+                        result.TipoAgibilita = "D";
+                        break;
+                    case TipoAgibilita.E_Inagibile:
+                        result.TipoAgibilita = "E";
+                        break;
+                    case TipoAgibilita.F_InagibilePerRischioEsterno:
+                        result.TipoAgibilita = "F";
+                        break;
+                }
                 return PartialView("_DettaglioImmobile", result);
             }
         }
