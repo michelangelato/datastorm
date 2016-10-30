@@ -9,12 +9,12 @@ namespace OpenDataProcessor.Models {
 
     public class Output {
         public string Codice {get; set;}
-        public int NumeroDiPiani {get;set;}
+        public string NumeroDiPiani {get;set;}
         public string Proprieta {get;set;}
-        public int AnnoDiCostruzione {get;set;}
+        public string AnnoDiCostruzione {get;set;}
         public string Costruzione {get;set;} 
-        public int AreaInMq {get; set;}
-        public int PercentualeUtilizzo {get;set;}
+        public string AreaInMq {get; set;}
+        public string PercentualeUtilizzo {get;set;}
         public string Uso {get;set;}
         public string Posizione {get;set;}
         public string CateneCordoli {get;set;}
