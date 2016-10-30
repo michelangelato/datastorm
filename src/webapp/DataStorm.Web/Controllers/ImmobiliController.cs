@@ -16,6 +16,7 @@ using System.Net.Http.Headers;
 namespace DataStorm.Web.Controllers
 {
     
+    
     public class ImmobiliController : Controller
     {
         private readonly ApplicationDbContext _db;
