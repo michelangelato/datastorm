@@ -40,8 +40,8 @@
       "type": "build"
     },
     "Microsoft.AspNetCore.Mvc.WebApiCompatShim": "1.0.1",
-    "Swashbuckle.SwaggerGen":"6.0.0-beta902",
-    "Swashbuckle.SwaggerUi":"6.0.0-beta902",
+    "Swashbuckle.SwaggerGen": "6.0.0-beta902",
+    "Swashbuckle.SwaggerUi": "6.0.0-beta902",
     "AutoMapper": "5.1.1"
   },
 
@@ -70,7 +70,8 @@
 
   "buildOptions": {
     "emitEntryPoint": true,
-    "preserveCompilationContext": true
+    "preserveCompilationContext": true,
+    "embed": ["Resources/Elenco-codici-statistici-e-denominazioni-al-01_07_2016.csv"]
   },
 
   "runtimeOptions": {
