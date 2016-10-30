@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Azienda>
+
+@{
+    ViewData["Title"] = "Lista Aziende";
+}
+
+<!--inizio breadcrumbs-->
+
+<ol class="breadcrumb">
+  <li><a asp-action="Index" asp-controller="Home" >Home</a></li>
+  <li class="active">@ViewData["Message"]</li>
+</ol>
+
+<!--fine breadcrumbs-->
+
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<div class="panel panel-default">
+    <table class="table table-striped">
+        <tr>
+            <th>Ragione sociale</th>
+            <th>Partita IVA</th>
+            <th>Indirizzo</th>
+            <th>Citt&agrave;</th>
+            <th>Lavori effettuati</th>
+        </tr>
+        @foreach (var azienda in Model)
+        {
+            <tr>
+                <td>@azienda.RagioneSociale</td>
+                <td>@azienda.PartitaIva</td>
+                <td>@azienda.Indirizzo</td>
+                <td>@azienda.Citta</td>
+                <td>@string.Join("; ", azienda.AziendaTipoLavoro.Select(t => t.TipoLavoro.Descrizione))</td>
+                    </tr>
+        }
+    </table>
+</div>

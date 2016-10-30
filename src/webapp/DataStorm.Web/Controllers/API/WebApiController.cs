@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -32,6 +33,59 @@ namespace DataStorm.Web.Controllers.API
 
             db.Seed(userManager, roleManager);
         }
+        private async Task<string> InvokeRequestResponseService(string numeroDiPiani, string proprieta, string annoDiCostruzione, string costruzione, string percentualeUtilizzo, string uso, string posizione, string cateneCordoli, string comune)
+        {
+            using (var client = new HttpClient())
+            {
+                var scoreRequest = new
+                {
+
+                    Inputs = new Dictionary<string, StringTable>() {
+                        {
+                            "input1",
+                            new StringTable()
+                            {
+                                ColumnNames = new string[] {"NumeroDiPiani", "Proprieta", "AnnoDiCostruzione", "Costruzione", "PercentualeUtilizzo", "Uso", "Posizione", "CateneCordoli", "Agibilita", "Comune"},
+                                Values = new string[,] { { numeroDiPiani, proprieta, annoDiCostruzione, costruzione, percentualeUtilizzo, uso, posizione, cateneCordoli, null, comune },  }
+                            }
+                        },
+                    },
+                    GlobalParameters = new Dictionary<string, string>()
+                    {
+                    }
+                };
+                const string apiKey = "vWUGp6GZ80V4VeMoY/j1DXYpiqRB6GUZkS+mTLkAOX8ma+S8UVCSv9/7iHXkbggq+YB6ee8vEBNvLQL3P67naA=="; // Replace this with the API key for the web service
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+
+                client.BaseAddress = new Uri("https://ussouthcentral.services.azureml.net/workspaces/9da97d27abde423ab8df23c86c5ce635/services/0f6a6bf2c33f4471991d6c203d2b9398/execute?api-version=2.0&details=true");
+
+                // WARNING: The 'await' statement below can result in a deadlock if you are calling this code from the UI thread of an ASP.Net application.
+                // One way to address this would be to call ConfigureAwait(false) so that the execution does not attempt to resume on the original context.
+                // For instance, replace code such as:
+                //      result = await DoSomeTask()
+                // with the following:
+                //      result = await DoSomeTask().ConfigureAwait(false)
+
+
+                HttpResponseMessage response = await client.PostAsJsonAsync("", scoreRequest);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception("Richiesta non valida");
+                }
+            }
+        }
+        private async Task<TipoAgibilita> RichiediValutazione(string numeroDiPiani, string proprieta, string annoDiCostruzione, string costruzione, string percentualeUtilizzo, string uso, string posizione, string cateneCordoli, string comune)
+        {
+            var risposta = await InvokeRequestResponseService(numeroDiPiani, proprieta, annoDiCostruzione, costruzione, percentualeUtilizzo, uso, posizione, cateneCordoli, comune);
+            var agibilita = (TipoAgibilita)Enum.Parse(typeof(TipoAgibilita), risposta);
+            return agibilita;
+        }
 
         [Authorize]
         [Route("api/putimmobile")]
@@ -47,10 +101,11 @@ namespace DataStorm.Web.Controllers.API
                 var utente = await _userManager.FindByNameAsync(User.Identity.Name);
                 Immobile nuovoImmobile = Mapper.Map<ImmobileDTO, Immobile>(immobile);
                 nuovoImmobile.UtenteAppartenenza = utente;
+                var valutazione=await RichiediValutazione(nuovoImmobile.NumeroDiPiani, nuovoImmobile.Proprieta, nuovoImmobile.AnnoDiCostruzione, nuovoImmobile.Costruzione, nuovoImmobile.PercentualeUtilizzo, nuovoImmobile.Uso,nuovoImmobile.Posizione,nuovoImmobile.CateneCordoli,nuovoImmobile.Comune);
                 _db.Immobili.Add(
                     nuovoImmobile
                     );
-
+                nuovoImmobile.TipoAgibilita = valutazione;
                 await _db.SaveChangesAsync();
 
                 return new HttpResponseMessage(HttpStatusCode.OK);
@@ -61,6 +116,7 @@ namespace DataStorm.Web.Controllers.API
                 return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
         }
+        [HttpPost]
         public async Task<ActionResult> EditImmobile(ImmobileDTO immobile)
         {
           
@@ -131,12 +187,18 @@ namespace DataStorm.Web.Controllers.API
             try
             {
                 var utente = await _userManager.FindByNameAsync(User.Identity.Name);
-
-                return await _db.Immobili
-                    .Where(i => i.UtenteAppartenenza == utente)
-                    .Select(i =>
-                        Mapper.Map<ImmobileDTO>(i)
-                    ).ToListAsync();
+                if (_db.Immobili.Count() > 0)
+                {
+                    var immobili = _db.Immobili
+                        .Where(i => i.UtenteAppartenenza == utente).ToList();
+                    return immobili.Select(i =>
+                            Mapper.Map<ImmobileDTO>(i)
+                        );
+                }
+                else
+                {
+                    return new List<ImmobileDTO>();
+                }
             }
             catch(Exception ex)
             {

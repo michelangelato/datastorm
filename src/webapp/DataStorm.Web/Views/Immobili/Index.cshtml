@@ -91,7 +91,15 @@
                 var immobile = {
                     "Comune": $("#txt-comune").val(),
                     "Indirizzo": $("#txt-indirizzo").val(),
-                    "TipoImmobile": 0
+                    "TipoImmobile": 0,
+                    "NumeroDiPiani":$("#txt-numero-di-piani").val(), 
+                    "Proprieta": $("#ddl-proprieta").val(),
+                    "AnnoDiCostruzione": $("#txt-anno-di-costruzione").val(),
+                    "Costruzione": $("#ddl-costruzione").val(),
+                    "PercentualeUtilizzo": $("#txt-percentuale-di-utilizzo").val(),
+                    "Uso": $("#ddl-uso").val(),
+                    "Posizione": $("#ddl-posizione").val(),
+                    "CateneCordoli": $("#ddl-catene-cordoli").val()
                 };
                 $.ajax({
                     type: 'PUT', // Use POST with X-HTTP-Method-Override or a straight PUT if appropriate.
@@ -152,6 +160,79 @@
                     <label for="txt-indirizzo" class="col-xs-2 col-form-label">Indirizzo</label>
                     <div class="col-xs-10">
                         <input class="form-control" type="text" name="indirizzo" id="txt-indirizzo" placeholder="Via e civico...">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txt-numero-di-piani" class="col-xs-2 col-form-label">Numero di piani</label>
+                    <div class="col-xs-10">
+                        <input class="form-control" type="text" name="NumeroDiPiani" id="txt-numero-di-piani" placeholder="Numero di piani...">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="ddl-proprieta" class="col-xs-2 col-form-label">Proprieta</label>
+                    <div class="col-xs-10">
+                        <select id="ddl-proprieta" name="Proprieta" class="form-control">
+                            <option value="pubblico">Pubblica</option>
+                            <option value="privato">Privata</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="ddl-costruzione" class="col-xs-2 col-form-label">Costruzione</label>
+                    <div class="col-xs-10">
+                        <select id="ddl-costruzione" name="Costruzione" class="form-control">
+                            <option value="1">Con telaio in acciaio</option>
+                            <option value="2">Con pareti in cermento armato</option>
+                            <option value="3">Con telaio in cemento armato</option>
+                            <option value="4">Strutture in muratura</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txt-anno-di-costruzione" class="col-xs-2 col-form-label">Anno di costruzione</label>
+                    <div class="col-xs-10">
+                        <input class="form-control" type="text" name="AnnoDiCostruzione" id="txt-anno-di-costruzione" placeholder="Anno di costruzione...">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txt-percentuale-di-utilizzo" class="col-xs-2 col-form-label">Percentuale di utilizzo</label>
+                    <div class="col-xs-10">
+                        <input class="form-control" type="number" max="100" name="PercentualeDiUtilizzo" id="txt-percentuale-di-utilizzo" placeholder="Percentuale di utilizzo...">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="ddl-uso" class="col-xs-2 col-form-label">Utilizzo costruzione</label>
+                    <div class="col-xs-10">
+                        <select name="Uso" id="ddl-uso" class="form-control">
+                            <option value="1">Uffici</option>
+                            <option value="2">Servizio pubblico</option>
+                            <option value="3">Deposito</option>
+                            <option value="4">Commercio</option>
+                            <option value="5">Strategico</option>
+                            <option value="6">Turistico ricettivo</option>
+                            <option value="7">Produttivo</option>
+                            <option value="8">Abitativo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="ddl-posizione" class="col-xs-2 col-form-label">Posizione</label>
+                    <div class="col-xs-10">
+                        <select class="form-control" name="Posizione" id="ddl-posizione">
+                            <option value="1">Isolato</option>
+                            <option value="2">Interno</option>
+                            <option value="3">Di estremit&agrave;</option>
+                            <option value="4">Ad angolo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="ddl-catene-cordoli" class="col-xs-2 col-form-label">Supporti</label>
+                    <div class="col-xs-10">
+                        <select class="form-control" name="CateneCordoli" id="ddl-catene-cordoli">
+                            <option value="1">Con catene e cordoli</option>
+                            <option value="2">Senza catene e cordoli</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">

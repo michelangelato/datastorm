@@ -14,6 +14,13 @@ namespace DataStorm.Web.Models
         public virtual string Comune { get; set; }
         public virtual TipologiaImmobile TipoImmobile { get; set; }
         public virtual TipoAgibilita TipoAgibilita { get; set; }
-        
+        public virtual string NumeroDiPiani { get; set; }
+        public virtual string Proprieta { get; set; }
+        public virtual string AnnoDiCostruzione { get; set; }
+        public virtual string Costruzione { get; set; }
+        public virtual string PercentualeUtilizzo { get; set; }
+        public virtual string Uso { get; set; }
+        public virtual string Posizione { get; set; }
+        public virtual string CateneCordoli { get; set; }
     }
 }
