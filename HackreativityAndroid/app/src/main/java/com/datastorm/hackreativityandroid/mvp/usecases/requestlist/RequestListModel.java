@@ -12,20 +12,20 @@ import rx.Observable;
 
 public class RequestListModel implements RequestListMVP.Model {
 
-	private final IRequestRepository zoneRepository;
+	private final IRequestRepository requestRepository;
 
 	public RequestListModel(Context context) {
 		final Context applicationContext = context.getApplicationContext();
-		zoneRepository = new RequeryRequestRepository(applicationContext);
+		requestRepository = new RequeryRequestRepository(applicationContext);
 	}
 
 	@Override
 	public void onDestroy() {
-		zoneRepository.onDestroy();
+		requestRepository.onDestroy();
 	}
 
 	@Override
 	public Observable<List<Request>> subscribe() {
-		return zoneRepository.retrieve();
+		return requestRepository.retrieve();
 	}
 }

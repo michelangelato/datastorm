@@ -32,6 +32,9 @@
 	<string name="alert_request_shortcut_description">Clicca per vedere come fare</string>
 	<string name="alert_map_shortcut_title">Mappa della zona</string>
 	<string name="alert_map_shortcut_description">Clicca per allargare</string>
+	<string name="request_type_check">Sopralluogo</string>
+	<string name="request_type_rescue">Recupero Beni</string>
+	<string name="report_sent">Segnalazione inviata!</string>
 	<string-array name="request_type">
 		<item>Sopralluogo</item>
 		<item>Recupero Beni</item>

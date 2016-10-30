@@ -58,6 +58,8 @@ public class PresentedAlertListView extends RecyclerLayout<AlertAdapter, LinearL
 		});
 		setAdapter(adapter);
 		setEnabled(false);
+		addItemDecoration(new VerticalSpaceItemDecoration(
+				getResources().getDimensionPixelSize(R.dimen.dimen_4dp)));
 	}
 
 	public void onItemNext(List<Alert> item) {

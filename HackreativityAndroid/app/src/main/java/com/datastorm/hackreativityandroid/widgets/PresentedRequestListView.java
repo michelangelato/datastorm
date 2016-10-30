@@ -1,6 +1,7 @@
 package com.datastorm.hackreativityandroid.widgets;
 
 import android.content.Context;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 
@@ -38,7 +39,8 @@ public class PresentedRequestListView extends RecyclerLayout<RequestAdapter, Lin
 			if (listener != null) listener.onRequestClicked(v, request);
 		});
 		setAdapter(adapter);
-		setEnabled(false);
+		setEnabled(true);
+		addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 	}
 
 	public void onItemNext(List<Request> item) {

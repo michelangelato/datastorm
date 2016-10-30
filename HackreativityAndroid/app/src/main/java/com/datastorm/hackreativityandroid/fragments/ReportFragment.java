@@ -3,9 +3,11 @@ package com.datastorm.hackreativityandroid.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.dadino.quickstart.core.fragments.DrawerToggleFragment;
 import com.dadino.quickstart.core.interfaces.IPresenter;
@@ -125,6 +127,8 @@ public class ReportFragment extends DrawerToggleFragment implements OnAlertClick
 		block.setEntries(blockOptions);
 
 		danger.setOnReportOptionClickedListener(this);
+		collapse.setOnReportOptionClickedListener(this);
+		block.setOnReportOptionClickedListener(this);
 	}
 
 	@Override
@@ -169,6 +173,8 @@ public class ReportFragment extends DrawerToggleFragment implements OnAlertClick
 
 	@Override
 	public void onReportOptionClicked(ReportOption reportOption) {
-		//TODO
+		Log.d("UI", "Option clicked");
+		Toast.makeText(getContext(), R.string.report_sent, Toast.LENGTH_SHORT)
+		     .show();
 	}
 }

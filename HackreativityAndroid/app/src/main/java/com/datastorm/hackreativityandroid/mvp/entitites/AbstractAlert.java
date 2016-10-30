@@ -55,4 +55,17 @@ public class AbstractAlert {
 	@Column(name = "map_objects")
 	@OneToMany(cascade = {CascadeAction.DELETE, CascadeAction.SAVE})
 	List<MapObject> maps;
+
+	@Override
+	public String toString() {
+		return "Alert{" +
+		       "id: " + id +
+		       ", topic: '" + topic + '\'' +
+		       ", title: '" + title + '\'' +
+		       ", description: '" + description + '\'' +
+		       ", images: " + (images != null ? images.size() : 0) +
+		       ", links: " + (links != null ? links.size() : 0) +
+		       ", maps: " + (maps != null ? maps.size() : 0) +
+		       '}';
+	}
 }

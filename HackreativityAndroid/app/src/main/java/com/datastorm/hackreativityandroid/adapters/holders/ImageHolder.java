@@ -1,5 +1,6 @@
 package com.datastorm.hackreativityandroid.adapters.holders;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -25,8 +26,10 @@ public class ImageHolder extends BaseHolder<AlertImage> {
 
 	@Override
 	public void bindItem(AlertImage item, int position) {
+		Log.i("UI", "N image, Loading image from: " + item.getUrl());
 		Picasso.with(image.getContext())
 		       .load(item.getUrl())
+		       .fit()
 		       .into(image);
 	}
 }

@@ -59,6 +59,7 @@ public class MapDrawer {
 			}
 		}
 
+		if (locs.isEmpty()) return;
 		final LatLngBounds.Builder builder = LatLngBounds.builder();
 		for (LatLng loc : locs) {
 			builder.include(loc);

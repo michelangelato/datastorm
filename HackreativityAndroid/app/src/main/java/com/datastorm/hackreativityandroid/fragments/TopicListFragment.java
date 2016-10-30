@@ -59,7 +59,6 @@ public class TopicListFragment extends DrawerToggleFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mAdapter = new TopicAlertPagerAdapter(getFragmentManager());
 		initPresenters();
 	}
 
@@ -97,8 +96,6 @@ public class TopicListFragment extends DrawerToggleFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		pager.setAdapter(mAdapter);
-		tabs.setupWithViewPager(pager);
 	}
 
 	@Override
@@ -129,7 +126,11 @@ public class TopicListFragment extends DrawerToggleFragment {
 	}
 
 	private void onTopicsLoaded(List<Topic> topics) {
+		mAdapter = new TopicAlertPagerAdapter(getChildFragmentManager());
+
 		mAdapter.setTopics(topics);
+		pager.setAdapter(mAdapter);
+		tabs.setupWithViewPager(pager);
 	}
 
 	private void onError(Throwable error) {

@@ -36,6 +36,7 @@ import com.datastorm.hackreativityandroid.interfaces.OnTopicAddInteractionListen
 import com.datastorm.hackreativityandroid.interfaces.OnTopicListInteractionListener;
 import com.datastorm.hackreativityandroid.mvp.components.ErrorHandler;
 import com.datastorm.hackreativityandroid.mvp.entitites.Alert;
+import com.datastorm.hackreativityandroid.utils.Seeder;
 
 import butterknife.BindView;
 
@@ -150,6 +151,11 @@ public class MainActivity extends BaseActivity implements NavigationView
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (mDrawerToggle.onOptionsItemSelected(item)) return true;
+		switch (item.getItemId()) {
+			case R.id.action_seed:
+				Seeder.seed(this);
+				return true;
+		}
 		return super.onOptionsItemSelected(item);
 	}
 

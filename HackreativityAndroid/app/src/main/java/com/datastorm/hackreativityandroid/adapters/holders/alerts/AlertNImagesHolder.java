@@ -1,5 +1,6 @@
 package com.datastorm.hackreativityandroid.adapters.holders.alerts;
 
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -24,6 +25,9 @@ public class AlertNImagesHolder extends AlertTextOnlyHolder {
 		super.bindItem(item, position);
 		ImageAdapter adapter = new ImageAdapter();
 		adapter.setItems(item.getImages());
+		images.setLayoutManager(
+				new LinearLayoutManager(images.getContext(), LinearLayoutManager.HORIZONTAL,
+						false));
 		images.setAdapter(adapter);
 	}
 }

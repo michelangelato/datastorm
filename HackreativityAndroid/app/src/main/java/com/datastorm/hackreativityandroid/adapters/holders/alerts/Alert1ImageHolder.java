@@ -1,5 +1,6 @@
 package com.datastorm.hackreativityandroid.adapters.holders.alerts;
 
+import android.util.Log;
 import android.view.View;
 
 import com.datastorm.hackreativityandroid.R;
@@ -23,12 +24,15 @@ public class Alert1ImageHolder extends AlertTextOnlyHolder {
 	@Override
 	public void bindItem(Alert item, int position) {
 		super.bindItem(item, position);
+
 		AlertImage im = item.getImages()
 		                    .get(0);
+		Log.i("UI", "1 image, Loading image from: " + im.getUrl());
 		image.setAspectRatio(im.getWidth() / im.getHeight());
 		image.setAspectRatioEnabled(true);
 		Picasso.with(image.getContext())
 		       .load(im.getUrl())
+		       .fit()
 		       .into(image);
 	}
 }

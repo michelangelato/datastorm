@@ -1,5 +1,6 @@
 package com.datastorm.hackreativityandroid.adapters;
 
+import android.util.Log;
 import android.view.ViewGroup;
 
 import com.dadino.quickstart.core.adapters.BaseListAdapter;
@@ -30,13 +31,22 @@ public class AlertAdapter extends BaseListAdapter<Alert, AlertBaseHolder> {
 		if (position == POSITION_MAP) return R.layout.item_alert_map_shortcut;
 
 		Alert alert = getItem(position);
+		Log.d("UI", "Alert: " + alert.toString());
+
 		if (alert.getMaps() != null && !alert.getMaps()
-		                                     .isEmpty()) return R.layout.item_alert_map;
+		                                     .isEmpty()) {
+			Log.d("UI", "Type: map");
+			return R.layout.item_alert_map;
+		}
 		if (alert.getImages() != null && !alert.getImages()
-		                                       .isEmpty()) return alert.getImages()
-		                                                               .size() == 1 ?
-		                                                          R.layout.item_alert_1image :
-		                                                          R.layout.item_alert_n_images;
+		                                       .isEmpty()) {
+
+			Log.d("UI", "Type: images");
+			return alert.getImages()
+			            .size() == 1 ? R.layout.item_alert_1image : R.layout.item_alert_n_images;
+		}
+
+		Log.d("UI", "Type: text");
 		return R.layout.item_alert_text_only;
 	}
 
@@ -64,32 +74,41 @@ public class AlertAdapter extends BaseListAdapter<Alert, AlertBaseHolder> {
 
 	@Override
 	protected AlertBaseHolder getHolder(ViewGroup parent, int viewType) {
+		Log.d("UI", "Holder: " + viewType);
+
 		switch (viewType) {
 			case R.layout.item_alert_report_shortcut:
+				Log.d("UI", "Holder: shortcut report");
 				return new AlertReportShortcutHolder(
 						inflater(parent.getContext()).inflate(R.layout.item_alert_report_shortcut,
 								parent, false));
 			case R.layout.item_alert_request_shortcut:
+				Log.d("UI", "Holder: shortcut request");
 				return new AlertRequestShortcutHolder(
 						inflater(parent.getContext()).inflate(R.layout.item_alert_request_shortcut,
 								parent, false));
 			case R.layout.item_alert_map_shortcut:
+				Log.d("UI", "Holder: shortcut map");
 				return new AlertMapShortcutHolder(
 						inflater(parent.getContext()).inflate(R.layout.item_alert_map_shortcut,
 								parent, false));
 			case R.layout.item_alert_map:
+				Log.d("UI", "Holder: map");
 				return new AlertMapHolder(
 						inflater(parent.getContext()).inflate(R.layout.item_alert_map, parent,
 								false));
 			case R.layout.item_alert_1image:
+				Log.d("UI", "Holder: 1 image");
 				return new Alert1ImageHolder(
 						inflater(parent.getContext()).inflate(R.layout.item_alert_1image, parent,
 								false));
 			case R.layout.item_alert_n_images:
+				Log.d("UI", "Holder: N image");
 				return new AlertNImagesHolder(
 						inflater(parent.getContext()).inflate(R.layout.item_alert_n_images, parent,
 								false));
 			case R.layout.item_alert_text_only:
+				Log.d("UI", "Holder: text");
 				return new AlertTextOnlyHolder(
 						inflater(parent.getContext()).inflate(R.layout.item_alert_text_only,
 								parent,

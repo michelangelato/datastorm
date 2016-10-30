@@ -13,4 +13,5 @@ public interface IRequestRepository extends IRepository {
 
 	Observable<List<Request>> retrieve();
 	Single<Boolean> update(List<Request> requests);
+	Single<Boolean> insert(Request request);
 }

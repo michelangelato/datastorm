@@ -31,7 +31,7 @@ public class RequestListFragment extends DrawerToggleFragment {
 	@BindView(R.id.toolbar)
 	Toolbar                  toolbar;
 	@BindView(R.id.request_list)
-	PresentedRequestListView alertList;
+	PresentedRequestListView requestListView;
 	@BindView(R.id.request_new_fab)
 	HideableFab              fab;
 
@@ -101,20 +101,23 @@ public class RequestListFragment extends DrawerToggleFragment {
 		fab.setOnClickListener(v -> {
 			if (mListener != null) mListener.onNewRequestClicked();
 		});
+		requestListView.setOnRefreshListener(() -> {
+			if (requestListPresenter() != null) requestListPresenter().load();
+		});
 		return view;
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (alertListPresenter() != null) alertListPresenter().addView(iRequestListView);
-		if (alertList != null) alertList.setPresenter(alertListPresenter());
+		if (requestListPresenter() != null) requestListPresenter().addView(iRequestListView);
+		if (requestListView != null) requestListView.setPresenter(requestListPresenter());
 	}
 
 	@Override
 	public void onPause() {
-		if (alertListPresenter() != null) alertListPresenter().removeView(iRequestListView);
-		if (alertList != null) alertList.setPresenter(null);
+		if (requestListPresenter() != null) requestListPresenter().removeView(iRequestListView);
+		if (requestListView != null) requestListView.setPresenter(null);
 
 		super.onPause();
 	}
@@ -127,9 +130,10 @@ public class RequestListFragment extends DrawerToggleFragment {
 
 	private void onError(Throwable error) {
 		//TODO
+		error.printStackTrace();
 	}
 
-	private RequestListMVP.Presenter alertListPresenter() {
+	private RequestListMVP.Presenter requestListPresenter() {
 		return requestListPresenterManager != null ? requestListPresenterManager.get() : null;
 	}
 }

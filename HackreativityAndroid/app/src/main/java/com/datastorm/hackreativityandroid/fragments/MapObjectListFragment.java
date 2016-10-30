@@ -3,12 +3,12 @@ package com.datastorm.hackreativityandroid.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.dadino.quickstart.core.fragments.DrawerToggleFragment;
-import com.dadino.quickstart.core.mvp.components.ErrorHandler;
 import com.dadino.quickstart.core.mvp.components.presenter.MvpView;
 import com.dadino.quickstart.core.mvp.components.presenter.PresenterManager;
 import com.datastorm.hackreativityandroid.R;
@@ -17,7 +17,7 @@ import com.datastorm.hackreativityandroid.mvp.entitites.MapObject;
 import com.datastorm.hackreativityandroid.mvp.usecases.mapobjectlist.MapObjectListMVP;
 import com.datastorm.hackreativityandroid.utils.MapDrawer;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
 import java.util.List;
@@ -31,9 +31,10 @@ public class MapObjectListFragment extends DrawerToggleFragment implements OnMap
 	public static final String TAG = "MapFragment";
 
 	@BindView(R.id.toolbar)
-	Toolbar     toolbar;
+	Toolbar toolbar;
 	@BindView(R.id.map)
-	MapFragment mapFragment;
+	MapView mapView;
+
 
 	private Unbinder unbinder;
 
@@ -52,52 +53,6 @@ public class MapObjectListFragment extends DrawerToggleFragment implements OnMap
 		Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		initPresenters();
-	}
-
-	private void initPresenters() {
-		mapObjectListPresenterManager = new PresenterManager<>(this, new MapObjectListMVP
-				.Factory(), null).bindTo(this);
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_map, container, false);
-		unbinder = ButterKnife.bind(this, view);
-		return view;
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		if (mapObjectListPresenter() != null) mapObjectListPresenter().addView(iMapObjectListView);
-	}
-
-	@Override
-	public void onPause() {
-		if (mapObjectListPresenter() != null) mapObjectListPresenter().removeView(
-				iMapObjectListView);
-
-		super.onPause();
-	}
-
-	@Override
-	public void onDestroyView() {
-		unbinder.unbind();
-		super.onDestroyView();
-	}
-
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		mapFragment.getMapAsync(this);
 	}
 
 	@Override
@@ -127,13 +82,88 @@ public class MapObjectListFragment extends DrawerToggleFragment implements OnMap
 		return R.string.fragment_title_map;
 	}
 
-	private void onObjectsLoaded(List<MapObject> objects) {
-		if (googleMap != null) MapDrawer.setupMap(getContext(), googleMap, objects);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		initPresenters();
 	}
+
+	@Override
+	public void onDestroy() {
+		if (mapView != null) mapView.onDestroy();
+		super.onDestroy();
+	}
+
+	private void initPresenters() {
+		mapObjectListPresenterManager = new PresenterManager<>(this, new MapObjectListMVP
+				.Factory(),
+				null).bindTo(this);
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	                         Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.fragment_map, container, false);
+		unbinder = ButterKnife.bind(this, view);
+		mapView.onCreate(null);
+		mapView.getMapAsync(this);
+		return view;
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		if (mapView != null) mapView.onStart();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (mapView != null) mapView.onResume();
+		if (mapObjectListPresenter() != null) mapObjectListPresenter().addView(iMapObjectListView);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		if (mapView != null) mapView.onSaveInstanceState(outState);
+	}
+
+	@Override
+	public void onPause() {
+		if (mapObjectListPresenter() != null) mapObjectListPresenter().removeView(
+				iMapObjectListView);
+		if (mapView != null) mapView.onPause();
+		super.onPause();
+	}
+
+	@Override
+	public void onStop() {
+		if (mapView != null) mapView.onStop();
+		super.onStop();
+	}
+
+	@Override
+	public void onLowMemory() {
+		super.onLowMemory();
+		if (mapView != null) mapView.onLowMemory();
+	}
+
+	@Override
+	public void onDestroyView() {
+		unbinder.unbind();
+		super.onDestroyView();
+	}
+
 
 	private void onError(Throwable error) {
 		//TODO
-		ErrorHandler.analyzeError(error);
+	}
+
+	private void onObjectsLoaded(List<MapObject> objects) {
+		Log.d("UI", "MapObjects loaded: " + objects.size());
+		if (googleMap != null) MapDrawer.setupMap(getContext(), googleMap, objects);
 	}
 
 	private MapObjectListMVP.Presenter mapObjectListPresenter() {

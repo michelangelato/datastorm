@@ -30,7 +30,7 @@
 	<color name="black_hint_text">#61000000</color>
 	<color name="black_divider">#1f000000</color>
 	<color name="transparent">#00000000</color>
-	<color name="background">#fafafa</color>
+	<color name="background">#f3f3f3</color>
 	<color name="toolbar_light_icon">#deffffff</color>
 	<color name="toolbar_dark_icon">#de000000</color>
 	<color name="ticket_builder_text">@color/white_primary_text</color>

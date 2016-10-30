@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "704380166941",
+    "firebase_url": "https://datastormhackreativity.firebaseio.com",
+    "project_id": "datastormhackreativity",
+    "storage_bucket": "datastormhackreativity.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:704380166941:android:cdfe1cc5155f0372",
+        "android_client_info": {
+          "package_name": "com.datastorm.hackreativityandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "704380166941-117vtlfuv773fv206noj77qi5pqg46j8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.datastorm.hackreativityandroid",
+            "certificate_hash": "FF0AD477C7398A1C85AC45C1D1C86F3268F5C759"
+          }
+        },
+        {
+          "client_id": "704380166941-27jsst49qtllsto8h7m9be2br7m51md4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACFODSeCmoHglywqq-stJbrduy7RptqJo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "704380166941-27jsst49qtllsto8h7m9be2br7m51md4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

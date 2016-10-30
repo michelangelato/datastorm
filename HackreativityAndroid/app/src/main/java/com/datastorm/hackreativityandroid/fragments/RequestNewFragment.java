@@ -6,21 +6,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.dadino.quickstart.core.fragments.DrawerToggleFragment;
-import com.dadino.quickstart.core.interfaces.IPresenter;
 import com.dadino.quickstart.core.mvp.components.presenter.MvpView;
 import com.dadino.quickstart.core.mvp.components.presenter.PresenterManager;
 import com.datastorm.hackreativityandroid.R;
 import com.datastorm.hackreativityandroid.interfaces.OnRequestNewInteractionListener;
-import com.datastorm.hackreativityandroid.mvp.entitites.Alert;
-import com.datastorm.hackreativityandroid.mvp.usecases.alertlist.AlertListMVP;
+import com.datastorm.hackreativityandroid.mvp.entitites.Request;
+import com.datastorm.hackreativityandroid.mvp.usecases.requestnew.RequestNewMVP;
 
-import java.util.List;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,9 +44,11 @@ public class RequestNewFragment extends DrawerToggleFragment {
 	Button   send;
 
 	private Unbinder unbinder;
+	public  int      selectedType;
 
-	private PresenterManager<AlertListMVP.Presenter> alertListPresenterManager;
-	private MvpView<List<Alert>> iRequestNewView = new MvpView<>(this::onError, this);
+	private PresenterManager<RequestNewMVP.Presenter> requestNewPresenterManager;
+	private MvpView<Boolean> iRequestNewView = new MvpView<>(this::onRequestSaved, this::onError,
+			this);
 
 
 	private OnRequestNewInteractionListener mListener;
@@ -98,8 +100,8 @@ public class RequestNewFragment extends DrawerToggleFragment {
 	}
 
 	private void initPresenters() {
-		alertListPresenterManager = new PresenterManager<>(this, new AlertListMVP.Factory(),
-				IPresenter::load).bindTo(this);
+		requestNewPresenterManager = new PresenterManager<>(this, new RequestNewMVP.Factory(),
+				null).bindTo(this);
 	}
 
 	@Override
@@ -107,7 +109,31 @@ public class RequestNewFragment extends DrawerToggleFragment {
 	                         Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_request_new, container, false);
 		unbinder = ButterKnife.bind(this, view);
+		send.setOnClickListener(view1 -> onSendClicked());
+		type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+				selectedType = i;
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> adapterView) {
+				selectedType = 0;
+			}
+		});
 		return view;
+	}
+
+	private void onSendClicked() {
+		Request request = new Request();
+		request.setRequestedAt(new Date());
+		request.setAddress(address.getText()
+		                          .toString()
+		                          .trim());
+		request.setType(selectedType);
+		request.setConditionDoor(door.isChecked());
+		request.setConditionStairs(stairs.isChecked());
+		if (alertListPresenter() != null) alertListPresenter().onSendClicked(request);
 	}
 
 	@Override
@@ -119,8 +145,19 @@ public class RequestNewFragment extends DrawerToggleFragment {
 	@Override
 	public void onPause() {
 		if (alertListPresenter() != null) alertListPresenter().removeView(iRequestNewView);
-
 		super.onPause();
+	}
+
+	private void onSendClicked() {
+		Request request = new Request();
+		request.setRequestedAt(new Date());
+		request.setAddress(address.getText()
+		                          .toString()
+		                          .trim());
+		request.setType(selectedType);
+		request.setConditionDoor(door.isChecked());
+		request.setConditionStairs(stairs.isChecked());
+		if (alertListPresenter() != null) alertListPresenter().onSendClicked(request);
 	}
 
 	@Override
@@ -129,12 +166,16 @@ public class RequestNewFragment extends DrawerToggleFragment {
 		super.onDestroyView();
 	}
 
+	private void onRequestSaved(boolean saved) {
+		getActivity().finish();
+	}
 
 	private void onError(Throwable error) {
 		//TODO
+		error.printStackTrace();
 	}
 
-	private AlertListMVP.Presenter alertListPresenter() {
-		return alertListPresenterManager != null ? alertListPresenterManager.get() : null;
+	private RequestNewMVP.Presenter alertListPresenter() {
+		return requestNewPresenterManager != null ? requestNewPresenterManager.get() : null;
 	}
 }

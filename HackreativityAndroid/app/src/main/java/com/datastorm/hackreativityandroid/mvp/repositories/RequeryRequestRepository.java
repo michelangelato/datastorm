@@ -21,6 +21,7 @@ public class RequeryRequestRepository extends RequeryRepository implements IRequ
 	@Override
 	public Observable<List<Request>> retrieve() {
 		return db().select(Request.class)
+		           .orderBy(Request.TICKET_NUMBER)
 		           .get()
 		           .toSelfObservable()
 		           .map(Result::toList);
@@ -43,6 +44,18 @@ public class RequeryRequestRepository extends RequeryRepository implements IRequ
 				singleSubscriber.onError(e);
 			} finally {
 				trans.close();
+			}
+		});
+	}
+
+	@Override
+	public Single<Boolean> insert(Request request) {
+		return Single.create(singleSubscriber -> {
+			try {
+				db().insert(request);
+				singleSubscriber.onSuccess(true);
+			} catch (Exception e) {
+				singleSubscriber.onError(e);
 			}
 		});
 	}
