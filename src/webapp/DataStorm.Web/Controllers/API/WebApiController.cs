@@ -40,6 +40,10 @@ namespace DataStorm.Web.Controllers.API
         {
             try
             {
+                if(string.IsNullOrEmpty(immobile.Indirizzo)||string.IsNullOrEmpty(immobile.Comune))
+                {
+                    throw new Exception("Immettere i dati necessari");
+                }
                 var utente = await _userManager.FindByNameAsync(User.Identity.Name);
                 Immobile nuovoImmobile = Mapper.Map<ImmobileDTO, Immobile>(immobile);
                 nuovoImmobile.UtenteAppartenenza = utente;
