@@ -160,6 +160,51 @@ namespace DataStorm.Web.Controllers.API
                 throw new Exception("Errore nella richiesta tipologie immobili");
             }
         }
+
+        [HttpPut]
+        [Route("api/avviso")]
+        public async Task<HttpResponseMessage> PutAvviso(AvvisoDTO avviso)
+        {
+            try
+            {
+                _db.Avvisi.Add(new Avviso
+                {
+                    Titolo = avviso.Titolo,
+                    Descrizione = avviso.Descrizione,
+                    ImmaginiAvviso = avviso.ImmaginiAvviso == null ? new List<ImmagineAvviso> { } : avviso.ImmaginiAvviso.Select(i => new ImmagineAvviso
+                    {
+                        TitoloImmagine = i.TitoloImmagine,
+                        UrlImmagine = i.UrlImmagine,
+                        Larghezza = i.Larghezza,
+                        Altezza = i.Altezza
+                    }).ToList(),
+                    Links = avviso.Links == null ? new List<LinkAvviso> { } : avviso.Links.Select(l => new LinkAvviso
+                    {
+                        Titolo = l.Titolo,
+                        Url = l.Url
+                    }).ToList(),
+                    AreeMappe = avviso.AreeMappe == null ? new List<AreaMappa> { } : avviso.AreeMappe.Select(a => new AreaMappa
+                    {
+                        TipoMappa = (TipoAreaMappa)Enum.Parse(typeof(TipoAreaMappa), a.TipoMappa),
+                        PuntiMappa = a.PuntiMappa.Select(p => new PuntoMappa
+                        {
+                            LatitudinePunto = p.LatitudinePunto,
+                            LongitudinePunto = p.LongitudinePunto
+                        }).ToList()
+                    }).ToList(),
+                    AvvisiTopics = new List<AvvisoTopic> { }
+                });
+
+                await _db.SaveChangesAsync();
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                ControllerContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                throw new Exception("Errore nell'inserimento dell'avviso");
+            }
+        }
+
         [HttpGet]
         [Route("api/avvisi")]
         public async Task<IEnumerable<AvvisoDTO>> GetAvvisi()
