@@ -4,7 +4,7 @@
     <!-- META -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - DataStorm.Web</title>
+    <title>@ViewData["Title"] - PrevenGO</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/font-awesome.min.css" rel="stylesheet">
     <link href="/css/animate.min.css" rel="stylesheet"> 
@@ -62,15 +62,12 @@
 
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                       
-                        @if (User.Identity.Name != null)
-                        {
-                        @if (User.Identity.Name.StartsWith(nameof(Ruolo.Cittadino), StringComparison.CurrentCultureIgnoreCase))
+                        @if (User.Identity.Name == null || User.Identity.Name.StartsWith(nameof(Ruolo.Cittadino), StringComparison.CurrentCultureIgnoreCase))
                         {
                             <li><a asp-area="" asp-controller="Immobili" asp-action="Index">Immobili</a></li>
                             <li><a asp-area="" asp-controller="Segnalazioni" asp-action="Index">Fai una segnalazione</a></li>
                             <li class="dropdown">
-                                <a href="#">Contatta un'azienda  <i class="fa fa-angle-down"></i></a>
+                                <a asp-area="" asp-controller="Aziende" asp-action="Index">Contatta un'azienda  <i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="#">Aziende edili</a></li>
                                     <li><a href="#">Liberi professionisti</a></li>
@@ -93,9 +90,7 @@
                         }
                         else
                         {
-
-
-                        }
+                                
                         }
                         @Html.Partial("_LoginPartial")
                     </ul>
@@ -134,7 +129,7 @@
             </div>
             <div class="col-sm-12 ">
                     <div class="copyright-text text-center">
-                        <p>&copy; DataStorm 2016. All Rights Reserved.</p>
+                        <p>&copy; PrevenGO 2016, a DataStorm company. All Rights Reserved.</p>
                      </div>
                 </div>
 
