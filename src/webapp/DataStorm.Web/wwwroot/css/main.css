@@ -101,6 +101,18 @@ color:#e53935 !important;
     padding: 10px 25px;
   }
 
+   .btn-common2 {
+    font-size: 12px;
+    background-color: #00897b;
+    color: #ffffff;
+    border: 1px solid #00897b;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    padding: 10px 25px;
+    margin-top:10px;
+    
+  }
+
   #action .col-sm-5{
     position: absolute;
 
@@ -108,6 +120,7 @@ color:#e53935 !important;
     height: 100%;
     right: 0;
   }
+
 
 
   .btn-common:hover, 
@@ -181,11 +194,10 @@ color:#e53935 !important;
 
 #header{
   margin-bottom: 0;
-<<<<<<< HEAD
+
   padding: 32px 0 32px 0;
-=======
-  padding: 30px 0 0 0;
->>>>>>> 259ac1e28325d4dd6e15bd52543c6529a80d74c8
+
+
 }
 
 #header .navbar-inverse .container{
@@ -227,6 +239,10 @@ color:#e53935 !important;
   border-radius: 4px;
 }
 
+#fascia-social{
+  margin-bottom:15px;
+}
+
 .social-icons ul li{
   padding: 0 10px;
 
@@ -244,23 +260,23 @@ color:#e53935 !important;
 }
 
 .social-icons ul li a:hover .fa-facebook {
-  color:#00897b;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover .fa-twitter {
-  color:#00897b;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover .fa-google-plus {
-  color:#A22523;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover .fa-dribbble {
-  color:#E94989;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover .fa-linkedin {
-  color:#00897b;
+  color:#e53935;
 }
 
 .social-icons ul li a:hover,
@@ -296,7 +312,7 @@ color:#e53935 !important;
   color: #000;
   font-size: 12px;
   padding: 20px;
-  text-trans: uppercase;
+  text-transform: uppercase;
   font-weight: 300;
 }
 
@@ -330,7 +346,7 @@ ul.sub-menu {
   padding: 5px 0;
   font-size: 13px;
   display: block;
-  text-trans: capitalize;
+  text-transform: capitalize;
 }
 
 #header .navbar-nav li ul.sub-menu li .active{
@@ -2098,7 +2114,7 @@ span.stButton_gradient,
   font-size: 20px;
   margin-bottom: 0;
   padding: 10px 0;
-  text-trans: capitalize;
+  text-transform: capitalize;
 }
 
 .single-price.price-one .plan-name {
@@ -2774,6 +2790,9 @@ span.stButton_gradient,
   border-top-color: #eee;
 }
 
+.panel-body{
+  margin-top:15px !important;
+}
 
 .nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus{
   background-color: #4FCCCD;
