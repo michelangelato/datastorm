@@ -266,16 +266,7 @@ namespace DataStorm.Web.Controllers.API
         {
             await Task.FromResult(0);
         }
-        //[Route("api/automapper")]
-        //public async Task<ImmobileDTO> ProvaAutoMapper()
-        //{
-        //    await Task.FromResult(0);
 
-        //    Immobile ImmobileTest = new Immobile();
-        //    ImmobileTest.Indirizzo = "aaaaa";
-        //    var mapped= Mapper.Map<Immobile, ImmobileDTO>(ImmobileTest);
-        //    return mapped;
-        //}
         [Route("api/aziende/{pageNumber:int?}")]
         [HttpGet]
         public async Task<PagedResult<AziendaDTO>> GetAziende(int? pageNumber)
