@@ -10,6 +10,7 @@ import com.datastorm.hackreativityandroid.mvp.entitites.AlertImage;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ImageHolder extends BaseHolder<AlertImage> {
 
@@ -18,6 +19,8 @@ public class ImageHolder extends BaseHolder<AlertImage> {
 
 	public ImageHolder(View itemView) {
 		super(itemView);
+		ButterKnife.bind(itemView);
+
 	}
 
 	public static int layout() {

@@ -97,7 +97,7 @@ public class Seeder {
 		Alert alert = new Alert();
 		alert.setId(id);
 		alert.setTitle("Avviso " + id);
-		alert.setDescription("description " + id);
+		alert.setDescription("Messaggi di servizio " + id);
 		alert.setTopic(random(new String[]{"camerino", "fabriano", "norcia"}));
 		alert.getImages();
 		createImages(alert);
@@ -131,8 +131,8 @@ public class Seeder {
 	private static MapObject createMapObject(Alert alert, long id) {
 		MapObject mapObject = new MapObject();
 		mapObject.setId(id);
-		mapObject.setTitle("title " + id);
-		mapObject.setDescription("description " + id);
+		mapObject.setTitle("Punto d'interesse " + id);
+		mapObject.setDescription("Descrizione " + id);
 		mapObject.setTopic(random(new String[]{"camerino", "fabriano", "norcia"}));
 		mapObject.setType(random(1, 3));
 		mapObject.setAlert(alert);
@@ -201,8 +201,8 @@ public class Seeder {
 	private static MapObject createMapObject(long id) {
 		MapObject mapObject = new MapObject();
 		mapObject.setId(id);
-		mapObject.setTitle("title " + id);
-		mapObject.setDescription("description " + id);
+		mapObject.setTitle("Punto d'interesse " + id);
+		mapObject.setDescription("Descrizione " + id);
 		mapObject.setTopic(random(new String[]{"camerino", "fabriano", "norcia"}));
 		mapObject.setType(random(1, 3));
 		createMapPoints(mapObject);

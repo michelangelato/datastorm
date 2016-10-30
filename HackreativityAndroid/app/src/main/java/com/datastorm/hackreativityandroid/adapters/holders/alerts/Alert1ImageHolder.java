@@ -10,6 +10,7 @@ import com.datastorm.hackreativityandroid.widgets.AspectRatioImageView;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class Alert1ImageHolder extends AlertTextOnlyHolder {
@@ -19,6 +20,7 @@ public class Alert1ImageHolder extends AlertTextOnlyHolder {
 
 	public Alert1ImageHolder(View itemView) {
 		super(itemView);
+		ButterKnife.bind(itemView);
 	}
 
 	@Override

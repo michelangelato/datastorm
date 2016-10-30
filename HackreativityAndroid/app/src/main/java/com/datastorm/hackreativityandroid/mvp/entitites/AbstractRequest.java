@@ -1,9 +1,6 @@
 package com.datastorm.hackreativityandroid.mvp.entitites;
 
 
-import android.content.Context;
-
-import com.datastorm.hackreativityandroid.R;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -68,16 +65,4 @@ public class AbstractRequest {
 
 	@Column(name = "synced")
 	Boolean synced;
-
-
-	public static String typeString(Context context, int type) {
-		switch (type) {
-			case 0:
-				return context.getString(R.string.request_type_check);
-			case 1:
-				return context.getString(R.string.request_type_rescue);
-			default:
-				return "";
-		}
-	}
 }

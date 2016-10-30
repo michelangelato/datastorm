@@ -13,6 +13,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static com.datastorm.hackreativityandroid.utils.MapDrawer.setupMap;
 
@@ -25,6 +26,7 @@ public class AlertMapHolder extends AlertTextOnlyHolder implements OnMapReadyCal
 
 	public AlertMapHolder(View itemView) {
 		super(itemView);
+		ButterKnife.bind(itemView);
 	}
 
 	@Override

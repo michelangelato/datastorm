@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import com.dadino.quickstart.core.adapters.holders.BaseHolder;
 import com.datastorm.hackreativityandroid.R;
-import com.datastorm.hackreativityandroid.mvp.entitites.AbstractRequest;
 import com.datastorm.hackreativityandroid.mvp.entitites.Request;
+import com.datastorm.hackreativityandroid.utils.Constants;
 
 import java.util.Date;
 import java.util.Locale;
@@ -38,7 +38,7 @@ public class RequestHolder extends BaseHolder<Request> {
 		address.setText(item.getAddress());
 		eta.setText(eta(item.getEta()));
 		number.setText(String.format(Locale.getDefault(), "#%d", item.getTicketNumber()));
-		type.setText(AbstractRequest.typeString(type.getContext(), item.getType()));
+		type.setText(Constants.typeString(type.getContext(), item.getType()));
 	}
 
 	private String eta(Date date) {

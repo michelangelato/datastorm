@@ -9,6 +9,7 @@ import com.datastorm.hackreativityandroid.adapters.ImageAdapter;
 import com.datastorm.hackreativityandroid.mvp.entitites.Alert;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class AlertNImagesHolder extends AlertTextOnlyHolder {
@@ -18,6 +19,7 @@ public class AlertNImagesHolder extends AlertTextOnlyHolder {
 
 	public AlertNImagesHolder(View itemView) {
 		super(itemView);
+		ButterKnife.bind(itemView);
 	}
 
 	@Override
